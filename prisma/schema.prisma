@@ -3,10 +3,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
-}
+
 
 // ========== USER & AUTH MODELS ==========
 
@@ -238,6 +235,12 @@ model ContentAnalytics {
 enum Role {
   ADMIN
   EDITOR
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")        // pooled for app traffic
+  directUrl = env("DIRECT_DATABASE_URL")// direct for migrate
 }
 
 enum EventCategory {
