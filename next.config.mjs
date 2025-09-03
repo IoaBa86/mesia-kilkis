@@ -1,11 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  eslint: {               // ⬅️  turns off ESLint during `next build`
-    ignoreDuringBuilds: true,
-  },
-  typescript: {           // ⬅️  turns off type-checking during `next build`
-    ignoreBuildErrors: true,
-  },
+export default {
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
+
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'scontent.fskg1-2.fna.fbcdn.net', pathname: '/**' },
@@ -17,5 +14,3 @@ const nextConfig = {
     ],
   },
 };
-
-export default nextConfig;
