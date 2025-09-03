@@ -42,12 +42,8 @@ export default function LegalNoticePage() {
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Στοιχεία Ιστοσελίδας</h2>
             <div className="bg-mesia-lightCream/50 p-6 rounded-lg border border-mesia-gold/30">
               <h3 className="text-lg font-semibold text-mesia-wine mb-3">Υπεύθυνος Ιστοσελίδας</h3>
-              <p><strong>Επωνυμία:</strong> Κοινότητα Μεσιάς Κιλκίς</p>
-              <p><strong>Έδρα:</strong> Μεσιά, Κιλκίς 61100, Ελλάδα</p>
-              <p><strong>ΑΦΜ:</strong> [ΑΦΜ ΚΟΙΝΟΤΗΤΑΣ]</p>
-              <p><strong>Τηλέφωνο:</strong> +30 23XX XXXXXX</p>
-              <p><strong>Email:</strong> info@mesiakilkis.gr</p>
-              <p><strong>Website:</strong> www.mesiakilkis.gr</p>
+              <p><strong>Email:</strong> info@mesia.gr</p>
+              <p><strong>Website:</strong> www.mesia.gr</p>
             </div>
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Σκοπός Ιστοσελίδας</h2>
@@ -62,8 +58,8 @@ export default function LegalNoticePage() {
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Τεχνικές Πληροφορίες</h2>
             <div className="bg-mesia-gold/10 p-6 rounded-lg border border-mesia-gold/30">
-              <p><strong>Hosting:</strong> [Πάροχος Hosting]</p>
-              <p><strong>Domain:</strong> mesiakilkis.gr</p>
+              <p><strong>Hosting:</strong> vercel.com</p>
+              <p><strong>Domain:</strong> mesia.gr</p>
               <p><strong>Τεχνολογίες:</strong> Next.js, React, TypeScript</p>
               <p><strong>SSL:</strong> Ναι (HTTPS)</p>
             </div>
