@@ -1,13 +1,11 @@
 import type { NextConfig } from 'next'
-import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin'
+// Remove this line: import { PrismaPlugin } from '@prisma/nextjs-monorepo-workaround-plugin'
 
 const nextConfig: NextConfig = {
-  /* ⬇️ Add this experimental flag */
   experimental: {
     missingSuspenseWithCSRBailout: false,
   },
 
-  /* ⬇️ Keep your existing config */
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'scontent.fskg1-2.fna.fbcdn.net', pathname: '/**' },
@@ -19,12 +17,7 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  webpack(config, { isServer, nextRuntime }) {
-    if (isServer && nextRuntime === 'nodejs') {
-      config.plugins.push(new PrismaPlugin())
-    }
-    return config
-  },
+  // Remove the entire webpack section if you remove the plugin
 }
 
 export default nextConfig
