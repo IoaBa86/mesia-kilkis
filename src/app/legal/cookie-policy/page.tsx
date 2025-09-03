@@ -103,7 +103,7 @@ export default function CookiePolicyPage() {
             <p>Για περισσότερες πληροφορίες σχετικά με τα cookies και τα δικαιώματά σας, δείτε την <Link href="/legal/privacy-policy" className="text-mesia-wine hover:text-mesia-gold">Πολιτική Απορρήτου</Link> μας.</p>
 
             <div className="bg-mesia-wine/10 p-6 rounded-lg border border-mesia-wine/20">
-              <p><strong>Επικοινωνία:</strong> cookies@mesiakilkis.gr</p>
+              <p><strong>Επικοινωνία:</strong> info@mesia.gr</p>
             </div>
           </div>
         </div>
