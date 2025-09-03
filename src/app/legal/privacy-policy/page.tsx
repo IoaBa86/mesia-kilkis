@@ -47,10 +47,10 @@ export default function PrivacyPolicyPage() {
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">1. Υπεύθυνος Επεξεργασίας Δεδομένων</h2>
             <div className="bg-mesia-lightCream/50 p-4 rounded-lg mb-6">
-              <p><strong>Οργανισμός:</strong> Κοινότητα Μεσιάς Κιλκίς</p>
+              <p><strong>Οργανισμός:</strong> mesia.gr</p>
               <p><strong>Διεύθυνση:</strong> Μεσιά, Κιλκίς 61100, Ελλάδα</p>
-              <p><strong>Email:</strong> info@mesiakilkis.gr</p>
-              <p><strong>Τηλέφωνο:</strong> +30 23XX XXXXXX</p>
+              <p><strong>Email:</strong> info@mesia.gr</p>
+              
             </div>
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">2. Τύποι Προσωπικών Δεδομένων που Συλλέγουμε</h2>
@@ -150,8 +150,7 @@ export default function PrivacyPolicyPage() {
             <div className="bg-mesia-wine/10 p-6 rounded-lg border border-mesia-wine/20">
               <p className="mb-4">Για την άσκηση των δικαιωμάτων σας ή οποιαδήποτε ερώτηση σχετικά με την επεξεργασία των προσωπικών σας δεδομένων:</p>
               <div className="space-y-2">
-                <p className="flex items-center"><Mail className="h-4 w-4 mr-2 text-mesia-wine" /><strong>Email:</strong> privacy@mesiakilkis.gr</p>
-                <p className="flex items-center"><Phone className="h-4 w-4 mr-2 text-mesia-wine" /><strong>Τηλέφωνο:</strong> +30 23XX XXXXXX</p>
+                <p className="flex items-center"><Mail className="h-4 w-4 mr-2 text-mesia-wine" /><strong>Email:</strong> info@mesia.gr</p>
               </div>
             </div>
 
