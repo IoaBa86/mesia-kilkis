@@ -13,27 +13,7 @@ export default function TermsOfServicePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-mesia-cream via-mesia-lightCream to-mesia-beige">
       {/* Navigation */}
-      <header className="bg-white/90 backdrop-blur-md shadow-xl border-b border-mesia-gold/20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Link href="/">
-                <Button variant="outline" className="border-mesia-wine text-mesia-wine hover:bg-mesia-wine hover:text-white">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Αρχική
-                </Button>
-              </Link>
-              <div className="flex items-center space-x-3">
-                <FileText className="h-8 w-8 text-mesia-wine" />
-                <div>
-                  <h1 className="text-2xl font-bold text-mesia-wine font-greek">Όροι Χρήσης</h1>
-                  <p className="text-sm text-mesia-lightText">Όροι και Προϋποθέσεις</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+
 
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -46,7 +26,7 @@ export default function TermsOfServicePage() {
             </div>
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">1. Αποδοχή Όρων</h2>
-            <p>Με την πρόσβαση και τη χρήση της ιστοσελίδας "Μεσιά Κιλκίς" (mesiakilkis.gr), αποδέχεστε πλήρως και αποδίδετε τους παρόντες όρους χρήσης. Εάν δεν συμφωνείτε με οποιονδήποτε από αυτούς τους όρους, παρακαλούμε μην χρησιμοποιείτε την ιστοσελίδα μας.</p>
+            <p>Με την πρόσβαση και τη χρήση της ιστοσελίδας "Μεσιά Κιλκίς" (mesia.gr), αποδέχεστε πλήρως και αποδίδετε τους παρόντες όρους χρήσης. Εάν δεν συμφωνείτε με οποιονδήποτε από αυτούς τους όρους, παρακαλούμε μην χρησιμοποιείτε την ιστοσελίδα μας.</p>
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">2. Περιγραφή Υπηρεσιών</h2>
             <p>Η ιστοσελίδα "Μεσιά Κιλκίς" παρέχει:</p>
@@ -125,8 +105,7 @@ export default function TermsOfServicePage() {
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">11. Επικοινωνία</h2>
             <div className="bg-mesia-wine/10 p-6 rounded-lg border border-mesia-wine/20">
               <p>Για ερωτήσεις σχετικά με τους όρους χρήσης:</p>
-              <p><strong>Email:</strong> info@mesiakilkis.gr</p>
-              <p><strong>Τηλέφωνο:</strong> +30 23XX XXXXXX</p>
+              <p><strong>Email:</strong> info@mesia.gr</p>
               <p><strong>Διεύθυνση:</strong> Μεσιά, Κιλκίς 61100, Ελλάδα</p>
             </div>
 

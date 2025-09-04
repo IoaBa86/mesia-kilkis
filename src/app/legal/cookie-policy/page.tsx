@@ -13,27 +13,7 @@ export default function CookiePolicyPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-mesia-cream via-mesia-lightCream to-mesia-beige">
       {/* Navigation */}
-      <header className="bg-white/90 backdrop-blur-md shadow-xl border-b border-mesia-gold/20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Link href="/">
-                <Button variant="outline" className="border-mesia-wine text-mesia-wine hover:bg-mesia-wine hover:text-white">
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  Αρχική
-                </Button>
-              </Link>
-              <div className="flex items-center space-x-3">
-                <Cookie className="h-8 w-8 text-mesia-wine" />
-                <div>
-                  <h1 className="text-2xl font-bold text-mesia-wine font-greek">Πολιτική Cookies</h1>
-                  <p className="text-sm text-mesia-lightText">Πληροφορίες Χρήσης Cookies</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
+
 
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -118,7 +98,7 @@ export default function CookiePolicyPage() {
             <p>Για περισσότερες πληροφορίες σχετικά με τα cookies και τα δικαιώματά σας, δείτε την <Link href="/legal/privacy-policy" className="text-mesia-wine hover:text-mesia-gold">Πολιτική Απορρήτου</Link> μας.</p>
 
             <div className="bg-mesia-wine/10 p-6 rounded-lg border border-mesia-wine/20">
-              <p><strong>Επικοινωνία:</strong> cookies@mesiakilkis.gr</p>
+              <p><strong>Επικοινωνία:</strong> info@mesia.gr</p>
             </div>
           </div>
         </div>
