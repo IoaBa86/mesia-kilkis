@@ -190,7 +190,16 @@ export default function ServicesPage() {
               </div>
             </div>
           </section>
+
+          {/* Village Council */}
+          <section className="py-24 bg-gradient-to-br from-mesia-beige/30 via-white to-mesia-cream/30" aria-labelledby="council-heading">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <header className="text-center mb-16">
+               
               </header>
+
+             
+            
 
               {/* Emergency Contacts */}
               <div className="mt-16">
