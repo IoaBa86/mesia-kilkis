@@ -75,7 +75,23 @@ export default function CookiePolicyPage() {
             </div>
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Συγκατάθεση για Cookies</h2>
-            <p>Κατά την πρώτη επίσκεψή σας, θα εμφανιστεί ένα banner που σας ενημερώνει για τη χρήση cookies. Μπορείτε:</p>
+            <p>Κατά την πρώτη επίσκεψή σας, θα εμφανιστεί ένα banner που σας ενημερώνει για τη χρήση cookies.</p>
+            <p>
+  Για συμμόρφωση με τον GDPR και άλλους νόμους προστασίας δεδομένων, 
+  καταγράφουμε τις επιλογές σας σχετικά με τα cookies, συμπεριλαμβανομένων:
+</p>
+<ul>
+  <li>Ανωνυμοποιημένη διεύθυνση IP (τα τελευταία ψηφία αφαιρούνται)</li>
+  <li>Ημερομηνία και ώρα της απόφασής σας</li>
+  <li>Ποιες κατηγορίες cookies αποδεχτήκατε ή απορρίψατε</li>
+  <li>Βασικές πληροφορίες του περιηγητή σας</li>
+</ul>
+<p>
+  Αυτά τα αρχεία διατηρούνται για 2 χρόνια και χρησιμοποιούνται μόνο για 
+  να αποδείξουμε ότι ληφθήκε η συναίνεσή σας σύμφωνα με το νόμο.
+</p>
+              
+              <p> Μπορείτε:</p>
             <ul>
               <li>Να αποδεχτείτε όλα τα cookies</li>
               <li>Να επιλέξετε συγκεκριμένες κατηγορίες</li>
@@ -98,7 +114,6 @@ export default function CookiePolicyPage() {
               <li><strong>Google Analytics:</strong> Ανάλυση κίνησης ιστοσελίδας</li>
               <li><strong>Social Media:</strong> Κουμπιά κοινοποίησης</li>
             </ul>
-
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Περισσότερες Πληροφορίες</h2>
             <p>Για περισσότερες πληροφορίες σχετικά με τα cookies και τα δικαιώματά σας, δείτε την <Link href="/legal/privacy-policy" className="text-mesia-wine hover:text-mesia-gold">Πολιτική Απορρήτου</Link> μας.</p>
 

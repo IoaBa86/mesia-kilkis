@@ -1,4 +1,4 @@
-// src/app/layout.tsx - Updated with client provider
+// src/app/layout.tsx - Fixed version
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
@@ -6,6 +6,8 @@ import { Providers } from './providers'
 import Header from '@/components/layout/Header'
 import Navbar from '@/components/layout/Navbar'  
 import Footer from '@/components/layout/Footer'
+import CookieConsentBanner from '@/components/CookieConsent'
+import ConditionalGoogleAnalytics from '@/components/GoogleAnalytics'  // NEW
 
 const inter = Inter({ subsets: ['latin', 'greek'] })
 
@@ -39,12 +41,15 @@ export default function RootLayout({
           <div className="flex flex-col min-h-screen">
             <Header />
             <Navbar />
-            <main className="flex-grow">
+            <main className="flex-grow">        
               {children}
             </main>
+            <CookieConsentBanner />
             <Footer />
           </div>
         </Providers>
+        {/* Google Analytics - loads only after cookie consent */}
+        <ConditionalGoogleAnalytics />
       </body>
     </html>
   )

@@ -1,32 +1,41 @@
-// prisma/schema.prisma - SQLite Compatible Version
 generator client {
   provider = "prisma-client-js"
 }
 
-
-
-// ========== USER & AUTH MODELS ==========
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_DATABASE_URL")
+}
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  password  String?  // For credentials auth
-  role      Role     @default(ADMIN)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
+  id              String           @id @default(cuid())
+  email           String           @unique
+  name            String?
+  password        String?
+  role            Role             @default(ADMIN)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  accounts        Account[]
   photos          Photo[]
+  sessions        Session[]
   events          Event[]
   historicalPosts HistoricalPost[]
-  
-  // NextAuth relations
-  accounts Account[]
-  sessions Session[]
 
   @@index([email])
   @@index([role])
+}
+
+model CookieConsent {
+  id           String   @id @default(cuid())
+  ipAddress    String
+  ipHash       String?
+  consentGiven Boolean
+  categories   Json
+  userAgent    String?
+  timestamp    DateTime @default(now())
+
+  @@map("cookie_consents")
 }
 
 model Account {
@@ -42,8 +51,7 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@index([userId])
@@ -54,8 +62,7 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
@@ -68,8 +75,6 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-// ========== CONTENT MODELS ==========
-
 model Category {
   id          String   @id @default(cuid())
   name        String
@@ -80,9 +85,7 @@ model Category {
   isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-
-  // Relations
-  photos Photo[]
+  photos      Photo[]
 
   @@index([slug])
   @@index([isActive])
@@ -103,14 +106,10 @@ model Photo {
   isActive      Boolean  @default(true)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-
-  // Foreign keys
-  categoryId String
-  userId     String
-
-  // Relations
-  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  uploadedBy User     @relation(fields: [userId], references: [id])
+  categoryId    String
+  userId        String
+  category      Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  uploadedBy    User     @relation(fields: [userId], references: [id])
 
   @@index([categoryId])
   @@index([userId])
@@ -134,49 +133,38 @@ model Event {
   imageUrl      String?
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
-  
-  // Foreign key
-  createdBy String
+  createdBy     String
+  creator       User          @relation(fields: [createdBy], references: [id], onDelete: Cascade)
 
-  // Relations
-  creator User @relation(fields: [createdBy], references: [id], onDelete: Cascade)
-
-  @@map("events")
   @@index([eventDate])
   @@index([isActive])
   @@index([isPinned])
   @@index([category])
   @@index([createdBy])
+  @@map("events")
 }
 
-// ========== FIXED: HISTORICAL POST MODEL ==========
 model HistoricalPost {
   id        String   @id @default(cuid())
   title     String
   slug      String   @unique
   excerpt   String
-  content   String   // FIXED: Removed @db.Text (not supported in SQLite)
-  images    Json     // FIXED: Changed from String[] to Json (SQLite compatible)
+  content   String
+  images    Json
   isActive  Boolean  @default(true)
   isPinned  Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  
-  // Foreign key
   creatorId String
+  creator   User     @relation(fields: [creatorId], references: [id], onDelete: Cascade)
 
-  // Relations
-  creator User @relation(fields: [creatorId], references: [id], onDelete: Cascade)
-
-  @@map("historical_posts")
   @@index([slug])
   @@index([isActive])
   @@index([isPinned])
   @@index([createdAt])
   @@index([creatorId])
+  @@map("historical_posts")
 }
-
-// ========== ANALYTICS MODELS ==========
 
 model PageView {
   id         String   @id @default(cuid())
@@ -187,13 +175,13 @@ model PageView {
   sessionId  String
   userId     String?
   timestamp  DateTime @default(now())
-  timeOnPage Int?     // in seconds
+  timeOnPage Int?
 
-  @@map("page_views")
   @@index([path])
   @@index([sessionId])
   @@index([timestamp])
   @@index([userId])
+  @@map("page_views")
 }
 
 model AnalyticsSession {
@@ -208,39 +196,31 @@ model AnalyticsSession {
   device     String?
   browser    String?
 
-  @@map("analytics_sessions")
   @@index([startTime])
   @@index([userId])
+  @@map("analytics_sessions")
 }
 
 model ContentAnalytics {
   id           String   @id @default(cuid())
-  contentType  String   // 'photo', 'event', 'page', 'historical_post'
+  contentType  String
   contentId    String
   path         String
   views        Int      @default(0)
   uniqueViews  Int      @default(0)
-  avgTimeSpent Int      @default(0) // in seconds
+  avgTimeSpent Int      @default(0)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
   @@unique([contentType, contentId])
-  @@map("content_analytics")
   @@index([contentType])
   @@index([path])
+  @@map("content_analytics")
 }
-
-// ========== ENUMS ==========
 
 enum Role {
   ADMIN
   EDITOR
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")        // pooled for app traffic
-  directUrl = env("DIRECT_DATABASE_URL")// direct for migrate
 }
 
 enum EventCategory {

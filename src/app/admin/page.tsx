@@ -1,4 +1,4 @@
-// src/app/admin/page.tsx - Updated with Historical Posts functionality
+// src/app/admin/page.tsx - Updated with Cookie Consent Logs functionality
 "use client"
 
 import { useSession, signOut } from "next-auth/react"
@@ -17,8 +17,9 @@ import {
   Users,
   Globe,
   Shield,
-  BookOpen,    // NEW: Added for Historical Posts
-  History      // NEW: Added for Historical Posts
+  BookOpen,
+  History,
+  Eye         // NEW: Added for Cookie Consent Logs
 } from "lucide-react"
 
 interface DashboardStats {
@@ -27,7 +28,8 @@ interface DashboardStats {
   activeCategories: number
   eventsCount: number
   upcomingEvents: number
-  historicalPostsCount?: number  // NEW: Add historical posts count
+  historicalPostsCount?: number
+  cookieConsentCount?: number  // NEW: Add cookie consent count
 }
 
 export default function AdminDashboard() {
@@ -39,7 +41,8 @@ export default function AdminDashboard() {
     activeCategories: 0,
     eventsCount: 0,
     upcomingEvents: 0,
-    historicalPostsCount: 0  // NEW: Initialize historical posts count
+    historicalPostsCount: 0,
+    cookieConsentCount: 0  // NEW: Initialize cookie consent count
   })
   const [loading, setLoading] = useState(true)
 
@@ -84,10 +87,9 @@ export default function AdminDashboard() {
         }
       } catch (eventsError) {
         console.log('Events API not available yet:', eventsError)
-        // Events system might not be implemented yet, continue without it
       }
 
-      // NEW: Fetch historical posts
+      // Fetch historical posts
       let historicalPostsCount = 0
       try {
         const postsResponse = await fetch('/api/admin/historical-posts')
@@ -98,6 +100,18 @@ export default function AdminDashboard() {
       } catch (postsError) {
         console.log('Historical posts API not available yet:', postsError)
       }
+
+      // NEW: Fetch cookie consent logs
+      let cookieConsentCount = 0
+      try {
+        const consentResponse = await fetch('/api/cookie-consent')
+        if (consentResponse.ok) {
+          const consentData = await consentResponse.json()
+          cookieConsentCount = consentData.totalCount || 0
+        }
+      } catch (consentError) {
+        console.log('Cookie consent API not available yet:', consentError)
+      }
         
       setStats({
         categoriesCount: categoriesData.length,
@@ -105,7 +119,8 @@ export default function AdminDashboard() {
         activeCategories,
         eventsCount,
         upcomingEvents,
-        historicalPostsCount  // NEW: Set historical posts count
+        historicalPostsCount,
+        cookieConsentCount  // NEW: Set cookie consent count
       })
     } catch (error) {
       console.error('Error fetching dashboard stats:', error)
@@ -163,8 +178,8 @@ export default function AdminDashboard() {
           <p className="text-mesia-lightText text-lg">Διαχειριστείτε το περιεχόμενο της ιστοσελίδας του χωριού</p>
         </div>
 
-        {/* Dashboard Cards - UPDATED: Added 5th card */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+        {/* Dashboard Cards - UPDATED: Now 6 cards in 2 rows */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
           <Card className="hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white/90 backdrop-blur-sm border border-mesia-gold/20 hover:scale-105" onClick={() => router.push("/admin/categories")}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-mesia-wine">Κατηγορίες</CardTitle>
@@ -230,8 +245,11 @@ export default function AdminDashboard() {
               </Button>
             </CardContent>
           </Card>
+        </div>
 
-          {/* NEW: Historical Posts Card */}
+        {/* Second row of dashboard cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Historical Posts Card */}
           <Card className="hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white/90 backdrop-blur-sm border border-mesia-gold/20 hover:scale-105" onClick={() => router.push("/admin/historical-posts")}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-mesia-wine">Ιστορικά Μνημεία</CardTitle>
@@ -254,7 +272,30 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
 
-          {/* SETTINGS CARD */}
+          {/* NEW: Cookie Consent Logs Card */}
+          <Card className="hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white/90 backdrop-blur-sm border border-mesia-gold/20 hover:scale-105" onClick={() => router.push("/admin/consent-logs")}>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium text-mesia-wine">Cookie Consent</CardTitle>
+              <Eye className="h-5 w-5 text-mesia-gold" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-3xl font-bold text-mesia-wine mb-2">{stats.cookieConsentCount || 0}</div>
+              <p className="text-xs text-mesia-lightText mb-4">
+                Καταγραφές συναίνεσης
+              </p>
+              <Button 
+                className="w-full bg-gradient-to-r from-mesia-wine to-mesia-wine/90 hover:from-mesia-wine/90 hover:to-mesia-wine text-white text-xs" 
+                onClick={(e) => {
+                  e.stopPropagation()
+                  router.push("/admin/consent-logs")
+                }}
+              >
+                Προβολή Καταγραφών
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Settings Card */}
           <Card className="hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white/90 backdrop-blur-sm border border-mesia-gold/20 hover:scale-105" onClick={() => router.push("/admin/settings")}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-mesia-wine">Ρυθμίσεις</CardTitle>
@@ -280,7 +321,7 @@ export default function AdminDashboard() {
           </Card>
         </div>
 
-        {/* Quick Actions - UPDATED: Added Historical Posts button */}
+        {/* Quick Actions - UPDATED: Added Cookie Consent Logs button */}
         <div className="mt-12">
           <h3 className="text-2xl font-bold text-mesia-wine font-greek mb-6">Γρήγορες Ενέργειες</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
@@ -310,7 +351,7 @@ export default function AdminDashboard() {
               <span className="font-medium text-center">Νέα Εκδήλωση</span>
             </Button>
 
-            {/* NEW: Historical Posts Quick Action */}
+            {/* Historical Posts Quick Action */}
             <Button 
               variant="outline" 
               className="h-28 flex flex-col space-y-2 border-2 border-mesia-wine text-mesia-wine hover:bg-mesia-wine hover:text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 text-sm"
@@ -319,16 +360,17 @@ export default function AdminDashboard() {
               <BookOpen className="h-6 w-6" />
               <span className="font-medium text-center">Νέο Ιστορικό Άρθρο</span>
             </Button>
-            
+
+            {/* NEW: Cookie Consent Logs Quick Action */}
             <Button 
               variant="outline" 
               className="h-28 flex flex-col space-y-2 border-2 border-mesia-gold text-mesia-wine hover:bg-mesia-gold hover:text-mesia-wine shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 text-sm"
-              onClick={() => window.open('/', '_blank')}
+              onClick={() => router.push("/admin/consent-logs")}
             >
-              <Globe className="h-6 w-6" />
-              <span className="font-medium text-center">Προβολή Site</span>
+              <Eye className="h-6 w-6" />
+              <span className="font-medium text-center">Cookie Logs</span>
             </Button>
-
+            
             <Button 
               variant="outline" 
               className="h-28 flex flex-col space-y-2 border-2 border-mesia-wine text-mesia-wine hover:bg-mesia-wine hover:text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 text-sm"
@@ -340,12 +382,12 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Recent Activity - UPDATED: Added Historical Posts stats */}
+        {/* Recent Activity - UPDATED: Added Cookie Consent stats */}
         {stats.categoriesCount > 0 && (
           <div className="mt-12">
             <h3 className="text-2xl font-bold text-mesia-wine font-greek mb-6">Σύνοψη Περιεχομένου</h3>
             <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-mesia-gold/20">
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
+              <div className="grid grid-cols-2 md:grid-cols-6 gap-8 text-center">
                 <div>
                   <div className="text-4xl font-bold text-mesia-wine mb-2">{stats.categoriesCount}</div>
                   <div className="text-mesia-lightText font-medium">Κατηγορίες</div>
@@ -361,14 +403,19 @@ export default function AdminDashboard() {
                   <div className="text-mesia-lightText font-medium">Εκδηλώσεις</div>
                   <div className="text-xs text-mesia-lightText mt-1">{stats.upcomingEvents} επερχόμενες</div>
                 </div>
-                {/* NEW: Historical Posts Summary */}
                 <div>
                   <div className="text-4xl font-bold text-mesia-gold mb-2">{stats.historicalPostsCount || 0}</div>
                   <div className="text-mesia-lightText font-medium">Ιστορικά Άρθρα</div>
                   <div className="text-xs text-mesia-lightText mt-1">Μνημεία</div>
                 </div>
+                {/* NEW: Cookie Consent Summary */}
                 <div>
-                  <div className="text-4xl font-bold text-mesia-wine mb-2">7</div>
+                  <div className="text-4xl font-bold text-mesia-wine mb-2">{stats.cookieConsentCount || 0}</div>
+                  <div className="text-mesia-lightText font-medium">Cookie Consent</div>
+                  <div className="text-xs text-mesia-lightText mt-1">Καταγραφές</div>
+                </div>
+                <div>
+                  <div className="text-4xl font-bold text-mesia-gold mb-2">7</div>
                   <div className="text-mesia-lightText font-medium">Σελίδες</div>
                   <div className="text-xs text-mesia-lightText mt-1">Ενεργές</div>
                 </div>
@@ -377,10 +424,10 @@ export default function AdminDashboard() {
           </div>
         )}
 
-        {/* Quick Links - UPDATED: Added Historical Posts link */}
+        {/* Quick Links - UPDATED: Added Cookie Consent Logs link */}
         <div className="mt-12">
           <h3 className="text-2xl font-bold text-mesia-wine font-greek mb-6">Γρήγοροι Σύνδεσμοι</h3>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <Card className="bg-gradient-to-br from-mesia-wine to-mesia-wine/90 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer" onClick={() => router.push("/admin/photos")}>
               <CardContent className="p-6 text-center">
                 <Image className="h-12 w-12 mx-auto mb-4 text-mesia-gold" />
@@ -397,7 +444,7 @@ export default function AdminDashboard() {
               </CardContent>
             </Card>
 
-            {/* NEW: Historical Posts Quick Link */}
+            {/* Historical Posts Quick Link */}
             <Card className="bg-gradient-to-br from-mesia-wine to-mesia-gold text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer" onClick={() => router.push("/admin/historical-posts")}>
               <CardContent className="p-6 text-center">
                 <History className="h-12 w-12 mx-auto mb-4 text-mesia-gold" />
@@ -406,11 +453,12 @@ export default function AdminDashboard() {
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-mesia-beige to-mesia-cream border border-mesia-gold/30 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer" onClick={() => window.open('/', '_blank')}>
+            {/* NEW: Cookie Consent Logs Quick Link */}
+            <Card className="bg-gradient-to-br from-mesia-gold to-mesia-wine text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer" onClick={() => router.push("/admin/consent-logs")}>
               <CardContent className="p-6 text-center">
-                <Globe className="h-12 w-12 mx-auto mb-4 text-mesia-wine" />
-                <h4 className="text-xl font-bold font-greek mb-2">Προβολή Website</h4>
-                <p className="text-mesia-lightText text-sm">Δείτε πως φαίνεται η ιστοσελίδα στους επισκέπτες</p>
+                <Eye className="h-12 w-12 mx-auto mb-4 text-mesia-gold" />
+                <h4 className="text-xl font-bold font-greek mb-2">Cookie Consent Logs</h4>
+                <p className="text-mesia-cream text-sm">Παρακολούθηση συναίνεσης cookies και GDPR συμμόρφωση</p>
               </CardContent>
             </Card>
           </div>
