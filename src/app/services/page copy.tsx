@@ -190,7 +190,115 @@ export default function ServicesPage() {
               </div>
             </div>
           </section>
+
+          {/* Village Council */}
+          <section className="py-24 bg-gradient-to-br from-mesia-beige/30 via-white to-mesia-cream/30" aria-labelledby="council-heading">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <header className="text-center mb-16">
+                <div className="inline-flex items-center px-4 py-2 bg-mesia-wine/10 rounded-full text-mesia-wine mb-6 border border-mesia-wine/20">
+                  <Users className="h-4 w-4 mr-2" aria-hidden="true" />
+                  <span className="text-sm font-medium">Τοπική Διοίκηση</span>
+                </div>
+                <h2 id="council-heading" className="text-4xl font-bold text-mesia-wine font-greek mb-6">
+                  Δημοτικό Συμβούλιο
+                </h2>
+                <p className="text-xl text-mesia-lightText max-w-3xl mx-auto">
+                  Επικοινωνήστε με τους εκπροσώπους του χωριού για οποιαδήποτε ανάγκη
+                </p>
               </header>
+
+              {/* Council Contact Info */}
+              <div className="mb-12">
+                <Card className="bg-gradient-to-br from-mesia-wine to-mesia-wine/90 text-white shadow-2xl border-0 overflow-hidden">
+                  <CardHeader>
+                    <div className="flex items-center mb-4">
+                      <Landmark className="h-8 w-8 text-mesia-gold mr-4" />
+                      <CardTitle className="text-2xl font-bold text-mesia-gold font-greek">
+                        Γενικές Πληροφορίες
+                      </CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      <div className="flex items-center">
+                        <MapPin className="h-5 w-5 text-mesia-gold mr-3" />
+                        <div>
+                          <p className="font-medium">Διεύθυνση:</p>
+                          <p className="text-mesia-cream">Δημαρχείο Μεσιάς, Κεντρική Πλατεία</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        <Phone className="h-5 w-5 text-mesia-gold mr-3" />
+                        <div>
+                          <p className="font-medium">Τηλέφωνο:</p>
+                          <p className="text-mesia-cream">23430 41000</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center">
+                        <Mail className="h-5 w-5 text-mesia-gold mr-3" />
+                        <div>
+                          <p className="font-medium">Email:</p>
+                          <p className="text-mesia-cream">info@mesia-kilkis.gr</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-6 pt-6 border-t border-mesia-gold/30">
+                      <div className="flex items-center">
+                        <Clock className="h-5 w-5 text-mesia-gold mr-3" />
+                        <div>
+                          <p className="font-medium">Ώρες Λειτουργίας:</p>
+                          <p className="text-mesia-cream">Δευτέρα - Παρασκευή: 08:00 - 15:00</p>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Council Members */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {councilMembers.map((member, index) => (
+                  <Card key={index} className="group hover:scale-105 transition-all duration-300 bg-white/95 backdrop-blur-sm border border-mesia-gold/20 shadow-xl hover:shadow-2xl">
+                    <CardHeader>
+                      <div className="text-center mb-4">
+                        <div className="w-20 h-20 bg-gradient-to-br from-mesia-wine to-mesia-gold rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                          <Users className="h-10 w-10 text-white" />
+                        </div>
+                        <CardTitle className="text-xl font-bold text-mesia-wine font-greek mb-1">
+                          {member.name}
+                        </CardTitle>
+                        <CardDescription className="text-mesia-gold font-semibold">
+                          {member.position}
+                        </CardDescription>
+                      </div>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3 mb-4">
+                        <div className="flex items-center text-sm text-mesia-darkText">
+                          <Phone className="h-4 w-4 mr-3 text-mesia-gold" />
+                          <span>{member.phone}</span>
+                        </div>
+                        <div className="flex items-center text-sm text-mesia-darkText">
+                          <Mail className="h-4 w-4 mr-3 text-mesia-gold" />
+                          <span className="truncate">{member.email}</span>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <h4 className="font-semibold text-mesia-wine mb-2">Αρμοδιότητες:</h4>
+                        <ul className="text-sm text-mesia-lightText space-y-1">
+                          {member.responsibilities.map((responsibility, idx) => (
+                            <li key={idx} className="flex items-center">
+                              <span className="w-1.5 h-1.5 bg-mesia-gold rounded-full mr-2"></span>
+                              {responsibility}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
 
               {/* Emergency Contacts */}
               <div className="mt-16">
