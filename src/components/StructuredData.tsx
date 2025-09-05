@@ -6,7 +6,7 @@ interface StructuredDataProps {
 
 export default function StructuredData({ type, data }: StructuredDataProps) {
   const generateSchema = () => {
-    const baseUrl = 'https://mesia-kilkis.vercel.app' // Update with your actual domain
+    const baseUrl = 'https://mesia.gr' // Update with your actual domain
     
     switch (type) {
       case 'website':
@@ -16,7 +16,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           name: 'Μεσιά Κιλκίς',
           alternateName: 'Mesia Kilkis Village',
           url: baseUrl,
-          description: 'Επίσημη ιστοσελίδα του παραδοσιακού χωριού Μεσιά Κιλκίς στην Κεντρική Μακεδονία, Ελλάδα',
+          description: 'Iστοσελίδα του  χωριού Μεσιά Κιλκίς στην Κεντρική Μακεδονία, Ελλάδα',
           inLanguage: 'el-GR',
           potentialAction: {
             '@type': 'SearchAction',
@@ -28,7 +28,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           },
           publisher: {
             '@type': 'Organization',
-            name: 'Κοινότητα Μεσιάς Κιλκίς',
+            name: 'Μεσιά Κιλκίς',
             url: baseUrl,
             logo: {
               '@type': 'ImageObject',
@@ -45,11 +45,11 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
         return {
           '@context': 'https://schema.org',
           '@type': 'LocalBusiness',
-          name: 'Κοινότητα Μεσιάς Κιλκίς',
-          description: 'Παραδοσιακό χωριό της Κεντρικής Μακεδονίας με πλούσια ιστορία και παράδοση',
+          name: 'Μεσιά Κιλκίς',
+          description: 'Xωριό της Κεντρικής Μακεδονίας με πλούσια ιστορία και παράδοση',
           url: baseUrl,
           telephone: data?.phone || '+30-xxx-xxxxxxx',
-          email: data?.email || 'info@mesia-kilkis.gr',
+          email: data?.email || 'info@mesia.gr',
           address: {
             '@type': 'PostalAddress',
             streetAddress: data?.address || 'Μεσιά',
@@ -86,7 +86,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           '@type': 'Place',
           name: 'Μεσιά Κιλκίς',
           alternateName: ['Mesia Kilkis', 'Μεσιά'],
-          description: 'Παραδοσιακό χωριό της Κεντρικής Μακεδονίας με 173 κατοίκους και πλούσια ιστορική κληρονομιά',
+          description: 'Xωριό της Κεντρικής Μακεδονίας με 173 κατοίκους και πλούσια ιστορική κληρονομιά',
           geo: {
             '@type': 'GeoCoordinates',
             latitude: '40.8825',
@@ -139,7 +139,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           },
           organizer: {
             '@type': 'Organization',
-            name: 'Κοινότητα Μεσιάς Κιλκίς',
+            name: 'Μεσιά Κιλκίς',
             url: baseUrl
           },
           performer: data?.performer ? {
@@ -167,12 +167,12 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           image: data?.images || [`${baseUrl}/images/gallery-cover.jpg`],
           author: {
             '@type': 'Organization',
-            name: 'Κοινότητα Μεσιάς Κιλκίς',
+            name: 'Μεσιά Κιλκίς',
             url: baseUrl
           },
           publisher: {
             '@type': 'Organization',
-            name: 'Κοινότητα Μεσιάς Κιλκίς',
+            name: 'Μεσιά Κιλκίς',
             url: baseUrl,
             logo: {
               '@type': 'ImageObject',
@@ -207,9 +207,9 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
         return {
           '@context': 'https://schema.org',
           '@type': 'Organization',
-          name: 'Κοινότητα Μεσιάς Κιλκίς',
+          name: 'Μεσιά Κιλκίς',
           alternateName: 'Mesia Kilkis Community',
-          description: 'Επίσημη κοινότητα του παραδοσιακού χωριού Μεσιά Κιλκίς στην Κεντρική Μακεδονία',
+          description: 'Ιστοσελίδα του χωριού Μεσιά Κιλκίς στην Κεντρική Μακεδονία',
           url: baseUrl,
           logo: {
             '@type': 'ImageObject',
@@ -256,11 +256,11 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           dateModified: data?.modifiedDate || data?.publishedDate,
           author: {
             '@type': 'Person',
-            name: data?.authorName || 'Κοινότητα Μεσιάς Κιλκίς'
+            name: data?.authorName || 'Μεσιά Κιλκίς'
           },
           publisher: {
             '@type': 'Organization',
-            name: 'Κοινότητα Μεσιάς Κιλκίς',
+            name: 'Μεσιά Κιλκίς',
             url: baseUrl,
             logo: {
               '@type': 'ImageObject',

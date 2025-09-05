@@ -1,4 +1,9 @@
 
+git add .
+git commit -m "Add SEO optimization and ShareButton component"
+git push origin main
+
+
 Contact Form - Add consent checkboxes to contact forms
 
 Legal Review - Have a Greek lawyer review the content
