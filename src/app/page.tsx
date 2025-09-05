@@ -39,7 +39,9 @@ export default function HomePage() {
   return (
     <>
       <StructuredData type="website" />
-      <StructuredData type="place" />
+      <StructuredData type="organization" data={{
+        email: 'info@mesia.gr',
+      }} />
       
       <div className="min-h-screen bg-gradient-to-br from-mesia-cream via-mesia-lightCream to-mesia-beige">
         {/* Main content */}

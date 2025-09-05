@@ -1,32 +1,66 @@
-// src/app/layout.tsx - Fixed version
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { Providers } from './providers'
 import Header from '@/components/layout/Header'
-import Navbar from '@/components/layout/Navbar'  
+import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import CookieConsentBanner from '@/components/CookieConsent'
-import ConditionalGoogleAnalytics from '@/components/GoogleAnalytics'  // NEW
+import ConditionalGoogleAnalytics from '@/components/GoogleAnalytics'
 
 const inter = Inter({ subsets: ['latin', 'greek'] })
 
+// Enhanced metadata for SEO
 export const metadata: Metadata = {
   title: {
-    template: '%s - Μεσιά Κιλκίς',
-    default: 'Μεσιά Κιλκίς - Χωριό Κεντρικής Μακεδονίας'
+    template: '%s | Μεσιά Κιλκίς',
+    default: 'Μεσιά Κιλκίς - Χωριό της Κεντρικής Μακεδονίας'
   },
-  description: 'Ιστοσελίδα για το χωριό Μεσιά Κιλκίς. Εκδηλώσεις, φωτογραφίες, ιστορία και πληροφορίες για το παραδοσιακό μας χωριό.',
-  keywords: ['Μεσιά', 'Κιλκίς', 'χωριό', 'Μακεδονία', 'εκδηλώσεις', 'παράδοση'],
-  authors: [{ name: 'Κοινότητα Μεσιάς Κιλκίς' }],
+  description: 'Ιστοσελίδα του χωριού Μεσιά Κιλκίς. Ανακαλύψτε την ιστορία, τις εκδηλώσεις και τις φωτογραφίες του παραδοσιακού μας χωριού στη Μακεδονία.',
+  keywords: ['Μεσιά', 'Κιλκίς', 'χωριό', 'Μακεδονία', 'Ελλάδα', 'παράδοση', 'ιστορία', 'εκδηλώσεις'],
+  authors: [{ name: 'Μεσιά Κιλκίς' }],
+  creator: 'Μεσιά Κιλκίς',
+  publisher: 'Μεσιά Κιλκίς',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
-    title: 'Μεσιά Κιλκίς - Παραδοσιακό Χωριό',
-    description: 'Ιστοσελίδα για το χωριό Μεσιά Κιλκίς',
+    type: 'website',
+    locale: 'el_GR',
     url: 'https://mesia.gr',
     siteName: 'Μεσιά Κιλκίς',
-    locale: 'el_GR',
-    type: 'website',
-  }
+    title: 'Μεσιά Κιλκίς - Χωριό της Κεντρικής Μακεδονίας',
+    description: 'Ιστοσελίδα του χωριού Μεσιά Κιλκίς. Ανακαλύψτε την ιστορία, τις εκδηλώσεις και τις φωτογραφίες του παραδοσιακού μας χωριού.',
+    images: [
+      {
+        url: 'https://mesia.gr/images/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Μεσιά Κιλκίς - Παραδοσιακό χωριό στη Μακεδονία',
+      }
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Μεσιά Κιλκίς - Παραδοσιακό Χωριό',
+    description: 'Ανακαλύψτε το παραδοσιακό χωριό Μεσιά στο Κιλκίς, Μακεδονία',
+    creator: '@mesia_kilkis',
+    images: ['https://mesia.gr/images/twitter-image.jpg'],
+  },
+  verification: {
+    google: '2Xu5E66EEkrjwcbDpTpng8wP9jo57_p_lkN40R0DCe0', // Add after creating Google Search Console
+  },
+  alternates: {
+    canonical: 'https://mesia.gr',
+  },
 }
 
 export default function RootLayout({
@@ -36,6 +70,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="el" className="scroll-smooth">
+      <head>
+        {/* Additional SEO meta tags */}
+        <meta name="geo.region" content="GR-61" />
+        <meta name="geo.placename" content="Μεσιά, Κιλκίς, Ελλάδα" />
+        <meta name="geo.position" content="41.15;22.87" />
+        <meta name="ICBM" content="41.15, 22.87" />
+        
+        {/* Favicon */}
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        
+        {/* Theme color */}
+        <meta name="theme-color" content="#8B5A3C" />
+      </head>
       <body className={`${inter.className} antialiased`}>
         <Providers>
           <div className="flex flex-col min-h-screen">
@@ -48,7 +96,7 @@ export default function RootLayout({
             <Footer />
           </div>
         </Providers>
-        {/* Google Analytics - loads only after cookie consent */}
+        
         <ConditionalGoogleAnalytics />
       </body>
     </html>
