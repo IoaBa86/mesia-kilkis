@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Φωτογραφίες - Μεσιά Κιλκίς',
     description: 'Ανακαλύψτε το παραδοσιακό χωριό Μεσιά Κιλκίς μέσα από τις φωτογραφίες μας. Εκδηλώσεις, παραδόσεις και καθημερινή ζωή.',
-    url: 'https://mesia.gr/photos',
+    url: 'https://www.mesia.gr/photos',
     siteName: 'Μεσιά Κιλκίς',
     images: [
       {

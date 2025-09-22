@@ -111,11 +111,17 @@ model Photo {
   category      Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   uploadedBy    User     @relation(fields: [userId], references: [id])
 
+  // Original indexes
   @@index([categoryId])
   @@index([userId])
   @@index([isActive])
   @@index([createdAt])
   @@index([order])
+
+  // 🚀 NEW: Performance indexes for photos page
+  @@index([isActive, categoryId])
+  @@index([isActive, createdAt])
+  @@index([categoryId, order])
 }
 
 model Event {
@@ -136,11 +142,20 @@ model Event {
   createdBy     String
   creator       User          @relation(fields: [createdBy], references: [id], onDelete: Cascade)
 
+  // Original indexes
   @@index([eventDate])
   @@index([isActive])
   @@index([isPinned])
   @@index([category])
   @@index([createdBy])
+
+  // 🚀 NEW: Performance indexes for events page
+  @@index([isActive, eventDate])
+  @@index([isPinned, eventDate])
+  @@index([isActive, category])
+  @@index([isActive, isPinned, eventDate])
+  @@index([category, eventDate])
+
   @@map("events")
 }
 
@@ -163,6 +178,7 @@ model HistoricalPost {
   @@index([isPinned])
   @@index([createdAt])
   @@index([creatorId])
+
   @@map("historical_posts")
 }
 
@@ -181,6 +197,7 @@ model PageView {
   @@index([sessionId])
   @@index([timestamp])
   @@index([userId])
+
   @@map("page_views")
 }
 
@@ -194,10 +211,11 @@ model AnalyticsSession {
   bounced    Boolean   @default(true)
   country    String?
   device     String?
-  browser    String?
+  browser     String?
 
   @@index([startTime])
   @@index([userId])
+
   @@map("analytics_sessions")
 }
 
@@ -215,6 +233,7 @@ model ContentAnalytics {
   @@unique([contentType, contentId])
   @@index([contentType])
   @@index([path])
+
   @@map("content_analytics")
 }
 
