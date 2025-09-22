@@ -98,6 +98,15 @@ export default function AdminLogin() {
           </button>
         </form>
         
+<<<<<<< HEAD
+=======
+        {/* Test Credentials */}
+        <div className="text-center mt-6 bg-gray-100 rounded-lg p-4">
+          <p className="text-sm text-gray-600 font-medium mb-2">Δοκιμαστικά στοιχεία:</p>
+          <p className="text-sm text-gray-700">Email: admin@mesia.gr</p>
+          <p className="text-sm text-gray-700">Password: admin123</p>
+        </div>
+>>>>>>> aa19e94c91b93b317e5373e8a4a7e514620d3181
       </div>
     </div>
   )

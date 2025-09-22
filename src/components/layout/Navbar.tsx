@@ -22,16 +22,26 @@ export default function Navbar() {
   const pathname = usePathname()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
+<<<<<<< HEAD
 const navItems = [
+=======
+  const navItems = [
+>>>>>>> aa19e94c91b93b317e5373e8a4a7e514620d3181
     { href: '/', label: 'Αρχική', icon: Home },
     { href: '/village', label: 'Το Χωριό', icon: Building2 },
     { href: '/access', label: 'Πώς να Έρθετε', icon: Navigation },
     { href: '/photos', label: 'Φωτογραφίες', icon: Camera },
     { href: '/area', label: 'Η Περιοχή', icon: Map },
     { href: '/history', label: 'Ιστορία', icon: BookOpen },
+<<<<<<< HEAD
     // { href: '/services', label: 'Υπηρεσίες', icon: Settings },
     { href: '/events', label: 'Εκδηλώσεις', icon: Calendar },
 ]
+=======
+    { href: '/services', label: 'Υπηρεσίες', icon: Settings },
+    { href: '/events', label: 'Εκδηλώσεις', icon: Calendar },
+  ]
+>>>>>>> aa19e94c91b93b317e5373e8a4a7e514620d3181
 
   const isActivePath = (path: string) => {
     if (path === '/') return pathname === '/'
