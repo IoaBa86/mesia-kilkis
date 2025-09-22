@@ -7,67 +7,67 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
     {
-      url: baseUrl,
+      url: `${baseUrl}/`, // Added trailing slash for homepage
       lastModified: new Date(),
       changeFrequency: 'daily',
       priority: 1,
     },
     {
-      url: `${baseUrl}/village`,
+      url: `${baseUrl}/village/`, // Added trailing slash
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/access`,
+      url: `${baseUrl}/access/`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/photos`,
+      url: `${baseUrl}/photos/`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/area`,
+      url: `${baseUrl}/area/`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/history`,
+      url: `${baseUrl}/history/`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
-      url: `${baseUrl}/events`,
+      url: `${baseUrl}/events/`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/legal/privacy-policy`,
+      url: `${baseUrl}/legal/privacy-policy/`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
-      url: `${baseUrl}/legal/cookie-policy`,
+      url: `${baseUrl}/legal/cookie-policy/`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
-      url: `${baseUrl}/legal/terms-of-service`,
+      url: `${baseUrl}/legal/terms-of-service/`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
-      url: `${baseUrl}/legal/legal-notice`,
+      url: `${baseUrl}/legal/legal-notice/`,
       lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
@@ -84,7 +84,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
 
     const eventPages: MetadataRoute.Sitemap = events.map((event) => ({
-      url: `${baseUrl}/events/${event.id}`,
+      url: `${baseUrl}/events/${event.id}/`, // Added trailing slash
       lastModified: event.updatedAt,
       changeFrequency: 'weekly' as const,
       priority: 0.6,
@@ -99,7 +99,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
 
     const historyPages: MetadataRoute.Sitemap = historicalPosts.map((post) => ({
-      url: `${baseUrl}/history/${post.slug}`,
+      url: `${baseUrl}/history/${post.slug}/`, // Added trailing slash
       lastModified: post.updatedAt,
       changeFrequency: 'monthly' as const,
       priority: 0.6,
