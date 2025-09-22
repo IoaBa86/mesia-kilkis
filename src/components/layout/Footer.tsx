@@ -12,7 +12,7 @@ export default function Footer() {
     { href: '/photos',   label: 'Φωτογραφίες',   icon: '📸' },
     { href: '/area',     label: 'Η Περιοχή',     icon: '🗺️' },
     { href: '/history',  label: 'Ιστορία',       icon: '📚' },
-    { href: '/services', label: 'Υπηρεσίες',     icon: '⚙️' },
+    /*{ href: '/services', label: 'Υπηρεσίες',     icon: '⚙️' },*/
     { href: '/events',   label: 'Εκδηλώσεις',    icon: '📅' },
   ]
 
