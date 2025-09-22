@@ -22,15 +22,15 @@ export const metadata: Metadata = {
   description: 'Περιηγηθείτε στις φωτογραφίες από το χωριό Μεσιά Κιλκίς. Δείτε εικόνες από εκδηλώσεις, παραδοσιακές γιορτές και την καθημερινή ζωή του χωριού.',
   keywords: ['φωτογραφίες', 'Μεσιά Κιλκίς', 'εκδηλώσεις', 'παραδοσιακές γιορτές', 'χωριό', 'Μακεδονία', 'γκαλερί'],
   
-  // Enhanced Open Graph
+  // Enhanced Open Graph - 🚀 FIXED: Use www version
   openGraph: {
     title: 'Φωτογραφίες - Μεσιά Κιλκίς',
     description: 'Ανακαλύψτε το παραδοσιακό χωριό Μεσιά Κιλκίς μέσα από τις φωτογραφίες μας. Εκδηλώσεις, παραδόσεις και καθημερινή ζωή.',
-    url: 'https://www.mesia.gr/photos',
+    url: 'https://www.mesia.gr/photos', // ✅ Changed to www
     siteName: 'Μεσιά Κιλκίς',
     images: [
       {
-        url: 'https://mesia.gr/images/photos-og.jpg',
+        url: 'https://www.mesia.gr/images/photos-og.jpg', // ✅ Changed to www
         width: 1200,
         height: 630,
         alt: 'Συλλογή φωτογραφιών από το χωριό Μεσιά Κιλκίς',
@@ -40,17 +40,17 @@ export const metadata: Metadata = {
     locale: 'el_GR',
   },
   
-  // Twitter Card
+  // Twitter Card - 🚀 FIXED: Use www version
   twitter: {
     card: 'summary_large_image',
     title: 'Φωτογραφίες - Μεσιά Κιλκίς',
     description: 'Περιηγηθείτε στη φωτογραφική συλλογή του παραδοσιακού χωριού Μεσιά Κιλκίς',
-    images: ['https://mesia.gr/images/photos-twitter.jpg'],
+    images: ['https://www.mesia.gr/images/photos-twitter.jpg'], // ✅ Changed to www
   },
   
-  // Canonical URL
+  // 🚀 FIXED: Canonical URL points to www (or use relative)
   alternates: {
-    canonical: 'https://mesia.gr/photos',
+    canonical: '/photos', // ✅ Use relative - will use metadataBase (www.mesia.gr)
   },
   
   // Additional SEO
@@ -121,11 +121,11 @@ export default async function PhotosPage({ searchParams }: PhotosPageProps) {
       orderBy: { order: 'asc' }
     })
 
-    // Prepare structured data
+    // 🚀 FIXED: Prepare structured data with www URLs
     const breadcrumbData = {
       items: [
-        { name: 'Αρχική', url: 'https://mesia.gr' },
-        { name: 'Φωτογραφίες', url: 'https://mesia.gr/photos' }
+        { name: 'Αρχική', url: 'https://www.mesia.gr' }, // ✅ Changed to www
+        { name: 'Φωτογραφίες', url: 'https://www.mesia.gr/photos' } // ✅ Changed to www
       ]
     }
 
@@ -156,8 +156,6 @@ export default async function PhotosPage({ searchParams }: PhotosPageProps) {
         
         <div className="min-h-screen bg-gradient-to-br from-mesia-cream via-mesia-lightCream to-mesia-beige">
           
-       
-
           {/* Main content */}
           <main>
             {/* Hero Section */}
@@ -199,11 +197,11 @@ export default async function PhotosPage({ searchParams }: PhotosPageProps) {
 
                 {/* Social Sharing */}
                 <div className="flex justify-center space-x-4">
-               <ShareButton
-  title="Φωτογραφίες - Μεσιά Κιλκίς"
-  text="Δείτε φωτογραφίες από το παραδοσιακό χωριό Μεσιά Κιλκίς"
-  className="bg-white/10 border-white/30 text-white hover:bg-white/20"
-/>
+                  <ShareButton
+                    title="Φωτογραφίες - Μεσιά Κιλκίς"
+                    text="Δείτε φωτογραφίες από το παραδοσιακό χωριό Μεσιά Κιλκίς"
+                    className="bg-white/10 border-white/30 text-white hover:bg-white/20"
+                  />
                 </div>
               </div>
             </section>
@@ -223,8 +221,6 @@ export default async function PhotosPage({ searchParams }: PhotosPageProps) {
                 photosPerPage
               }}
             />
-
-          
 
             {/* Additional SEO Content */}
             <section className="py-16 bg-white/50">

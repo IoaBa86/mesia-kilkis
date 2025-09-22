@@ -11,12 +11,16 @@ import ResponsiveAdSlot from '@/components/ads/ResponsiveAdSlot'
 export const metadata: Metadata = {
   title: 'Το Χωριό - Μεσιά Κιλκίς',
   description: 'Γεωγραφική θέση, πληθυσμός, διοικητική υπαγωγή και αξιοθέατα.',
+  alternates: {
+    canonical: '/village', // ✅ Add this line
+  },
   openGraph: {
     title: 'Το Χωριό - Μεσιά Κιλκίς',
     description: 'Πλήρεις πληροφορίες για το παραδοσιακό χωριό Μεσιά Κιλκίς',
     images: ['/og-image.jpg'],
   },
 }
+
 
 export default function VillagePage() {
   const villageStats = [

@@ -21,6 +21,9 @@ import HistoricalPostsSection from '@/components/history/HistoricalPostsSection'
 export const metadata: Metadata = {
   title: 'Ιστορία - Μεσιά Κιλκίς',
   description: 'Η ιστορία του χωριού Μεσιά Κιλκίς από την Τουρκοκρατία μέχρι σήμερα. Ιστορικά μνημεία, σημαντικές ημερομηνίες και η εξέλιξη της κοινότητας.',
+  alternates: {
+    canonical: '/history', // ✅ Add this line
+  },
   openGraph: {
     title: 'Ιστορία - Μεσιά Κιλκίς',
     description: 'Ανακαλύψτε την πλούσια ιστορία του χωριού Μεσιά Κιλκίς από την Τουρκοκρατία μέχρι σήμερα',

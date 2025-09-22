@@ -6,8 +6,17 @@ import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
   title: 'Πολιτική Cookies - Μεσιά Κιλκίς',
-  description: 'Πληροφορίες για τη χρήση cookies στην ιστοσελίδα Μεσιά Κιλκίς',
+  description: 'Πληροφορίες για τη χρήση cookies στην ιστοσελίδα Μεσιά Κιλκίς. Τύποι cookies, διαχείριση και προσωπικά δεδομένα.',
+  alternates: {
+    canonical: '/legal/cookie-policy', // ✅ Add this line
+  },
+  openGraph: {
+    title: 'Πολιτική Cookies - Μεσιά Κιλκίς',
+    description: 'Αναλυτικές πληροφορίες για τη χρήση cookies στην ιστοσελίδα Μεσιά Κιλκίς',
+    images: ['/og-image.jpg'],
+  },
 }
+
 
 export default function CookiePolicyPage() {
   return (

@@ -20,12 +20,23 @@ import ResponsiveAdSlot from '@/components/ads/ResponsiveAdSlot'
 export const metadata: Metadata = {
   title: 'Εκδηλώσεις & Ανακοινώσεις',
   description: 'Δείτε όλες τις εκδηλώσεις και ανακοινώσεις του χωριού Μεσιά Κιλκίς. Φεστιβάλ, συνεδριάσεις, πολιτιστικές εκδηλώσεις και περισσότερα.',
+  keywords: ['εκδηλώσεις', 'ανακοινώσεις', 'Μεσιά Κιλκίς', 'φεστιβάλ', 'πολιτιστικές εκδηλώσεις', 'κοινότητα'],
+  alternates: {
+    canonical: '/events', // ✅ Fixed canonical URL
+  },
   openGraph: {
     title: 'Εκδηλώσεις & Ανακοινώσεις - Μεσιά Κιλκίς',
     description: 'Όλες οι εκδηλώσεις και ανακοινώσεις του χωριού Μεσιά Κιλκίς',
+    url: 'https://www.mesia.gr/events', // Added for consistency
     images: ['/og-image.jpg'],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Εκδηλώσεις - Μεσιά Κιλκίς',
+    description: 'Δείτε όλες τις εκδηλώσεις του χωριού Μεσιά Κιλκίς',
+  },
 }
+
 
 // 🚀 PERFORMANCE: Enable static generation with revalidation
 export const revalidate = 3600 // Cache for 1 hour

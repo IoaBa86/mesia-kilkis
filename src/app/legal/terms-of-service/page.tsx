@@ -6,8 +6,17 @@ import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
   title: 'Όροι Χρήσης - Μεσιά Κιλκίς',
-  description: 'Όροι και προϋποθέσεις χρήσης της ιστοσελίδας Μεσιά Κιλκίς',
+  description: 'Όροι και προϋποθέσεις χρήσης της ιστοσελίδας Μεσιά Κιλκίς. Αποδεκτή χρήση, πνευματικά δικαιώματα και υποχρεώσεις χρηστών.',
+  alternates: {
+    canonical: '/legal/terms-of-service', // ✅ Add this line
+  },
+  openGraph: {
+    title: 'Όροι Χρήσης - Μεσιά Κιλκίς',
+    description: 'Όροι και προϋποθέσεις χρήσης της ιστοσελίδας Μεσιά Κιλκίς',
+    images: ['/og-image.jpg'],
+  },
 }
+
 
 export default function TermsOfServicePage() {
   return (

@@ -6,8 +6,17 @@ import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
   title: 'Νομικές Πληροφορίες - Μεσιά Κιλκίς',
-  description: 'Νομικές πληροφορίες και στοιχεία της ιστοσελίδας Μεσιά Κιλκίς',
+  description: 'Νομικές πληροφορίες και στοιχεία της ιστοσελίδας Μεσιά Κιλκίς. Πνευματικά δικαιώματα, εφαρμοστέο δίκαιο και όροι χρήσης.',
+  alternates: {
+    canonical: '/legal/legal-notice', // ✅ Add this line
+  },
+  openGraph: {
+    title: 'Νομικές Πληροφορίες - Μεσιά Κιλκίς',
+    description: 'Στοιχεία ιστοσελίδας, πνευματικά δικαιώματα και νομικό πλαίσιο',
+    images: ['/og-image.jpg'],
+  },
 }
+
 
 export default function LegalNoticePage() {
   return (

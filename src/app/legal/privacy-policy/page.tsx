@@ -6,8 +6,17 @@ import { Button } from '@/components/ui/button'
 
 export const metadata: Metadata = {
   title: 'Πολιτική Απορρήτου - Μεσιά Κιλκίς',
-  description: 'Πολιτική προστασίας προσωπικών δεδομένων σύμφωνα με τον GDPR και την ελληνική νομοθεσία',
+  description: 'Πολιτική προστασίας προσωπικών δεδομένων σύμφωνα με τον GDPR και την ελληνική νομοθεσία. Δικαιώματα χρηστών και ασφάλεια δεδομένων.',
+  alternates: {
+    canonical: '/legal/privacy-policy', // ✅ Add this line
+  },
+  openGraph: {
+    title: 'Πολιτική Απορρήτου - Μεσιά Κιλκίς',
+    description: 'Πολιτική προστασίας προσωπικών δεδομένων σύμφωνα με GDPR',
+    images: ['/og-image.jpg'],
+  },
 }
+
 
 export default function PrivacyPolicyPage() {
   return (
@@ -136,12 +145,13 @@ export default function PrivacyPolicyPage() {
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">12. Καταγγελία στην Αρχή Προστασίας Δεδομένων</h2>
             <p>Έχετε δικαίωμα να υποβάλετε καταγγελία στην Αρχή Προστασίας Δεδομένων Προσωπικού Χαρακτήρα:</p>
             <div className="bg-mesia-lightCream/50 p-4 rounded-lg">
-              <p><strong>Αρχή Προστασίας Δεδομένων Προσωπικού Χαρακτήρα</strong></p>
-              <p>Κηφισίας 1-3, 11523 Αθήνα</p>
-              <p>Τηλ.: 210 6475600</p>
-              <p>Email: contact@dpa.gr</p>
-              <p>Website: <a href="https://www.dpa.gr" target="_blank" rel="noopener" className="text-mesia-wine hover:text-mesia-gold">www.dpa.gr</a></p>
-            </div>
+  <p><strong>Αρχή Προστασίας Δεδομένων Προσωπικού Χαρακτήρα</strong></p>
+  <p>Κηφισίας 1-3, 11523 Αθήνα</p>
+  <p>Τηλ.: 210 6475600</p>
+  <p>Email: contact@dpa.gr</p>
+  <p>Website: <a href="https://www.dpa.gr" target="_blank" rel="noopener noreferrer" className="text-mesia-wine hover:text-mesia-gold">www.dpa.gr</a></p>
+</div>
+
           </div>
         </div>
       </main>

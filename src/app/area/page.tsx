@@ -20,12 +20,16 @@ import {
 export const metadata: Metadata = {
   title: 'Η Περιοχή - Μεσιά Κιλκίς',
   description: 'Γεωγραφία, γειτονικά χωριά, φυσικό περιβάλλον, ιστορικά μνημεία και δραστηριότητες στην περιοχή της Μεσιάς Κιλκίς.',
+  alternates: {
+    canonical: '/area', // ✅ Add this line
+  },
   openGraph: {
     title: 'Η Περιοχή - Μεσιά Κιλκίς',
     description: 'Ανακαλύψτε την πλούσια γεωγραφία, ιστορία και φυσικές ομορφιές της περιοχής Μεσιά Κιλκίς',
     images: ['/og-image.jpg'],
   },
 }
+
 
 export default function AreaPage() {
   const neighboringVillages = [
