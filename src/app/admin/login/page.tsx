@@ -1,4 +1,3 @@
-// src/app/admin/login/page.tsx
 "use client"
 
 import { useState } from "react"
@@ -13,7 +12,7 @@ export default function AdminLogin() {
   const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault() // Prevent default form submission
+    e.preventDefault()
     setLoading(true)
     setError("")
 
@@ -21,13 +20,12 @@ export default function AdminLogin() {
       const result = await signIn("credentials", {
         email,
         password,
-        redirect: false, // Don't auto-redirect, handle manually
+        redirect: false,
       })
 
       if (result?.error) {
         setError("Λάθος στοιχεία σύνδεσης")
       } else if (result?.ok) {
-        // Successful login - manually redirect
         router.push("/admin")
         router.refresh()
       }
@@ -45,7 +43,6 @@ export default function AdminLogin() {
         <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Μεσιά Κιλκίς</h1>
         <p className="text-center text-gray-600 mb-6">Διαχείριση Ιστοσελίδας</p>
         
-        {/* Error Display */}
         {error && (
           <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
             <div className="flex items-center">
@@ -55,7 +52,6 @@ export default function AdminLogin() {
           </div>
         )}
 
-        {/* Login Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
@@ -67,7 +63,7 @@ export default function AdminLogin() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              placeholder="admin@mesia.gr"
+              placeholder="admin@mesiakilkis.gr"
               className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
               disabled={loading}
             />
@@ -97,16 +93,6 @@ export default function AdminLogin() {
             {loading ? "Σύνδεση..." : "Σύνδεση"}
           </button>
         </form>
-        
-<<<<<<< HEAD
-=======
-        {/* Test Credentials */}
-        <div className="text-center mt-6 bg-gray-100 rounded-lg p-4">
-          <p className="text-sm text-gray-600 font-medium mb-2">Δοκιμαστικά στοιχεία:</p>
-          <p className="text-sm text-gray-700">Email: admin@mesia.gr</p>
-          <p className="text-sm text-gray-700">Password: admin123</p>
-        </div>
->>>>>>> aa19e94c91b93b317e5373e8a4a7e514620d3181
       </div>
     </div>
   )
