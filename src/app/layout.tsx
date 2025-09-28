@@ -86,9 +86,8 @@ export default function RootLayout({
         {/* Theme color */}
         <meta name="theme-color" content="#8B5A3C" />
 
-        {/* Google AdSense Script */}
+        {/* Google AdSense Script - Fixed */}
         <Script
-          async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1184028367307988"
           crossOrigin="anonymous"
           strategy="afterInteractive"
