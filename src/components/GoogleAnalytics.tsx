@@ -34,19 +34,28 @@ export default function GoogleAnalytics() {
     window.gtag('config', GA_MEASUREMENT_ID, {
       page_path: pathname,
       page_title: document.title,
-      debug_mode: true // Enable debug mode for testing
+      debug_mode: true // Keep debug mode for testing
     })
     
     console.log('✅ Google Analytics initialized')
   }
 
-  // Track page views on route changes
+  // Track page views on route changes - SIMPLIFIED
   useEffect(() => {
     if (window.gtag && GA_MEASUREMENT_ID) {
       console.log('📄 Tracking page view:', pathname)
+      
+      // Simple GA page view tracking - no custom analytics
       window.gtag('config', GA_MEASUREMENT_ID, {
         page_path: pathname,
         page_title: document.title
+      })
+      
+      // Also send explicit page_view event
+      window.gtag('event', 'page_view', {
+        page_path: pathname,
+        page_title: document.title,
+        page_location: window.location.href
       })
     }
   }, [pathname, GA_MEASUREMENT_ID])
@@ -57,18 +66,16 @@ export default function GoogleAnalytics() {
   }
 
   return (
-    <>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        strategy="afterInteractive"
-        onLoad={() => {
-          console.log('📊 GA Script loaded successfully')
-          initializeGA()
-        }}
-        onError={(e) => {
-          console.error('❌ GA Script failed to load:', e)
-        }}
-      />
-    </>
+    <Script
+      src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+      strategy="afterInteractive"
+      onLoad={() => {
+        console.log('📊 GA Script loaded successfully')
+        initializeGA()
+      }}
+      onError={(e) => {
+        console.error('❌ GA Script failed to load:', e)
+      }}
+    />
   )
 }
