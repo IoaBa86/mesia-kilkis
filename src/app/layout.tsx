@@ -6,6 +6,7 @@ import { Providers } from './providers'
 import Header from '@/components/layout/Header'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import SimplePageTracker from '@/components/SimplePageTracker'
 
 const inter = Inter({ subsets: ['latin', 'greek'] })
 
@@ -126,6 +127,9 @@ export default function RootLayout({
             <Footer />
           </div>
         </Providers>
+        
+        {/* Page Tracker for Client-Side Navigation */}
+        <SimplePageTracker />
       </body>
     </html>
   )
