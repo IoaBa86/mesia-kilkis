@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
 import { Providers } from './providers'
 import Header from '@/components/layout/Header'
@@ -12,7 +13,7 @@ const inter = Inter({ subsets: ['latin', 'greek'] })
 
 // Enhanced metadata for SEO
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.mesia.gr'), // Added metadataBase for www canonical
+  metadataBase: new URL('https://www.mesia.gr'),
   title: {
     template: '%s | Μεσιά Κιλκίς',
     default: 'Μεσιά Κιλκίς - Χωριό της Κεντρικής Μακεδονίας'
@@ -36,13 +37,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'el_GR',
-    url: 'https://www.mesia.gr', // Changed to www for consistency
+    url: 'https://www.mesia.gr',
     siteName: 'Μεσιά Κιλκίς',
     title: 'Μεσιά Κιλκίς - Χωριό της Κεντρικής Μακεδονίας',
     description: 'Ιστοσελίδα του χωριού Μεσιά Κιλκίς. Ανακαλύψτε την ιστορία, τις εκδηλώσεις και τις φωτογραφίες του παραδοσιακού μας χωριού.',
     images: [
       {
-        url: 'https://www.mesia.gr/images/og-image.jpg', // Changed to www
+        url: 'https://www.mesia.gr/images/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Μεσιά Κιλκίς - Παραδοσιακό χωριό στη Μακεδονία',
@@ -54,13 +55,13 @@ export const metadata: Metadata = {
     title: 'Μεσιά Κιλκίς - Παραδοσιακό Χωριό',
     description: 'Ανακαλύψτε το παραδοσιακό χωριό Μεσιά στο Κιλκίς, Μακεδονία',
     creator: '@mesia_kilkis',
-    images: ['https://www.mesia.gr/images/twitter-image.jpg'], // Changed to www
+    images: ['https://www.mesia.gr/images/twitter-image.jpg'],
   },
   verification: {
     google: '2Xu5E66EEkrjwcbDpTpng8wP9jo57_p_lkN40R0DCe0',
   },
   alternates: {
-    canonical: 'https://www.mesia.gr/', // Changed to www with trailing slash
+    canonical: 'https://www.mesia.gr/',
   },
 }
 
@@ -84,6 +85,14 @@ export default function RootLayout({
         
         {/* Theme color */}
         <meta name="theme-color" content="#8B5A3C" />
+
+        {/* Google AdSense Script */}
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID}`}
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
       </head>
       <body className={`${inter.className} antialiased`}>
         <Providers>
