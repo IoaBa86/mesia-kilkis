@@ -6,14 +6,13 @@ import { Providers } from './providers'
 import Header from '@/components/layout/Header'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
-import CookieConsentBanner from '@/components/CookieConsent'
 import ConditionalGoogleAnalytics from '@/components/GoogleAnalytics'
 
 const inter = Inter({ subsets: ['latin', 'greek'] })
 
-// Enhanced metadata for SEO
+// Enhanced metadata for SEO - Updated to use correct domain
 export const metadata: Metadata = {
-  metadataBase: new URL('https://www.mesia.gr'),
+  metadataBase: new URL('https://mesia.gr'), // Changed from www.mesia.gr
   title: {
     template: '%s | Μεσιά Κιλκίς',
     default: 'Μεσιά Κιλκίς - Χωριό της Κεντρικής Μακεδονίας'
@@ -37,13 +36,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'el_GR',
-    url: 'https://www.mesia.gr',
+    url: 'https://mesia.gr', // Changed from www.mesia.gr
     siteName: 'Μεσιά Κιλκίς',
     title: 'Μεσιά Κιλκίς - Χωριό της Κεντρικής Μακεδονίας',
     description: 'Ιστοσελίδα του χωριού Μεσιά Κιλκίς. Ανακαλύψτε την ιστορία, τις εκδηλώσεις και τις φωτογραφίες του παραδοσιακού μας χωριού.',
     images: [
       {
-        url: 'https://www.mesia.gr/images/og-image.jpg',
+        url: 'https://mesia.gr/images/og-image.jpg', // Changed from www.mesia.gr
         width: 1200,
         height: 630,
         alt: 'Μεσιά Κιλκίς - Παραδοσιακό χωριό στη Μακεδονία',
@@ -55,13 +54,13 @@ export const metadata: Metadata = {
     title: 'Μεσιά Κιλκίς - Παραδοσιακό Χωριό',
     description: 'Ανακαλύψτε το παραδοσιακό χωριό Μεσιά στο Κιλκίς, Μακεδονία',
     creator: '@mesia_kilkis',
-    images: ['https://www.mesia.gr/images/twitter-image.jpg'],
+    images: ['https://mesia.gr/images/twitter-image.jpg'], // Changed from www.mesia.gr
   },
   verification: {
     google: '2Xu5E66EEkrjwcbDpTpng8wP9jo57_p_lkN40R0DCe0',
   },
   alternates: {
-    canonical: 'https://www.mesia.gr/',
+    canonical: 'https://mesia.gr/', // Changed from www.mesia.gr
   },
 }
 
@@ -95,7 +94,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.className} antialiased`}>
-        {/* Google AdSense Script - Fixed positioning and strategy */}
+        {/* Google AdSense Script */}
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1184028367307988"
           strategy="beforeInteractive"
@@ -108,7 +107,6 @@ export default function RootLayout({
             <main className="flex-grow">        
               {children}
             </main>
-           {/*<CookieConsentBanner /> */}
             <Footer />
           </div>
         </Providers>
