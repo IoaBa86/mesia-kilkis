@@ -108,7 +108,7 @@ export default function RootLayout({
             <main className="flex-grow">        
               {children}
             </main>
-            <CookieConsentBanner />
+           {/*<CookieConsentBanner /> */}
             <Footer />
           </div>
         </Providers>

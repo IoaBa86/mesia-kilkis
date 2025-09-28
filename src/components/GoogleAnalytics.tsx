@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Script from 'next/script'
 import { usePathname } from 'next/navigation'
 
@@ -8,74 +8,83 @@ declare global {
   interface Window {
     gtag: (...args: any[]) => void
     dataLayer: any[]
+    UC_UI: any
   }
 }
 
 export default function GoogleAnalytics() {
+  const [consentGiven, setConsentGiven] = useState(false)
   const pathname = usePathname()
   const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
-  // Initialize GA when script loads
-  const initializeGA = () => {
-    if (!GA_MEASUREMENT_ID) {
-      console.error('❌ GA_MEASUREMENT_ID not found')
-      return
-    }
-
-    console.log('🚀 Initializing Google Analytics with ID:', GA_MEASUREMENT_ID)
-    
-    window.dataLayer = window.dataLayer || []
-    window.gtag = function gtag(...args: any[]) {
-      window.dataLayer.push(args)
-      console.log('🏷️ gtag called:', args[0])
-    }
-    
-    window.gtag('js', new Date())
-    window.gtag('config', GA_MEASUREMENT_ID, {
-      page_path: pathname,
-      page_title: document.title,
-      debug_mode: true // Keep debug mode for testing
-    })
-    
-    console.log('✅ Google Analytics initialized')
-  }
-
-  // Track page views on route changes - SIMPLIFIED
   useEffect(() => {
-    if (window.gtag && GA_MEASUREMENT_ID) {
-      console.log('📄 Tracking page view:', pathname)
+    const checkUsercentrics = () => {
+      // Check if Usercentrics consent was given
+      if (window.UC_UI) {
+        try {
+          const consentData = window.UC_UI.getServicesBaseInfo()
+          const analyticsService = consentData?.find((service: any) => 
+            service.name?.toLowerCase().includes('google') || 
+            service.name?.toLowerCase().includes('analytics')
+          )
+
+          if (analyticsService?.consent?.status === true) {
+            console.log('✅ Usercentrics consent granted for Analytics')
+            setConsentGiven(true)
+            initializeGA()
+          } else {
+            console.log('🚫 Usercentrics consent not granted yet')
+          }
+        } catch (error) {
+          console.log('⚠️ Usercentrics not ready, initializing GA directly')
+          setConsentGiven(true)
+          initializeGA()
+        }
+      } else {
+        // Fallback: Initialize directly if Usercentrics not found
+        console.log('⚠️ Usercentrics not found, initializing GA')
+        setConsentGiven(true)
+        initializeGA()
+      }
+    }
+
+    const initializeGA = () => {
+      if (!GA_MEASUREMENT_ID || consentGiven) return
+
+      console.log('🚀 Initializing Google Analytics with ID:', GA_MEASUREMENT_ID)
       
-      // Simple GA page view tracking - no custom analytics
+      window.dataLayer = window.dataLayer || []
+      window.gtag = function gtag(...args: any[]) {
+        window.dataLayer.push(args)
+      }
+      
+      window.gtag('js', new Date())
       window.gtag('config', GA_MEASUREMENT_ID, {
         page_path: pathname,
         page_title: document.title
       })
       
-      // Also send explicit page_view event
-      window.gtag('event', 'page_view', {
-        page_path: pathname,
-        page_title: document.title,
-        page_location: window.location.href
-      })
+      console.log('✅ Google Analytics initialized')
     }
-  }, [pathname, GA_MEASUREMENT_ID])
 
-  if (!GA_MEASUREMENT_ID) {
-    console.error('❌ NEXT_PUBLIC_GA_MEASUREMENT_ID not set')
-    return null
-  }
+    // Wait for Usercentrics to load
+    setTimeout(checkUsercentrics, 2000)
+    
+    // Listen for consent changes
+    window.addEventListener('UC_UI_CONSENT_CHANGED', checkUsercentrics)
+    
+    return () => {
+      window.removeEventListener('UC_UI_CONSENT_CHANGED', checkUsercentrics)
+    }
+  }, [GA_MEASUREMENT_ID, pathname, consentGiven])
 
-  return (
+  if (!GA_MEASUREMENT_ID) return null
+
+  return consentGiven ? (
     <Script
       src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
       strategy="afterInteractive"
-      onLoad={() => {
-        console.log('📊 GA Script loaded successfully')
-        initializeGA()
-      }}
-      onError={(e) => {
-        console.error('❌ GA Script failed to load:', e)
-      }}
+      onLoad={() => console.log('📊 GA Script loaded')}
     />
-  )
+  ) : null
 }
