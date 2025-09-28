@@ -1,4 +1,6 @@
-// src/app/page.tsx - Updated with responsive ad spaces
+'use client'
+
+import { useEffect } from 'react'
 import Image from "next/image"
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -6,30 +8,49 @@ import { Button } from "@/components/ui/button"
 import { MapPin, Camera, Clock, Users, ArrowRight, Sparkles, Mountain, Church } from "lucide-react"
 import StructuredData from "@/components/StructuredData"
 
-// NEW: Responsive Ad Component
-function ResponsiveAdSlot({ id, className = "" }: { id: string; className?: string }) {
+// Declare global window interface for AdSense
+declare global {
+  interface Window {
+    adsbygoogle: any[]
+  }
+}
+
+// Working AdSense Component with your actual ad details
+function ResponsiveAdSlot({ 
+  id, 
+  className = "",
+  adSlot = "9390449710" // Your default ad slot ID
+}: { 
+  id: string; 
+  className?: string; 
+  adSlot?: string;
+}) {
+  
+  useEffect(() => {
+    try {
+      (window.adsbygoogle = window.adsbygoogle || []).push({})
+    } catch (err) {
+      console.error('AdSense error:', err)
+    }
+  }, [])
+
   return (
     <div className={`w-full flex justify-center py-6 ${className}`}>
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div 
-          id={id}
-          className="
-            min-h-[50px] sm:min-h-[90px] lg:min-h-[250px]
-            w-full max-w-[320px] sm:max-w-[728px] lg:max-w-[970px]
-            mx-auto
-            bg-gradient-to-r from-mesia-lightCream/20 to-mesia-beige/20
-            border border-mesia-gold/20 rounded-lg
-            flex items-center justify-center
-            text-mesia-lightText text-sm
-            hover:from-mesia-lightCream/30 hover:to-mesia-beige/30
-            transition-all duration-300
-          "
-        >
-          {/* Placeholder - Replace with actual Google AdSense code */}
-          <div className="text-center opacity-50">
-            <div className="text-xs sm:text-sm">Διαφήμιση</div>
-          </div>
-        </div>
+        <ins
+          className="adsbygoogle"
+          style={{
+            display: 'block',
+            minHeight: '50px',
+            width: '100%',
+            maxWidth: '970px',
+            margin: '0 auto'
+          }}
+          data-ad-client="ca-pub-1184028367307988"
+          data-ad-slot={adSlot}
+          data-ad-format="auto"
+          data-full-width-responsive="true"
+        />
       </div>
     </div>
   )
@@ -93,8 +114,6 @@ export default function HomePage() {
                 </Button>
               </div>
             </div>
-
-          
           </section>
 
           {/* Stats Cards */}
@@ -132,6 +151,7 @@ export default function HomePage() {
           {/* 🎯 AD SLOT 1 - After Stats Cards (High Engagement Point) */}
           <ResponsiveAdSlot 
             id="homepage-ad-1" 
+            adSlot="9390449710"  // Your actual ad slot ID
             className="bg-gradient-to-r from-mesia-cream/10 to-mesia-beige/10" 
           />
 
@@ -182,8 +202,6 @@ export default function HomePage() {
                     </Button>
                   </div>
                 </article>
-                
-       
               </div>
             </div>
           </section>
@@ -270,6 +288,7 @@ export default function HomePage() {
           {/* 🎯 AD SLOT 2 - After Quick Access (Pre-Final Content) */}
           <ResponsiveAdSlot 
             id="homepage-ad-2" 
+            adSlot="9390449710"  // Using same ad slot, you can create different ones
             className="bg-white" 
           />
 
@@ -277,7 +296,6 @@ export default function HomePage() {
           <section id="attractions" className="py-24 bg-gradient-to-br from-mesia-beige/30 via-white to-mesia-cream/30" aria-labelledby="attractions-heading">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <header className="text-center mb-16">
-               
                 <h2 id="attractions-heading" className="text-5xl font-bold text-mesia-wine font-greek mb-6">
                   Αξιοθέατα & Ιστορία
                 </h2>
@@ -321,8 +339,6 @@ export default function HomePage() {
               </div>
             </div>
           </section>
-
-        
         </main>
       </div>
     </>
