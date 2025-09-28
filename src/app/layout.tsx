@@ -6,13 +6,12 @@ import { Providers } from './providers'
 import Header from '@/components/layout/Header'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
-import ConditionalGoogleAnalytics from '@/components/GoogleAnalytics'
 
 const inter = Inter({ subsets: ['latin', 'greek'] })
 
 // Enhanced metadata for SEO - Updated to use correct domain
 export const metadata: Metadata = {
-  metadataBase: new URL('https://mesia.gr'), // Changed from www.mesia.gr
+  metadataBase: new URL('https://mesia.gr'),
   title: {
     template: '%s | Μεσιά Κιλκίς',
     default: 'Μεσιά Κιλκίς - Χωριό της Κεντρικής Μακεδονίας'
@@ -36,13 +35,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'el_GR',
-    url: 'https://mesia.gr', // Changed from www.mesia.gr
+    url: 'https://mesia.gr',
     siteName: 'Μεσιά Κιλκίς',
     title: 'Μεσιά Κιλκίς - Χωριό της Κεντρικής Μακεδονίας',
     description: 'Ιστοσελίδα του χωριού Μεσιά Κιλκίς. Ανακαλύψτε την ιστορία, τις εκδηλώσεις και τις φωτογραφίες του παραδοσιακού μας χωριού.',
     images: [
       {
-        url: 'https://mesia.gr/images/og-image.jpg', // Changed from www.mesia.gr
+        url: 'https://mesia.gr/images/og-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Μεσιά Κιλκίς - Παραδοσιακό χωριό στη Μακεδονία',
@@ -54,13 +53,13 @@ export const metadata: Metadata = {
     title: 'Μεσιά Κιλκίς - Παραδοσιακό Χωριό',
     description: 'Ανακαλύψτε το παραδοσιακό χωριό Μεσιά στο Κιλκίς, Μακεδονία',
     creator: '@mesia_kilkis',
-    images: ['https://mesia.gr/images/twitter-image.jpg'], // Changed from www.mesia.gr
+    images: ['https://mesia.gr/images/twitter-image.jpg'],
   },
   verification: {
     google: '2Xu5E66EEkrjwcbDpTpng8wP9jo57_p_lkN40R0DCe0',
   },
   alternates: {
-    canonical: 'https://mesia.gr/', // Changed from www.mesia.gr
+    canonical: 'https://mesia.gr/',
   },
 }
 
@@ -92,6 +91,23 @@ export default function RootLayout({
           data-settings-id="AwAIUZcb10Nqhx"
           strategy="beforeInteractive"
         />
+
+        {/* Google Analytics - Direct Implementation */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-0JBJ2897HL"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-0JBJ2897HL', {
+              debug_mode: true
+            });
+            console.log('📊 Google Analytics loaded directly');
+          `}
+        </Script>
       </head>
       <body className={`${inter.className} antialiased`}>
         {/* Google AdSense Script */}
@@ -110,8 +126,6 @@ export default function RootLayout({
             <Footer />
           </div>
         </Providers>
-        
-        <ConditionalGoogleAnalytics />
       </body>
     </html>
   )
