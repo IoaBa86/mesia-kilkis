@@ -85,9 +85,17 @@ export default function RootLayout({
         
         {/* Theme color */}
         <meta name="theme-color" content="#8B5A3C" />
+
+        {/* Usercentrics CMP - Cookie Consent Management */}
+        <Script
+          id="usercentrics-cmp"
+          src="https://app.usercentrics.eu/browser-ui/latest/loader.js"
+          data-settings-id="AwAIUZcb10Nqhx"
+          strategy="beforeInteractive"
+        />
       </head>
       <body className={`${inter.className} antialiased`}>
-        {/* Google AdSense Script - Moved outside head to fix warning */}
+        {/* Google AdSense Script - Fixed positioning and strategy */}
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1184028367307988"
           strategy="beforeInteractive"
