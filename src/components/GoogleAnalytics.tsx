@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Script from 'next/script'
 import { usePathname } from 'next/navigation'
 
@@ -12,70 +12,47 @@ declare global {
 }
 
 export default function GoogleAnalytics() {
-  const [hasConsent, setHasConsent] = useState<boolean | null>(null)
-  const [isLoaded, setIsLoaded] = useState(false)
   const pathname = usePathname()
-
   const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
-  // Fixed: Check document.cookie instead of getCookieConsentValue
-  useEffect(() => {
-    const checkConsent = () => {
-      const hasCookieConsent = document.cookie.includes('mesia-cookie-consent=true')
-      
-      if (hasCookieConsent) {
-        setHasConsent(true)
-        console.log('📊 Analytics enabled - user accepted cookies')
-      } else if (document.cookie.includes('mesia-cookie-consent=false')) {
-        setHasConsent(false)
-        console.log('🚫 Analytics disabled - user declined cookies')
-      } else {
-        setHasConsent(null)
-        console.log('⏳ Waiting for cookie consent...')
-      }
+  // Initialize GA when script loads
+  const initializeGA = () => {
+    if (!GA_MEASUREMENT_ID) {
+      console.error('❌ GA_MEASUREMENT_ID not found')
+      return
     }
 
-    checkConsent()
+    console.log('🚀 Initializing Google Analytics with ID:', GA_MEASUREMENT_ID)
     
-    // Check every 2 seconds for consent changes
-    const interval = setInterval(checkConsent, 2000)
-    
-    return () => clearInterval(interval)
-  }, [])
-
-  // Initialize Google Analytics when consent is given
-  useEffect(() => {
-    if (hasConsent && !isLoaded && GA_MEASUREMENT_ID) {
-      console.log('🚀 Initializing Google Analytics with ID:', GA_MEASUREMENT_ID)
-      
-      window.dataLayer = window.dataLayer || []
-      window.gtag = function gtag(...args: any[]) {
-        window.dataLayer.push(args)
-      }
-      
-      window.gtag('js', new Date())
-      window.gtag('config', GA_MEASUREMENT_ID, {
-        page_path: pathname,
-        page_title: document.title
-      })
-      
-      setIsLoaded(true)
-      console.log('✅ Google Analytics initialized')
+    window.dataLayer = window.dataLayer || []
+    window.gtag = function gtag(...args: any[]) {
+      window.dataLayer.push(args)
+      console.log('🏷️ gtag called:', args[0])
     }
-  }, [hasConsent, GA_MEASUREMENT_ID, isLoaded, pathname])
+    
+    window.gtag('js', new Date())
+    window.gtag('config', GA_MEASUREMENT_ID, {
+      page_path: pathname,
+      page_title: document.title,
+      debug_mode: true // Enable debug mode for testing
+    })
+    
+    console.log('✅ Google Analytics initialized')
+  }
 
   // Track page views on route changes
   useEffect(() => {
-    if (hasConsent && isLoaded && window.gtag) {
+    if (window.gtag && GA_MEASUREMENT_ID) {
       console.log('📄 Tracking page view:', pathname)
       window.gtag('config', GA_MEASUREMENT_ID, {
         page_path: pathname,
         page_title: document.title
       })
     }
-  }, [pathname, hasConsent, isLoaded, GA_MEASUREMENT_ID])
+  }, [pathname, GA_MEASUREMENT_ID])
 
-  if (!hasConsent || !GA_MEASUREMENT_ID) {
+  if (!GA_MEASUREMENT_ID) {
+    console.error('❌ NEXT_PUBLIC_GA_MEASUREMENT_ID not set')
     return null
   }
 
@@ -85,7 +62,11 @@ export default function GoogleAnalytics() {
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
         strategy="afterInteractive"
         onLoad={() => {
-          console.log('📊 Google Analytics script loaded')
+          console.log('📊 GA Script loaded successfully')
+          initializeGA()
+        }}
+        onError={(e) => {
+          console.error('❌ GA Script failed to load:', e)
         }}
       />
     </>
