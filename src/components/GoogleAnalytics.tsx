@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import Script from 'next/script'
-import { getCookieConsentValue } from 'react-cookie-consent'
-import { trackDualAnalytics } from '@/lib/analytics'  // Now client-safe!
 import { usePathname } from 'next/navigation'
 
 declare global {
@@ -20,14 +18,15 @@ export default function GoogleAnalytics() {
 
   const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
+  // Fixed: Check document.cookie instead of getCookieConsentValue
   useEffect(() => {
     const checkConsent = () => {
-      const consentValue = getCookieConsentValue('mesia-cookie-consent')
+      const hasCookieConsent = document.cookie.includes('mesia-cookie-consent=true')
       
-      if (consentValue === 'true') {
+      if (hasCookieConsent) {
         setHasConsent(true)
         console.log('📊 Analytics enabled - user accepted cookies')
-      } else if (consentValue === 'false') {
+      } else if (document.cookie.includes('mesia-cookie-consent=false')) {
         setHasConsent(false)
         console.log('🚫 Analytics disabled - user declined cookies')
       } else {
@@ -37,37 +36,14 @@ export default function GoogleAnalytics() {
     }
 
     checkConsent()
-    const handleConsentChange = () => checkConsent()
-
-    window.addEventListener('cookie-consent-updated', handleConsentChange)
+    
+    // Check every 2 seconds for consent changes
     const interval = setInterval(checkConsent, 2000)
     
-    return () => {
-      window.removeEventListener('cookie-consent-updated', handleConsentChange)
-      clearInterval(interval)
-    }
+    return () => clearInterval(interval)
   }, [])
 
-  // Track page views on route changes
-  useEffect(() => {
-    if (hasConsent && isLoaded) {
-      const sessionId = sessionStorage.getItem('sessionId') || 
-                       Date.now().toString(36) + Math.random().toString(36).substr(2)
-      
-      if (!sessionStorage.getItem('sessionId')) {
-        sessionStorage.setItem('sessionId', sessionId)
-      }
-
-      // Now this is client-safe - no direct Prisma calls!
-      trackDualAnalytics.pageView(pathname, document.title, {
-        sessionId,
-        userAgent: navigator.userAgent,
-        referrer: document.referrer || undefined
-      })
-    }
-  }, [pathname, hasConsent, isLoaded])
-
-  // Initialize Google Analytics
+  // Initialize Google Analytics when consent is given
   useEffect(() => {
     if (hasConsent && !isLoaded && GA_MEASUREMENT_ID) {
       console.log('🚀 Initializing Google Analytics with ID:', GA_MEASUREMENT_ID)
@@ -88,6 +64,17 @@ export default function GoogleAnalytics() {
     }
   }, [hasConsent, GA_MEASUREMENT_ID, isLoaded, pathname])
 
+  // Track page views on route changes
+  useEffect(() => {
+    if (hasConsent && isLoaded && window.gtag) {
+      console.log('📄 Tracking page view:', pathname)
+      window.gtag('config', GA_MEASUREMENT_ID, {
+        page_path: pathname,
+        page_title: document.title
+      })
+    }
+  }, [pathname, hasConsent, isLoaded, GA_MEASUREMENT_ID])
+
   if (!hasConsent || !GA_MEASUREMENT_ID) {
     return null
   }
@@ -101,23 +88,6 @@ export default function GoogleAnalytics() {
           console.log('📊 Google Analytics script loaded')
         }}
       />
-      
-      <Script id="google-analytics-init" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          
-          gtag('consent', 'default', {
-            'analytics_storage': 'denied',
-            'ad_storage': 'denied'
-          });
-          
-          gtag('consent', 'update', {
-            'analytics_storage': 'granted',
-            'ad_storage': 'granted'
-          });
-        `}
-      </Script>
     </>
   )
 }
