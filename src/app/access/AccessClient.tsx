@@ -1,25 +1,26 @@
 // src/app/access/AccessClient.tsx - Client Component
 'use client'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { 
-  Car, 
-  Bus, 
-  Plane, 
-  MapPin, 
-  Clock, 
+import {
+  Car,
+  Bus,
+  Plane,
+  MapPin,
+  Clock,
   Phone,
   Navigation,
   Lightbulb,
   Route
 } from "lucide-react"
 import MapComponent from '@/components/maps/GoogleMap'
+import PageHero from '@/components/site/PageHero'
+import SectionHeading from '@/components/site/SectionHeading'
+import CoordinateStamp from '@/components/site/CoordinateStamp'
 
 export default function AccessClient() {
   const accessMethods = [
     {
       icon: Car,
       title: "Με Αυτοκίνητο",
-      color: "from-mesia-wine to-mesia-wine/80",
       routes: [
         {
           from: "Από Θεσσαλονίκη",
@@ -44,7 +45,6 @@ export default function AccessClient() {
     {
       icon: Bus,
       title: "Με Λεωφορείο",
-      color: "from-mesia-gold to-mesia-accent",
       info: {
         provider: "ΚΤΕΛ Κιλκίς",
         description: "Δρομολόγια από Θεσσαλονίκη προς Πολύκαστρο και στη συνέχεια τοπικό δρομολόγιο προς Μεσιά.",
@@ -55,7 +55,6 @@ export default function AccessClient() {
     {
       icon: Plane,
       title: "Από Αεροδρόμια",
-      color: "from-mesia-wine to-mesia-gold",
       airports: [
         {
           name: "\"Μακεδονία\" (SKG)",
@@ -81,220 +80,175 @@ export default function AccessClient() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-mesia-cream via-mesia-lightCream to-mesia-beige">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-mesia-wine via-mesia-wine/95 to-mesia-wine/90 py-20 overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-64 h-64 bg-mesia-gold rounded-full blur-3xl"></div>
-          <div className="absolute bottom-10 right-10 w-80 h-80 bg-mesia-cream rounded-full blur-3xl"></div>
-        </div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-          <div className="mb-6">
-            <Navigation className="h-16 w-16 text-mesia-gold mx-auto mb-6" />
-          </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-white font-greek mb-6">
-            Πώς να Έρθετε
-          </h1>
-          <p className="text-xl md:text-2xl text-mesia-cream mb-8 max-w-3xl mx-auto leading-relaxed">
-            Αναλυτικές οδηγίες για την πρόσβαση στο παραδοσιακό χωριό Μεσιά Κιλκίς
-          </p>
-        </div>
-      </section>
+    <div className="bg-mesia-cream min-h-screen">
+      <PageHero
+        icon={Navigation}
+        title="Πώς να Έρθετε"
+        description="Αναλυτικές οδηγίες για την πρόσβαση στο παραδοσιακό χωριό Μεσιά Κιλκίς."
+        stamp="40.88250 · 22.57639"
+      />
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         {/* Access Methods */}
-        <div className="space-y-12">
+        <div className="space-y-16">
           {accessMethods.map((method, index) => (
-            <Card key={index} className="bg-white/90 backdrop-blur-sm border border-mesia-gold/20 shadow-2xl overflow-hidden">
-              <CardHeader className="relative">
-                <div className="flex items-center space-x-4 mb-4">
-                  <div className={`p-4 rounded-2xl bg-gradient-to-r ${method.color} text-white shadow-lg`}>
-                    <method.icon className="h-8 w-8" />
-                  </div>
-                  <CardTitle className="text-3xl font-bold text-mesia-wine font-greek">
-                    {method.title}
-                  </CardTitle>
+            <section key={index}>
+              <div className="flex items-center gap-4 mb-8">
+                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center border border-mesia-wine/20 bg-white text-mesia-wine">
+                  <method.icon className="h-6 w-6" />
                 </div>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                
-                {/* Car Routes */}
-                {method.routes && (
-                  <div className="space-y-4">
-                    {method.routes.map((route, routeIndex) => (
-                      <div key={routeIndex} className="bg-mesia-lightCream/30 rounded-xl p-6 border border-mesia-gold/20">
-                        <div className="flex items-start justify-between mb-4">
-                          <h3 className="text-xl font-bold text-mesia-wine font-greek">
-                            {route.from}
-                          </h3>
-                          <div className="flex space-x-4 text-sm text-mesia-lightText">
-                            <div className="flex items-center space-x-1">
-                              <Route className="h-4 w-4" />
-                              <span>{route.distance}</span>
-                            </div>
-                            <div className="flex items-center space-x-1">
-                              <Clock className="h-4 w-4" />
-                              <span>{route.time}</span>
-                            </div>
+                <h2 className="text-2xl md:text-3xl font-bold text-mesia-wine font-greek">
+                  {method.title}
+                </h2>
+              </div>
+
+              {/* Car Routes */}
+              {method.routes && (
+                <div className="divide-y divide-mesia-gold/25 border-t border-b border-mesia-gold/25">
+                  {method.routes.map((route, routeIndex) => (
+                    <div key={routeIndex} className="py-6">
+                      <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
+                        <h3 className="text-lg font-bold text-mesia-wine font-greek">
+                          {route.from}
+                        </h3>
+                        <div className="flex gap-4 font-mono text-xs uppercase tracking-wide text-mesia-lightText">
+                          <div className="flex items-center gap-1.5">
+                            <Route className="h-3.5 w-3.5" />
+                            <span>{route.distance}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <Clock className="h-3.5 w-3.5" />
+                            <span>{route.time}</span>
                           </div>
                         </div>
-                        <p className="text-mesia-darkText leading-relaxed">
-                          {route.description}
-                        </p>
                       </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* Bus Info */}
-                {method.info && (
-                  <div className="bg-mesia-lightCream/30 rounded-xl p-6 border border-mesia-gold/20">
-                    <h3 className="text-xl font-bold text-mesia-wine font-greek mb-4">
-                      {method.info.provider}
-                    </h3>
-                    <p className="text-mesia-darkText leading-relaxed mb-4">
-                      {method.info.description}
-                    </p>
-                    <div className="grid md:grid-cols-2 gap-4">
-                      <div className="flex items-center space-x-2">
-                        <Phone className="h-4 w-4 text-mesia-wine" />
-                        <span className="font-medium text-mesia-wine">Τηλ. Πληροφοριών:</span>
-                      </div>
-                      <div className="space-y-1">
-                        {method.info.phones.map((phone, phoneIndex) => (
-                          <a key={phoneIndex} href={`tel:${phone}`} className="block text-mesia-wine hover:text-mesia-gold transition-colors">
-                            {phone}
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="mt-4 p-3 bg-mesia-gold/10 rounded-lg">
-                      <p className="text-mesia-wine font-medium">
-                        <strong>Συχνότητα:</strong> {method.info.schedule}
+                      <p className="text-mesia-darkText/90 leading-relaxed">
+                        {route.description}
                       </p>
                     </div>
-                  </div>
-                )}
+                  ))}
+                </div>
+              )}
 
-                {/* Airport Info */}
-                {method.airports && (
-                  <div className="space-y-4">
-                    {method.airports.map((airport, airportIndex) => (
-                      <div key={airportIndex} className="bg-mesia-lightCream/30 rounded-xl p-6 border border-mesia-gold/20">
-                        <div className="flex items-start justify-between mb-4">
-                          <h3 className="text-xl font-bold text-mesia-wine font-greek">
-                            {airport.name}
-                          </h3>
-                          <div className="flex space-x-4 text-sm text-mesia-lightText">
-                            <div className="flex items-center space-x-1">
-                              <Route className="h-4 w-4" />
-                              <span>{airport.distance}</span>
-                            </div>
-                            <div className="flex items-center space-x-1">
-                              <Clock className="h-4 w-4" />
-                              <span>{airport.time}</span>
-                            </div>
+              {/* Bus Info */}
+              {method.info && (
+                <div className="border border-mesia-gold/25 bg-white p-6">
+                  <h3 className="text-lg font-bold text-mesia-wine font-greek mb-3">
+                    {method.info.provider}
+                  </h3>
+                  <p className="text-mesia-darkText/90 leading-relaxed mb-5">
+                    {method.info.description}
+                  </p>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="flex items-center gap-2">
+                      <Phone className="h-4 w-4 text-mesia-gold" />
+                      <span className="font-medium text-mesia-wine">Τηλ. Πληροφοριών:</span>
+                    </div>
+                    <div className="space-y-1 font-mono">
+                      {method.info.phones.map((phone, phoneIndex) => (
+                        <a key={phoneIndex} href={`tel:${phone}`} className="block text-mesia-wine hover:text-mesia-gold transition-colors">
+                          {phone}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-mesia-gold/25">
+                    <p className="text-mesia-wine text-sm">
+                      <strong>Συχνότητα:</strong> {method.info.schedule}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Airport Info */}
+              {method.airports && (
+                <div className="divide-y divide-mesia-gold/25 border-t border-b border-mesia-gold/25">
+                  {method.airports.map((airport, airportIndex) => (
+                    <div key={airportIndex} className="py-6">
+                      <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
+                        <h3 className="text-lg font-bold text-mesia-wine font-greek">
+                          {airport.name}
+                        </h3>
+                        <div className="flex gap-4 font-mono text-xs uppercase tracking-wide text-mesia-lightText">
+                          <div className="flex items-center gap-1.5">
+                            <Route className="h-3.5 w-3.5" />
+                            <span>{airport.distance}</span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <Clock className="h-3.5 w-3.5" />
+                            <span>{airport.time}</span>
                           </div>
                         </div>
-                        <p className="text-mesia-darkText">
-                          {airport.method}
-                        </p>
                       </div>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+                      <p className="text-mesia-darkText/90">
+                        {airport.method}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </section>
           ))}
         </div>
 
         {/* GPS Coordinates with Interactive Map */}
-        <Card className="mt-16 bg-white/90 backdrop-blur-sm border border-mesia-gold/20 shadow-2xl">
-          <CardHeader>
-            <div className="flex items-center space-x-4 mb-4">
-              <div className="p-4 rounded-2xl bg-gradient-to-r from-mesia-wine to-mesia-gold text-white shadow-lg">
-                <MapPin className="h-8 w-8" />
-              </div>
-              <CardTitle className="text-3xl font-bold text-mesia-wine font-greek">
-                Χάρτης Πρόσβασης
-              </CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            {/* Interactive Google Map */}
-            <div className="mb-6">
-              <MapComponent lat={40.88250} lng={22.57639} zoom={15} />
-            </div>
-            
-            {/* GPS Coordinates */}
-            <div className="bg-mesia-lightCream/30 rounded-xl p-8 border border-mesia-gold/20 text-center">
-              <h3 className="text-2xl font-bold text-mesia-wine font-greek mb-4">
-                GPS Συντεταγμένες
-              </h3>
-              <div className="text-3xl font-mono font-bold text-mesia-wine mb-2">
-                40.88250, 22.57639
-              </div>
-              <p className="text-mesia-lightText">
-                Αντιγράψτε τις συντεταγμένες στην εφαρμογή χαρτών σας
-              </p>
-            </div>
+        <section className="mt-20">
+          <SectionHeading eyebrow="Χάρτης" title="Χάρτης Πρόσβασης" align="left" />
 
-            {/* Quick Actions */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <a 
-                href={`https://www.google.com/maps/dir/?api=1&destination=40.88250,22.57639`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center space-x-2 p-4 bg-mesia-wine text-white rounded-lg hover:bg-mesia-wine/90 transition-colors"
-              >
-                <Navigation className="h-5 w-5" />
-                <span>Οδηγίες στο Google Maps</span>
-              </a>
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText('40.88250, 22.57639')
-                    .then(() => alert('Οι συντεταγμένες αντιγράφηκαν!'))
-                    .catch(() => alert('Σφάλμα αντιγραφής'))
-                }}
-                className="flex items-center justify-center space-x-2 p-4 border-2 border-mesia-wine text-mesia-wine rounded-lg hover:bg-mesia-wine hover:text-white transition-colors"
-              >
-                <MapPin className="h-5 w-5" />
-                <span>Αντιγραφή Συντεταγμένων</span>
-              </button>
+          <div className="mb-6 border border-mesia-gold/25">
+            <MapComponent lat={40.88250} lng={22.57639} zoom={15} />
+          </div>
+
+          <div className="border border-mesia-gold/25 bg-white p-8 text-center mb-6">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-mesia-wine/50 mb-4">
+              GPS Συντεταγμένες
+            </p>
+            <div className="flex justify-center mb-4">
+              <CoordinateStamp tone="dark">40.88250, 22.57639</CoordinateStamp>
             </div>
-          </CardContent>
-        </Card>
+            <p className="text-mesia-lightText text-sm">
+              Αντιγράψτε τις συντεταγμένες στην εφαρμογή χαρτών σας
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <a
+              href={`https://www.google.com/maps/dir/?api=1&destination=40.88250,22.57639`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 p-4 bg-mesia-wine text-white hover:bg-mesia-wine/90 transition-colors"
+            >
+              <Navigation className="h-5 w-5" />
+              <span>Οδηγίες στο Google Maps</span>
+            </a>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText('40.88250, 22.57639')
+                  .then(() => alert('Οι συντεταγμένες αντιγράφηκαν!'))
+                  .catch(() => alert('Σφάλμα αντιγραφής'))
+              }}
+              className="flex items-center justify-center gap-2 p-4 border-2 border-mesia-wine text-mesia-wine hover:bg-mesia-wine hover:text-white transition-colors"
+            >
+              <MapPin className="h-5 w-5" />
+              <span>Αντιγραφή Συντεταγμένων</span>
+            </button>
+          </div>
+        </section>
 
         {/* Tips Section */}
-        <Card className="mt-16 bg-white/90 backdrop-blur-sm border border-mesia-gold/20 shadow-2xl">
-          <CardHeader>
-            <div className="flex items-center space-x-4 mb-4">
-              <div className="p-4 rounded-2xl bg-gradient-to-r from-mesia-gold to-mesia-accent text-white shadow-lg">
-                <Lightbulb className="h-8 w-8" />
+        <section className="mt-20">
+          <SectionHeading eyebrow="Καλή διαδρομή" title="Χρήσιμες Συμβουλές" align="left" />
+          <div className="grid md:grid-cols-2 gap-4">
+            {tips.map((tip, index) => (
+              <div key={index} className="flex items-start gap-4 border border-mesia-gold/25 bg-white p-5">
+                <Lightbulb className="h-5 w-5 text-mesia-gold flex-shrink-0 mt-0.5" />
+                <p className="text-mesia-darkText/90 leading-relaxed">
+                  {tip}
+                </p>
               </div>
-              <CardTitle className="text-3xl font-bold text-mesia-wine font-greek">
-                Χρήσιμες Συμβουλές
-              </CardTitle>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-2 gap-6">
-              {tips.map((tip, index) => (
-                <div key={index} className="flex items-start space-x-3 p-4 bg-mesia-lightCream/30 rounded-lg border border-mesia-gold/20">
-                  <div className="w-6 h-6 bg-mesia-gold rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <span className="text-white text-sm font-bold">{index + 1}</span>
-                  </div>
-                  <p className="text-mesia-darkText leading-relaxed">
-                    {tip}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+            ))}
+          </div>
+        </section>
       </main>
     </div>
   )

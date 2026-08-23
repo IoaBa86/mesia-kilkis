@@ -20,12 +20,22 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicyPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-mesia-cream via-mesia-lightCream to-mesia-beige">
-      {/* Navigation */}
+    <div className="min-h-screen bg-mesia-cream">
+      <div className="bg-mesia-wine">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <Link href="/" className="inline-flex items-center gap-2 text-mesia-cream/70 hover:text-mesia-gold text-sm mb-4 transition-colors">
+            <ArrowLeft className="h-4 w-4" /> Αρχική
+          </Link>
+          <div className="flex items-center gap-3">
+            <Shield className="h-6 w-6 text-mesia-gold" />
+            <h1 className="text-2xl md:text-3xl font-bold text-white font-greek">Πολιτική Απορρήτου</h1>
+          </div>
+        </div>
+      </div>
 
       {/* Main Content */}
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="bg-white/90 backdrop-blur-sm border border-mesia-gold/20 shadow-xl rounded-2xl p-8">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="border border-mesia-gold/25 bg-white p-8 md:p-10">
           <div className="prose prose-lg max-w-none">
             <div className="mb-8 p-4 bg-mesia-wine/10 rounded-lg border border-mesia-wine/20">
               <p className="text-mesia-darkText mb-0">

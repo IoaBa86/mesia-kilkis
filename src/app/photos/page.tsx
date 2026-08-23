@@ -207,7 +207,7 @@ export default async function PhotosPage({ searchParams }: PhotosPageProps) {
             </section>
 
             {/* Ad */}
-            <ResponsiveAdSlot id="photos-ad-1" />
+            <ResponsiveAdSlot slotKey="photos-ad-1" />
 
             {/* Photos Client Component with Enhanced Props */}
             <PhotosClient 

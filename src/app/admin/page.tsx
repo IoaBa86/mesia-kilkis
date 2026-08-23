@@ -4,14 +4,13 @@ import { useSession, signOut } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { 
-  Image, 
-  FolderOpen, 
-  Settings, 
-  LogOut, 
-  Plus, 
-  Upload, 
+import {
+  Image,
+  FolderOpen,
+  Settings,
+  LogOut,
+  Plus,
+  Upload,
   Calendar,
   Users,
   Globe,
@@ -19,7 +18,9 @@ import {
   BookOpen,
   History,
   Eye,         // Cookie Consent Logs
-  TrendingUp   // NEW: Analytics Dashboard
+  TrendingUp,  // NEW: Analytics Dashboard
+  Megaphone,   // Ad Slots
+  type LucideIcon
 } from "lucide-react"
 
 interface DashboardStats {
@@ -31,6 +32,47 @@ interface DashboardStats {
   historicalPostsCount?: number
   cookieConsentCount?: number
   analyticsVisitors?: number  // NEW: Analytics data
+  adSlotsCount?: number
+  activeAdSlots?: number
+}
+
+function DashCard({
+  title,
+  icon: Icon,
+  value,
+  caption,
+  onOpen,
+  buttonLabel,
+}: {
+  title: string
+  icon: LucideIcon
+  value: React.ReactNode
+  caption: string
+  onOpen: () => void
+  buttonLabel: string
+}) {
+  return (
+    <div
+      className="group cursor-pointer border border-mesia-gold/25 bg-white p-6 transition-colors duration-200 hover:border-mesia-wine/40"
+      onClick={onOpen}
+    >
+      <div className="flex items-center justify-between mb-4">
+        <p className="font-mono text-xs uppercase tracking-[0.14em] text-mesia-wine/50">{title}</p>
+        <Icon className="h-5 w-5 text-mesia-gold" />
+      </div>
+      <div className="text-3xl font-bold text-mesia-wine font-mono mb-1">{value}</div>
+      <p className="text-xs text-mesia-lightText mb-4">{caption}</p>
+      <Button
+        className="w-full text-xs"
+        onClick={(e) => {
+          e.stopPropagation()
+          onOpen()
+        }}
+      >
+        {buttonLabel}
+      </Button>
+    </div>
+  )
 }
 
 export default function AdminDashboard() {
@@ -44,7 +86,9 @@ export default function AdminDashboard() {
     upcomingEvents: 0,
     historicalPostsCount: 0,
     cookieConsentCount: 0,
-    analyticsVisitors: 0  // NEW: Initialize analytics visitors
+    analyticsVisitors: 0,  // NEW: Initialize analytics visitors
+    adSlotsCount: 0,
+    activeAdSlots: 0
   })
   const [loading, setLoading] = useState(true)
 
@@ -77,13 +121,13 @@ export default function AdminDashboard() {
       // Fetch events
       let eventsCount = 0
       let upcomingEvents = 0
-      
+
       try {
         const eventsResponse = await fetch('/api/events')
         if (eventsResponse.ok) {
           const eventsData = await eventsResponse.json()
           eventsCount = eventsData.events?.length || 0
-          upcomingEvents = eventsData.events?.filter((event: any) => 
+          upcomingEvents = eventsData.events?.filter((event: any) =>
             new Date(event.eventDate) >= new Date()
           ).length || 0
         }
@@ -126,7 +170,21 @@ export default function AdminDashboard() {
       } catch (analyticsError) {
         console.log('Analytics API not available yet:', analyticsError)
       }
-        
+
+      // Fetch ad slots
+      let adSlotsCount = 0
+      let activeAdSlots = 0
+      try {
+        const adSlotsResponse = await fetch('/api/ad-slots')
+        if (adSlotsResponse.ok) {
+          const adSlotsData = await adSlotsResponse.json()
+          adSlotsCount = adSlotsData.length || 0
+          activeAdSlots = adSlotsData.filter((slot: any) => slot.isActive).length || 0
+        }
+      } catch (adSlotsError) {
+        console.log('Ad slots API not available yet:', adSlotsError)
+      }
+
       setStats({
         categoriesCount: categoriesData.length,
         photosCount: totalPhotos,
@@ -135,7 +193,9 @@ export default function AdminDashboard() {
         upcomingEvents,
         historicalPostsCount,
         cookieConsentCount,
-        analyticsVisitors  // NEW: Set analytics visitors
+        analyticsVisitors,  // NEW: Set analytics visitors
+        adSlotsCount,
+        activeAdSlots
       })
     } catch (error) {
       console.error('Error fetching dashboard stats:', error)
@@ -146,8 +206,8 @@ export default function AdminDashboard() {
 
   if (status === "loading" || loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-mesia-cream via-mesia-lightCream to-mesia-beige">
-        <div className="text-xl text-mesia-wine">Φόρτωση...</div>
+      <div className="flex items-center justify-center min-h-screen bg-mesia-cream">
+        <div className="text-lg font-mono text-mesia-wine">Φόρτωση...</div>
       </div>
     )
   }
@@ -157,26 +217,26 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-mesia-cream via-mesia-lightCream to-mesia-beige">
+    <div className="min-h-screen bg-mesia-cream">
       {/* Header */}
-      <header className="bg-white/90 backdrop-blur-md shadow-xl border-b border-mesia-gold/20">
+      <header className="bg-white border-b border-mesia-gold/25">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4">
-            <div className="flex items-center space-x-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-mesia-wine to-mesia-gold rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-white font-bold text-lg">Μ</span>
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center border-2 border-mesia-wine bg-mesia-wine text-mesia-gold font-greek font-bold text-lg">
+                Μ
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-mesia-wine font-greek">Μεσιά Κιλκίς</h1>
-                <p className="text-sm text-mesia-lightText">Διαχείριση Ιστοσελίδας</p>
+                <h1 className="text-xl font-bold text-mesia-wine font-greek leading-none">Μεσιά Κιλκίς</h1>
+                <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-mesia-lightText mt-1">Διαχείριση Ιστοσελίδας</p>
               </div>
             </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-sm text-mesia-darkText">Καλώς ήρθες, {session.user?.name}</span>
-              <Button 
-                variant="outline" 
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-mesia-darkText hidden sm:inline">Καλώς ήρθες, {session.user?.name}</span>
+              <Button
+                variant="outline"
                 onClick={() => signOut({ callbackUrl: "/" })}
-                className="flex items-center space-x-2 border-mesia-wine text-mesia-wine hover:bg-mesia-wine hover:text-white"
+                className="flex items-center gap-2"
               >
                 <LogOut className="h-4 w-4" />
                 <span>Αποσύνδεση</span>
@@ -187,298 +247,146 @@ export default function AdminDashboard() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h2 className="text-4xl font-bold text-mesia-wine font-greek mb-2">Πίνακας Ελέγχου</h2>
-          <p className="text-mesia-lightText text-lg">Διαχειριστείτε το περιεχόμενο της ιστοσελίδας του χωριού</p>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="mb-10">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-mesia-wine/50 mb-2">Admin</p>
+          <h2 className="text-3xl font-bold text-mesia-wine font-greek mb-2">Πίνακας Ελέγχου</h2>
+          <p className="text-mesia-lightText">Διαχειριστείτε το περιεχόμενο της ιστοσελίδας του χωριού</p>
         </div>
 
-        {/* Dashboard Cards - First Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-          <Card className="hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white/90 backdrop-blur-sm border border-mesia-gold/20 hover:scale-105" onClick={() => router.push("/admin/categories")}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-mesia-wine">Κατηγορίες</CardTitle>
-              <FolderOpen className="h-5 w-5 text-mesia-gold" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-mesia-wine mb-2">{stats.categoriesCount}</div>
-              <p className="text-xs text-mesia-lightText mb-4">
-                {stats.activeCategories} ενεργές
-              </p>
-              <Button 
-                className="w-full bg-gradient-to-r from-mesia-wine to-mesia-wine/90 hover:from-mesia-wine/90 hover:to-mesia-wine text-white text-xs" 
-                onClick={(e) => {
-                  e.stopPropagation()
-                  router.push("/admin/categories")
-                }}
-              >
-                Διαχείριση
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card className="hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white/90 backdrop-blur-sm border border-mesia-gold/20 hover:scale-105" onClick={() => router.push("/admin/photos")}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-mesia-wine">Φωτογραφίες</CardTitle>
-              <Image className="h-5 w-5 text-mesia-gold" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-mesia-wine mb-2">{stats.photosCount}</div>
-              <p className="text-xs text-mesia-lightText mb-4">
-                Συνολικές
-              </p>
-              <Button 
-                className="w-full bg-gradient-to-r from-mesia-wine to-mesia-wine/90 hover:from-mesia-wine/90 hover:to-mesia-wine text-white text-xs" 
-                onClick={(e) => {
-                  e.stopPropagation()
-                  router.push("/admin/photos")
-                }}
-              >
-                Διαχείριση
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card className="hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white/90 backdrop-blur-sm border border-mesia-gold/20 hover:scale-105" onClick={() => router.push("/admin/events")}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-mesia-wine">Εκδηλώσεις</CardTitle>
-              <Calendar className="h-5 w-5 text-mesia-gold" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-mesia-wine mb-2">{stats.eventsCount}</div>
-              <p className="text-xs text-mesia-lightText mb-4">
-                {stats.upcomingEvents} επερχόμενες
-              </p>
-              <Button 
-                className="w-full bg-gradient-to-r from-mesia-wine to-mesia-wine/90 hover:from-mesia-wine/90 hover:to-mesia-wine text-white text-xs" 
-                onClick={(e) => {
-                  e.stopPropagation()
-                  router.push("/admin/events")
-                }}
-              >
-                Διαχείριση
-              </Button>
-            </CardContent>
-          </Card>
+        {/* Dashboard Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-mesia-gold/25 border border-mesia-gold/25 mb-12">
+          <DashCard
+            title="Κατηγορίες"
+            icon={FolderOpen}
+            value={stats.categoriesCount}
+            caption={`${stats.activeCategories} ενεργές`}
+            onOpen={() => router.push("/admin/categories")}
+            buttonLabel="Διαχείριση"
+          />
+          <DashCard
+            title="Φωτογραφίες"
+            icon={Image}
+            value={stats.photosCount}
+            caption="Συνολικές"
+            onOpen={() => router.push("/admin/photos")}
+            buttonLabel="Διαχείριση"
+          />
+          <DashCard
+            title="Εκδηλώσεις"
+            icon={Calendar}
+            value={stats.eventsCount}
+            caption={`${stats.upcomingEvents} επερχόμενες`}
+            onOpen={() => router.push("/admin/events")}
+            buttonLabel="Διαχείριση"
+          />
+          <DashCard
+            title="Διαφημίσεις"
+            icon={Megaphone}
+            value={stats.adSlotsCount || 0}
+            caption={`${stats.activeAdSlots || 0} ενεργές`}
+            onOpen={() => router.push("/admin/ads")}
+            buttonLabel="Διαχείριση"
+          />
+          <DashCard
+            title="Αναλυτικά"
+            icon={TrendingUp}
+            value={stats.analyticsVisitors || 0}
+            caption="Σημερινοί επισκέπτες"
+            onOpen={() => router.push("/admin/analytics")}
+            buttonLabel="Προβολή Στατιστικών"
+          />
+          <DashCard
+            title="Cookie Consent"
+            icon={Eye}
+            value={stats.cookieConsentCount || 0}
+            caption="Καταγραφές συναίνεσης"
+            onOpen={() => router.push("/admin/consent-logs")}
+            buttonLabel="Προβολή Καταγραφών"
+          />
         </div>
 
-        {/* Dashboard Cards - Second Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
-          {/* NEW: Analytics Dashboard Card */}
-          <Card className="hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white/90 backdrop-blur-sm border border-mesia-gold/20 hover:scale-105" onClick={() => router.push("/admin/analytics")}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-mesia-wine">Αναλυτικά</CardTitle>
-              <TrendingUp className="h-5 w-5 text-mesia-gold" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-mesia-wine mb-2">{stats.analyticsVisitors || 0}</div>
-              <p className="text-xs text-mesia-lightText mb-4">
-                Σημερινοί επισκέπτες
-              </p>
-              <Button 
-                className="w-full bg-gradient-to-r from-mesia-wine to-mesia-wine/90 hover:from-mesia-wine/90 hover:to-mesia-wine text-white text-xs" 
-                onClick={(e) => {
-                  e.stopPropagation()
-                  router.push("/admin/analytics")
-                }}
-              >
-                Προβολή Στατιστικών
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Cookie Consent Logs Card */}
-          <Card className="hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white/90 backdrop-blur-sm border border-mesia-gold/20 hover:scale-105" onClick={() => router.push("/admin/consent-logs")}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-mesia-wine">Cookie Consent</CardTitle>
-              <Eye className="h-5 w-5 text-mesia-gold" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-mesia-wine mb-2">{stats.cookieConsentCount || 0}</div>
-              <p className="text-xs text-mesia-lightText mb-4">
-                Καταγραφές συναίνεσης
-              </p>
-              <Button 
-                className="w-full bg-gradient-to-r from-mesia-wine to-mesia-wine/90 hover:from-mesia-wine/90 hover:to-mesia-wine text-white text-xs" 
-                onClick={(e) => {
-                  e.stopPropagation()
-                  router.push("/admin/consent-logs")
-                }}
-              >
-                Προβολή Καταγραφών
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Settings Card */}
-          <Card className="hover:shadow-2xl transition-all duration-300 cursor-pointer bg-white/90 backdrop-blur-sm border border-mesia-gold/20 hover:scale-105" onClick={() => router.push("/admin/settings")}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-mesia-wine">Ρυθμίσεις</CardTitle>
+        {/* Settings — standalone, not part of the numeric grid */}
+        <div className="mb-12">
+          <div
+            className="flex items-center justify-between border border-mesia-gold/25 bg-white p-6 cursor-pointer hover:border-mesia-wine/40 transition-colors"
+            onClick={() => router.push("/admin/settings")}
+          >
+            <div className="flex items-center gap-3">
               <Settings className="h-5 w-5 text-mesia-gold" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-bold text-mesia-gold mb-2">
-                <Settings className="h-8 w-8" />
-              </div>
-              <p className="text-xs text-mesia-lightText mb-4">
-                Διαχείριση ιστοσελίδας
-              </p>
-              <Button 
-                className="w-full bg-gradient-to-r from-mesia-wine to-mesia-wine/90 hover:from-mesia-wine/90 hover:to-mesia-wine text-white text-xs"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  router.push("/admin/settings")
-                }}
-              >
-                Ρυθμίσεις
-              </Button>
-            </CardContent>
-          </Card>
+              <span className="font-medium text-mesia-wine">Ρυθμίσεις — Διαχείριση ιστοσελίδας</span>
+            </div>
+            <Button variant="outline" onClick={(e) => { e.stopPropagation(); router.push("/admin/settings") }}>
+              Ρυθμίσεις
+            </Button>
+          </div>
         </div>
 
         {/* Quick Actions */}
-        <div className="mt-12">
-          <h3 className="text-2xl font-bold text-mesia-wine font-greek mb-6">Γρήγορες Ενέργειες</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            <Button 
-              className="h-28 flex flex-col space-y-2 bg-gradient-to-br from-mesia-wine to-mesia-wine/90 hover:from-mesia-wine/90 hover:to-mesia-wine text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 text-sm"
-              onClick={() => router.push("/admin/categories/new")}
-            >
-              <Plus className="h-6 w-6" />
-              <span className="font-medium text-center">Νέα Κατηγορία</span>
-            </Button>
-            
-            <Button 
-              variant="outline" 
-              className="h-28 flex flex-col space-y-2 border-2 border-mesia-gold text-mesia-wine hover:bg-mesia-gold hover:text-mesia-wine shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 text-sm"
-              onClick={() => router.push("/admin/photos/upload")}
-            >
-              <Upload className="h-6 w-6" />
-              <span className="font-medium text-center">Ανέβασμα Φωτογραφιών</span>
-            </Button>
-
-            <Button 
-              variant="outline" 
-              className="h-28 flex flex-col space-y-2 border-2 border-mesia-wine text-mesia-wine hover:bg-mesia-wine hover:text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 text-sm"
-              onClick={() => router.push("/admin/events/new")}
-            >
-              <Calendar className="h-6 w-6" />
-              <span className="font-medium text-center">Νέα Εκδήλωση</span>
-            </Button>
-
-            {/* NEW: Analytics Quick Action */}
-            <Button 
-              variant="outline" 
-              className="h-28 flex flex-col space-y-2 border-2 border-mesia-gold text-mesia-wine hover:bg-mesia-gold hover:text-mesia-wine shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 text-sm"
-              onClick={() => router.push("/admin/analytics")}
-            >
-              <TrendingUp className="h-6 w-6" />
-              <span className="font-medium text-center">Αναλυτικά</span>
-            </Button>
-
-            {/* Cookie Consent Logs Quick Action */}
-            <Button 
-              variant="outline" 
-              className="h-28 flex flex-col space-y-2 border-2 border-mesia-gold text-mesia-wine hover:bg-mesia-gold hover:text-mesia-wine shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 text-sm"
-              onClick={() => router.push("/admin/consent-logs")}
-            >
-              <Eye className="h-6 w-6" />
-              <span className="font-medium text-center">Cookie Logs</span>
-            </Button>
-            
-            <Button 
-              variant="outline" 
-              className="h-28 flex flex-col space-y-2 border-2 border-mesia-wine text-mesia-wine hover:bg-mesia-wine hover:text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 text-sm"
-              onClick={() => router.push("/admin/settings")}
-            >
-              <Settings className="h-6 w-6" />
-              <span className="font-medium text-center">Ρυθμίσεις</span>
-            </Button>
+        <div className="mb-12">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-mesia-wine/50 mb-4">Γρήγορες Ενέργειες</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-px bg-mesia-gold/25 border border-mesia-gold/25">
+            {[
+              { icon: Plus, label: "Νέα Κατηγορία", href: "/admin/categories/new" },
+              { icon: Upload, label: "Ανέβασμα Φωτογραφιών", href: "/admin/photos/upload" },
+              { icon: Calendar, label: "Νέα Εκδήλωση", href: "/admin/events/new" },
+              { icon: TrendingUp, label: "Αναλυτικά", href: "/admin/analytics" },
+              { icon: Eye, label: "Cookie Logs", href: "/admin/consent-logs" },
+              { icon: Settings, label: "Ρυθμίσεις", href: "/admin/settings" },
+              { icon: Megaphone, label: "Νέα Θέση Διαφήμισης", href: "/admin/ads/new" },
+            ].map((action) => (
+              <button
+                key={action.href}
+                onClick={() => router.push(action.href)}
+                className="h-28 flex flex-col items-center justify-center gap-2 bg-white text-mesia-wine hover:bg-mesia-cream transition-colors text-sm p-2"
+              >
+                <action.icon className="h-5 w-5" />
+                <span className="font-medium text-center leading-tight">{action.label}</span>
+              </button>
+            ))}
           </div>
         </div>
 
         {/* Content Summary */}
         {stats.categoriesCount > 0 && (
-          <div className="mt-12">
-            <h3 className="text-2xl font-bold text-mesia-wine font-greek mb-6">Σύνοψη Περιεχομένου</h3>
-            <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl p-8 border border-mesia-gold/20">
+          <div className="mb-12">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-mesia-wine/50 mb-4">Σύνοψη Περιεχομένου</p>
+            <div className="border border-mesia-gold/25 bg-white p-8">
               <div className="grid grid-cols-2 md:grid-cols-6 gap-8 text-center">
                 <div>
-                  <div className="text-4xl font-bold text-mesia-wine mb-2">{stats.categoriesCount}</div>
-                  <div className="text-mesia-lightText font-medium">Κατηγορίες</div>
+                  <div className="text-3xl font-bold text-mesia-wine font-mono mb-1">{stats.categoriesCount}</div>
+                  <div className="text-mesia-lightText text-sm font-medium">Κατηγορίες</div>
                   <div className="text-xs text-mesia-lightText mt-1">{stats.activeCategories} ενεργές</div>
                 </div>
                 <div>
-                  <div className="text-4xl font-bold text-mesia-gold mb-2">{stats.photosCount}</div>
-                  <div className="text-mesia-lightText font-medium">Φωτογραφίες</div>
+                  <div className="text-3xl font-bold text-mesia-wine font-mono mb-1">{stats.photosCount}</div>
+                  <div className="text-mesia-lightText text-sm font-medium">Φωτογραφίες</div>
                   <div className="text-xs text-mesia-lightText mt-1">Συνολικές</div>
                 </div>
                 <div>
-                  <div className="text-4xl font-bold text-mesia-wine mb-2">{stats.eventsCount}</div>
-                  <div className="text-mesia-lightText font-medium">Εκδηλώσεις</div>
+                  <div className="text-3xl font-bold text-mesia-wine font-mono mb-1">{stats.eventsCount}</div>
+                  <div className="text-mesia-lightText text-sm font-medium">Εκδηλώσεις</div>
                   <div className="text-xs text-mesia-lightText mt-1">{stats.upcomingEvents} επερχόμενες</div>
                 </div>
-                {/* NEW: Analytics Summary */}
                 <div>
-                  <div className="text-4xl font-bold text-mesia-gold mb-2">{stats.analyticsVisitors || 0}</div>
-                  <div className="text-mesia-lightText font-medium">Επισκέπτες</div>
+                  <div className="text-3xl font-bold text-mesia-wine font-mono mb-1">{stats.analyticsVisitors || 0}</div>
+                  <div className="text-mesia-lightText text-sm font-medium">Επισκέπτες</div>
                   <div className="text-xs text-mesia-lightText mt-1">Σήμερα</div>
                 </div>
-                {/* Cookie Consent Summary */}
                 <div>
-                  <div className="text-4xl font-bold text-mesia-wine mb-2">{stats.cookieConsentCount || 0}</div>
-                  <div className="text-mesia-lightText font-medium">Cookie Consent</div>
+                  <div className="text-3xl font-bold text-mesia-wine font-mono mb-1">{stats.cookieConsentCount || 0}</div>
+                  <div className="text-mesia-lightText text-sm font-medium">Cookie Consent</div>
                   <div className="text-xs text-mesia-lightText mt-1">Καταγραφές</div>
                 </div>
                 <div>
-                  <div className="text-4xl font-bold text-mesia-gold mb-2">6</div>
-                  <div className="text-mesia-lightText font-medium">Σελίδες</div>
+                  <div className="text-3xl font-bold text-mesia-wine font-mono mb-1">6</div>
+                  <div className="text-mesia-lightText text-sm font-medium">Σελίδες</div>
                   <div className="text-xs text-mesia-lightText mt-1">Ενεργές</div>
                 </div>
               </div>
             </div>
           </div>
         )}
-
-        {/* Quick Links */}
-        <div className="mt-12">
-          <h3 className="text-2xl font-bold text-mesia-wine font-greek mb-6">Γρήγοροι Σύνδεσμοι</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card className="bg-gradient-to-br from-mesia-wine to-mesia-wine/90 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer" onClick={() => router.push("/admin/photos")}>
-              <CardContent className="p-6 text-center">
-                <Image className="h-12 w-12 mx-auto mb-4 text-mesia-gold" />
-                <h4 className="text-xl font-bold font-greek mb-2">Διαχείριση Φωτογραφιών</h4>
-                <p className="text-mesia-cream text-sm">Προσθήκη, επεξεργασία και διαχείριση φωτογραφιών</p>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-mesia-gold to-mesia-accent text-mesia-wine shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer" onClick={() => router.push("/admin/events")}>
-              <CardContent className="p-6 text-center">
-                <Calendar className="h-12 w-12 mx-auto mb-4 text-mesia-wine" />
-                <h4 className="text-xl font-bold font-greek mb-2">Διαχείριση Εκδηλώσεων</h4>
-                <p className="text-mesia-wine/80 text-sm">Δημιουργία και διαχείριση εκδηλώσεων και ανακοινώσεων</p>
-              </CardContent>
-            </Card>
-
-            {/* NEW: Analytics Dashboard Quick Link */}
-            <Card className="bg-gradient-to-br from-mesia-wine to-mesia-gold text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer" onClick={() => router.push("/admin/analytics")}>
-              <CardContent className="p-6 text-center">
-                <TrendingUp className="h-12 w-12 mx-auto mb-4 text-mesia-gold" />
-                <h4 className="text-xl font-bold font-greek mb-2">Αναλυτικά Στοιχεία</h4>
-                <p className="text-mesia-cream text-sm">Στατιστικά επισκεπτότητας και χρήσης ιστοσελίδας</p>
-              </CardContent>
-            </Card>
-
-            {/* Cookie Consent Logs Quick Link */}
-            <Card className="bg-gradient-to-br from-mesia-gold to-mesia-wine text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer" onClick={() => router.push("/admin/consent-logs")}>
-              <CardContent className="p-6 text-center">
-                <Eye className="h-12 w-12 mx-auto mb-4 text-mesia-gold" />
-                <h4 className="text-xl font-bold font-greek mb-2">Cookie Consent Logs</h4>
-                <p className="text-mesia-cream text-sm">Παρακολούθηση συναίνεσης cookies και GDPR συμμόρφωση</p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
       </main>
     </div>
   )

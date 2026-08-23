@@ -60,9 +60,10 @@ module.exports = {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        display: ['Poppins', 'sans-serif'],
-        greek: ['Georgia', 'Times New Roman', 'serif'],
+        sans: ['var(--font-body)', 'Inter', 'sans-serif'],
+        display: ['var(--font-display)', 'Georgia', 'serif'],
+        greek: ['var(--font-display)', 'Georgia', 'Times New Roman', 'serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       animation: {
         'bounce-slow': 'bounce 2s infinite',

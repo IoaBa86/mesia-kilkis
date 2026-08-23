@@ -1,21 +1,12 @@
 // src/app/events/page.tsx
 import { Metadata } from 'next'
 import Link from "next/link"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { 
-  Calendar, 
-  MapPin, 
-  Clock, 
-  ArrowLeft, 
-  Pin,
-  Filter,
-  Search,
-  CalendarDays
-} from "lucide-react"
+import { CalendarDays } from "lucide-react"
 import { prisma } from "@/lib/prisma"
 import EventsClient from "@/components/EventsClient"
 import ResponsiveAdSlot from '@/components/ads/ResponsiveAdSlot'
+import PageHero from '@/components/site/PageHero'
 
 export const metadata: Metadata = {
   title: 'Εκδηλώσεις & Ανακοινώσεις',
@@ -132,31 +123,18 @@ export default async function EventsPage({ searchParams }: EventsPageProps) {
     ])
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-mesia-cream via-mesia-lightCream to-mesia-beige">
+      <div className="min-h-screen bg-mesia-cream">
         {/* Main content */}
         <main>
-          {/* Hero Section */}
-          <section className="relative bg-gradient-to-br from-mesia-wine via-mesia-wine/95 to-mesia-wine/90 py-20 overflow-hidden">
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-10 left-10 w-64 h-64 bg-mesia-gold rounded-full blur-3xl"></div>
-              <div className="absolute bottom-10 right-10 w-80 h-80 bg-mesia-cream rounded-full blur-3xl"></div>
-            </div>
-            
-            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-              <div className="mb-6">
-                <CalendarDays className="h-16 w-16 text-mesia-gold mx-auto mb-6" />
-              </div>
-              <h2 className="text-5xl md:text-6xl font-bold text-white font-greek mb-6">
-                Εκδηλώσεις & Ανακοινώσεις
-              </h2>
-              <p className="text-xl md:text-2xl text-mesia-cream mb-8 max-w-3xl mx-auto leading-relaxed">
-                Μείνετε ενημερωμένοι για όλες τις εκδηλώσεις και ανακοινώσεις του χωριού μας
-              </p>
-            </div>
-          </section>
-          
+          <PageHero
+            icon={CalendarDays}
+            eyebrow="Ημερολόγιο Χωριού"
+            title="Εκδηλώσεις & Ανακοινώσεις"
+            description="Μείνετε ενημερωμένοι για όλες τις εκδηλώσεις και ανακοινώσεις του χωριού μας"
+          />
+
           {/* ⭐ Responsive Ad Slot */}
-          <ResponsiveAdSlot id="events-ad-1" />
+          <ResponsiveAdSlot slotKey="events-ad-1" />
 
           {/* Events Client Component with Search and Filters */}
           <EventsClient 
@@ -176,11 +154,12 @@ export default async function EventsPage({ searchParams }: EventsPageProps) {
     
     // 🚀 ERROR FALLBACK: Return minimal page on database error
     return (
-      <div className="min-h-screen bg-gradient-to-br from-mesia-cream via-mesia-lightCream to-mesia-beige">
+      <div className="min-h-screen bg-mesia-cream">
         <main className="max-w-7xl mx-auto px-4 py-20 text-center">
-          <h2 className="text-4xl font-bold text-mesia-wine mb-6">Εκδηλώσεις</h2>
-          <p className="text-mesia-lightText">Σφάλμα φόρτωσης εκδηλώσεων. Δοκιμάστε ξανά.</p>
-          <Button asChild className="mt-6">
+          <CalendarDays className="h-12 w-12 text-mesia-gold mx-auto mb-6" />
+          <h2 className="text-3xl font-bold text-mesia-wine font-greek mb-4">Εκδηλώσεις</h2>
+          <p className="text-mesia-lightText mb-6">Σφάλμα φόρτωσης εκδηλώσεων. Δοκιμάστε ξανά.</p>
+          <Button asChild>
             <Link href="/">Επιστροφή στην Αρχική</Link>
           </Button>
         </main>

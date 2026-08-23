@@ -1,341 +1,211 @@
-'use client'
-
-import { useEffect } from 'react'
-import Image from "next/image"
 import Link from "next/link"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { MapPin, Camera, Clock, Users, ArrowRight, Sparkles, Mountain, Church } from "lucide-react"
+import { MapPin, Camera, Users, Mountain, Compass, ArrowRight, Church, Landmark } from "lucide-react"
 import StructuredData from "@/components/StructuredData"
-
-// Declare global window interface for AdSense
-declare global {
-  interface Window {
-    adsbygoogle: any[]
-  }
-}
-
-// Working AdSense Component with your actual ad details
-function ResponsiveAdSlot({ 
-  id, 
-  className = "",
-  adSlot = "9390449710" // Your default ad slot ID
-}: { 
-  id: string; 
-  className?: string; 
-  adSlot?: string;
-}) {
-  
-  useEffect(() => {
-    try {
-      (window.adsbygoogle = window.adsbygoogle || []).push({})
-    } catch (err) {
-      console.error('AdSense error:', err)
-    }
-  }, [])
-
-  return (
-    <div className={`w-full flex justify-center py-6 ${className}`}>
-      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <ins
-          className="adsbygoogle"
-          style={{
-            display: 'block',
-            minHeight: '50px',
-            width: '100%',
-            maxWidth: '970px',
-            margin: '0 auto'
-          }}
-          data-ad-client="ca-pub-1184028367307988"
-          data-ad-slot={adSlot}
-          data-ad-format="auto"
-          data-full-width-responsive="true"
-        />
-      </div>
-    </div>
-  )
-}
+import ResponsiveAdSlot from "@/components/ads/ResponsiveAdSlot"
+import CoordinateStamp from "@/components/site/CoordinateStamp"
+import SectionHeading from "@/components/site/SectionHeading"
+import StatEntry from "@/components/site/StatEntry"
+import FeatureCard from "@/components/site/FeatureCard"
 
 export default function HomePage() {
   return (
     <>
       <StructuredData type="website" />
-      <StructuredData type="organization" data={{
-        email: 'info@mesia.gr',
-      }} />
-      
-      <div className="min-h-screen bg-gradient-to-br from-mesia-cream via-mesia-lightCream to-mesia-beige">
-        {/* Main content */}
+      <StructuredData type="organization" data={{ email: 'info@mesia.gr' }} />
+
+      <div className="bg-mesia-cream">
         <main>
-          {/* Hero Section */}
-          <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-            {/* Elegant Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-mesia-wine via-mesia-wine/90 to-mesia-gold/80">
-              <div className="absolute inset-0 bg-mesh-gradient opacity-30"></div>
-              <div className="absolute top-20 left-20 w-72 h-72 bg-mesia-gold/20 rounded-full blur-3xl animate-float"></div>
-              <div className="absolute bottom-20 right-20 w-96 h-96 bg-mesia-cream/30 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}} aria-hidden="true"></div>
-            </div>
+          {/* Hero */}
+          <section className="relative overflow-hidden bg-mesia-wine pt-24 pb-32 md:pt-32 md:pb-40">
+            <div
+              className="absolute inset-0 opacity-[0.15]"
+              style={{
+                backgroundImage: 'radial-gradient(circle, rgba(250,247,240,0.7) 1px, transparent 1.5px)',
+                backgroundSize: '26px 26px',
+              }}
+              aria-hidden="true"
+            />
+            <div className="absolute inset-x-0 bottom-0 h-px bg-mesia-gold/30" aria-hidden="true" />
 
-            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-              <h2 className="text-6xl md:text-8xl font-bold text-white mb-8 font-greek leading-tight">
-                <span className="block animate-bounce-slow">Μεσιά</span>
-                <span className="block bg-gradient-to-r from-mesia-gold to-mesia-cream bg-clip-text text-transparent">
-                  Κιλκίς
-                </span>
-              </h2>
-              
-              <p className="text-xl md:text-3xl text-mesia-cream mb-12 max-w-4xl mx-auto leading-relaxed">
-                Πεδινό χωριό της <span className="text-mesia-gold font-semibold">Κεντρικής Μακεδονίας</span> 
-                <br />στην Περιφερειακή Ενότητα Κιλκίς
+            <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+              <p className="font-mono text-xs uppercase tracking-[0.3em] text-mesia-gold mb-6">
+                Περιφερειακή Ενότητα Κιλκίς &middot; Κεντρική Μακεδονία
               </p>
-              
-              <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-                <Button 
-                  size="lg" 
-                  className="bg-gradient-to-r from-mesia-gold to-mesia-accent text-mesia-wine hover:from-mesia-accent hover:to-mesia-gold transform hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-mesia-gold/25 px-8 py-4 text-lg font-semibold animate-glow border border-mesia-gold/50"
-                  asChild
-                >
+
+              <h1 className="text-6xl md:text-8xl font-bold text-white font-greek leading-[0.95] mb-8">
+                Μεσιά Κιλκίς
+              </h1>
+
+              <p className="text-lg md:text-2xl text-mesia-cream/90 mb-10 max-w-2xl mx-auto leading-relaxed">
+                Πεδινό χωριό στη δυτική όχθη του Αξιού, με ρίζες που φτάνουν
+                ως την προϊστορική εποχή.
+              </p>
+
+              <div className="flex justify-center mb-12">
+                <CoordinateStamp tone="light">40°52′57″N &middot; 22°34′35″E</CoordinateStamp>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Button size="lg" asChild className="bg-mesia-gold text-mesia-wine hover:bg-mesia-cream px-8">
                   <Link href="/photos" className="flex items-center">
-                    <Camera className="h-6 w-6 mr-3" aria-hidden="true" />
+                    <Camera className="h-5 w-5 mr-2" aria-hidden="true" />
                     Δείτε Φωτογραφίες
-                    <ArrowRight className="h-5 w-5 ml-2" aria-hidden="true" />
+                    <ArrowRight className="h-4 w-4 ml-2" aria-hidden="true" />
                   </Link>
                 </Button>
-                
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="border-2 border-white text-white hover:bg-white hover:text-mesia-wine transform hover:scale-105 transition-all duration-300 backdrop-blur-sm px-8 py-4 text-lg"
-                  asChild
-                >
-                  <Link href="#about">
-                    Μάθετε Περισσότερα
-                  </Link>
+                <Button size="lg" variant="outline" asChild className="border-mesia-cream/40 text-white hover:bg-white hover:text-mesia-wine px-8">
+                  <Link href="#about">Μάθετε Περισσότερα</Link>
                 </Button>
               </div>
             </div>
           </section>
 
-          {/* Stats Cards */}
-          <section className="py-20 -mt-16 relative z-20" aria-labelledby="stats-heading">
+          {/* Stats ledger */}
+          <section className="relative z-20 -mt-14" aria-labelledby="stats-heading">
             <h2 id="stats-heading" className="sr-only">Στατιστικά στοιχεία χωριού</h2>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                {[
-                  { icon: Users, value: "173", label: "κάτοικοι (2021)", color: "wine", emoji: "👥" },
-                  { icon: Mountain, value: "30μ", label: "από τη θάλασσα", color: "gold", emoji: "⛰️" },
-                  { icon: MapPin, value: "17χλμ", label: "από Πολύκαστρο", color: "wine", emoji: "📍" },
-                  { icon: Clock, value: "40°52′57″N", label: "22°34′35″E", color: "gold", emoji: "🗺️" },
-                ].map((stat, index) => (
-                  <Card key={index} className="group hover:scale-105 transition-all duration-500 border-0 shadow-xl hover:shadow-2xl bg-white/95 backdrop-blur-sm hover:bg-white overflow-hidden">
-                    <div className={`absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-5 transition-opacity duration-500 ${
-                      stat.color === 'wine' ? 'from-mesia-wine to-mesia-wine/80' : 'from-mesia-gold to-mesia-accent'
-                    }`} aria-hidden="true"></div>
-                    <CardContent className="pt-8 text-center relative">
-                      <div className="text-4xl mb-4 animate-float" style={{animationDelay: `${index * 0.5}s`}} aria-hidden="true">
-                        {stat.emoji}
-                      </div>
-                      <div className={`text-4xl font-bold mb-2 ${
-                        stat.color === 'wine' ? 'text-mesia-wine' : 'text-mesia-gold'
-                      }`}>
-                        {stat.value}
-                      </div>
-                      <p className="text-mesia-lightText font-medium">{stat.label}</p>
-                    </CardContent>
-                  </Card>
-                ))}
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="grid grid-cols-2 md:grid-cols-4">
+                <StatEntry code="ΠΛΗΘ." icon={Users} value="173" label="κάτοικοι (2021)" />
+                <StatEntry code="ΥΨΟΣ" icon={Mountain} value="30μ" label="από τη θάλασσα" />
+                <StatEntry code="ΑΠΟΣΤ." icon={MapPin} value="17χλμ" label="από Πολύκαστρο" />
+                <StatEntry code="ΣΥΝΤ." icon={Compass} value="40°52′N" label="22°34′E" />
               </div>
             </div>
           </section>
 
-          {/* 🎯 AD SLOT 1 - After Stats Cards (High Engagement Point) */}
-          <ResponsiveAdSlot 
-            id="homepage-ad-1" 
-            adSlot="9390449710"  // Your actual ad slot ID
-            className="bg-gradient-to-r from-mesia-cream/10 to-mesia-beige/10" 
-          />
+          <ResponsiveAdSlot slotKey="home-ad-1" className="mt-16" />
 
-          {/* About Section */}
-          <section id="about" className="py-24 bg-gradient-to-br from-white via-mesia-cream/50 to-mesia-beige/50 relative overflow-hidden" aria-labelledby="about-heading">
-            <div className="absolute inset-0 opacity-5" aria-hidden="true">
-              <div className="absolute top-20 left-10 w-64 h-64 bg-mesia-gold rounded-full blur-3xl"></div>
-              <div className="absolute bottom-20 right-10 w-80 h-80 bg-mesia-wine rounded-full blur-3xl"></div>
-            </div>
-            
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <article>
-                  <div className="inline-flex items-center px-4 py-2 bg-mesia-gold/20 rounded-full text-mesia-wine mb-6 border border-mesia-gold/30">
-                    <MapPin className="h-4 w-4 mr-2" aria-hidden="true" />
-                    <span className="text-sm font-medium">Κεντρική Μακεδονία</span>
-                  </div>
-                  
-                  <h2 id="about-heading" className="text-5xl font-bold text-mesia-wine font-greek leading-tight mb-8">
+          {/* About */}
+          <section id="about" className="py-24 bg-white scroll-mt-20" aria-labelledby="about-heading">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="grid grid-cols-1 lg:grid-cols-5 gap-16">
+                <article className="lg:col-span-3">
+                  <p className="font-mono text-xs uppercase tracking-[0.25em] text-mesia-wine/50 mb-4">
                     Πού βρίσκεται
+                  </p>
+                  <h2 id="about-heading" className="text-4xl md:text-5xl font-bold text-mesia-wine font-greek leading-tight mb-8">
+                    Ανάμεσα στον Αξιό <br className="hidden sm:block" />και το Παϊκό
                   </h2>
-                  
-                  <div className="space-y-6 text-lg text-mesia-darkText leading-relaxed">
+
+                  <div className="space-y-6 text-lg text-mesia-darkText/90 leading-relaxed">
                     <p>
-                      Η <strong className="text-mesia-wine">Μεσιά</strong> είναι ένα χωριό της Κεντρικής Μακεδονίας, 
-                      που βρίσκεται στην Περιφερειακή Ενότητα Κιλκίς. Με υψόμετρο 30 μέτρα 
-                      από τη θάλασσα και πληθυσμό 173 κατοίκους, το χωριό απέχει 17 χιλιόμετρα 
-                       από το Πολύκαστρο και 19 χιλιόμετρα από τη Γουμένισσα.
+                      Η <strong className="text-mesia-wine">Μεσιά</strong> είναι ένα χωριό της Κεντρικής Μακεδονίας
+                      στην Περιφερειακή Ενότητα Κιλκίς. Με υψόμετρο 30 μέτρα από τη θάλασσα
+                      και πληθυσμό 173 κατοίκους, απέχει 17 χιλιόμετρα από το Πολύκαστρο
+                      και 19 χιλιόμετρα από τη Γουμένισσα.
                     </p>
                     <p>
-                      Βρίσκεται δυτικά του <strong className="text-mesia-wine">Αξιού ποταμού</strong>, 
-                      στις συντεταγμένες 40°52′57″N 22°34′35″E, σε μια περιοχή πλούσια σε ιστορία 
-                      και φυσική ομορφιά.
+                      Βρίσκεται δυτικά του <strong className="text-mesia-wine">Αξιού ποταμού</strong>,
+                      σε μια περιοχή πλούσια σε ιστορία και φυσική ομορφιά.
                     </p>
                   </div>
-                  
-                  <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                    <Button className="bg-gradient-to-r from-mesia-wine to-mesia-wine/90 hover:from-mesia-wine/90 hover:to-mesia-wine text-white transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-mesia-wine/25 px-8 py-4 border border-mesia-wine/20" asChild>
-                      <Link href="/photos">
+
+                  <div className="flex flex-col sm:flex-row gap-4 mt-10">
+                    <Button asChild>
+                      <Link href="/photos" className="flex items-center">
                         Δείτε τις Φωτογραφίες μας
-                        <ArrowRight className="h-5 w-5 ml-2" aria-hidden="true" />
+                        <ArrowRight className="h-4 w-4 ml-2" aria-hidden="true" />
                       </Link>
                     </Button>
-                    <Button variant="outline" className="border-mesia-wine text-mesia-wine hover:bg-mesia-wine hover:text-white px-8 py-4" asChild>
-                      <Link href="/services">
-                        Υπηρεσίες Χωριού
-                      </Link>
+                    <Button variant="outline" asChild>
+                      <Link href="/services">Υπηρεσίες Χωριού</Link>
                     </Button>
                   </div>
                 </article>
+
+                <aside className="lg:col-span-2">
+                  <div className="border border-mesia-gold/30 bg-mesia-cream p-8 h-full">
+                    <p className="font-mono text-xs uppercase tracking-[0.2em] text-mesia-wine/50 mb-6">
+                      Απογραφή Πληθυσμού
+                    </p>
+                    <div className="flex items-end justify-between border-b border-mesia-gold/30 pb-4 mb-4">
+                      <span className="font-mono text-sm text-mesia-lightText">2011</span>
+                      <span className="text-3xl font-bold text-mesia-wine font-mono">226</span>
+                    </div>
+                    <div className="flex items-end justify-between">
+                      <span className="font-mono text-sm text-mesia-lightText">2021</span>
+                      <span className="text-3xl font-bold text-mesia-wine font-mono">173</span>
+                    </div>
+                    <p className="text-sm text-mesia-lightText leading-relaxed mt-6 pt-6 border-t border-mesia-gold/30">
+                      Τοπική κοινότητα της δημοτικής ενότητας Ευρωπού, Δήμου Παιονίας.
+                    </p>
+                  </div>
+                </aside>
               </div>
             </div>
           </section>
 
-          {/* Quick Access Section */}
-          <section className="py-24 bg-white" aria-labelledby="quick-access-heading">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <header className="text-center mb-16">
-                <h2 id="quick-access-heading" className="text-4xl font-bold text-mesia-wine font-greek mb-6">
-                  Γρήγορη Πρόσβαση
-                </h2>
-                <p className="text-xl text-mesia-lightText max-w-3xl mx-auto">
-                  Βρείτε γρήγορα αυτό που ψάχνετε για το χωριό μας
-                </p>
-              </header>
+          {/* Quick Access */}
+          <section className="py-24 bg-mesia-cream" aria-labelledby="quick-access-heading">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+              <SectionHeading
+                eyebrow="Γρήγορη Πρόσβαση"
+                title="Βρείτε αυτό που ψάχνετε"
+                description="Υπηρεσίες, εκδηλώσεις και φωτογραφίες του χωριού μας."
+              />
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <Card className="group hover:scale-105 transition-all duration-500 border-0 shadow-xl hover:shadow-2xl overflow-hidden bg-white/95 backdrop-blur-sm">
-                  <CardHeader className="text-center">
-                    <div className="w-16 h-16 bg-gradient-to-br from-mesia-wine to-mesia-wine/80 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                      <span className="text-3xl text-white">📋</span>
-                    </div>
-                    <CardTitle className="text-2xl font-bold text-mesia-wine font-greek mb-2">
-                      Υπηρεσίες
-                    </CardTitle>
-                    <CardDescription className="text-mesia-lightText">
-                      Βρείτε όλες τις υπηρεσίες και την επικοινωνία με το Δημοτικό Συμβούλιο
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button className="w-full bg-gradient-to-r from-mesia-wine to-mesia-wine/90 hover:from-mesia-wine/90 hover:to-mesia-wine text-white" asChild>
-                      <Link href="/services">
-                        Δείτε Υπηρεσίες
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <FeatureCard
+                  icon={Landmark}
+                  title="Υπηρεσίες"
+                  description="Όλες οι υπηρεσίες και η επικοινωνία με το Δημοτικό Συμβούλιο."
+                  className="bg-mesia-cream"
+                >
+                  <Link href="/services" className="mt-6 inline-flex items-center text-sm font-medium text-mesia-wine hover:text-mesia-gold transition-colors">
+                    Δείτε Υπηρεσίες <ArrowRight className="h-4 w-4 ml-1" />
+                  </Link>
+                </FeatureCard>
 
-                <Card className="group hover:scale-105 transition-all duration-500 border-0 shadow-xl hover:shadow-2xl overflow-hidden bg-white/95 backdrop-blur-sm">
-                  <CardHeader className="text-center">
-                    <div className="w-16 h-16 bg-gradient-to-br from-mesia-gold to-mesia-accent rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                      <span className="text-3xl text-mesia-wine">📅</span>
-                    </div>
-                    <CardTitle className="text-2xl font-bold text-mesia-wine font-greek mb-2">
-                      Εκδηλώσεις
-                    </CardTitle>
-                    <CardDescription className="text-mesia-lightText">
-                      Μείνετε ενημερωμένοι για όλες τις εκδηλώσεις και ανακοινώσεις του χωριού
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button className="w-full bg-gradient-to-r from-mesia-gold to-mesia-accent text-mesia-wine hover:from-mesia-accent hover:to-mesia-gold" asChild>
-                      <Link href="/events">
-                        Δείτε Εκδηλώσεις
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
+                <FeatureCard
+                  icon={Compass}
+                  title="Εκδηλώσεις"
+                  description="Μείνετε ενημερωμένοι για εκδηλώσεις και ανακοινώσεις του χωριού."
+                  className="bg-mesia-cream"
+                >
+                  <Link href="/events" className="mt-6 inline-flex items-center text-sm font-medium text-mesia-wine hover:text-mesia-gold transition-colors">
+                    Δείτε Εκδηλώσεις <ArrowRight className="h-4 w-4 ml-1" />
+                  </Link>
+                </FeatureCard>
 
-                <Card className="group hover:scale-105 transition-all duration-500 border-0 shadow-xl hover:shadow-2xl overflow-hidden bg-white/95 backdrop-blur-sm">
-                  <CardHeader className="text-center">
-                    <div className="w-16 h-16 bg-gradient-to-br from-mesia-wine to-mesia-gold rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                      <Camera className="h-8 w-8 text-white" />
-                    </div>
-                    <CardTitle className="text-2xl font-bold text-mesia-wine font-greek mb-2">
-                      Φωτογραφίες
-                    </CardTitle>
-                    <CardDescription className="text-mesia-lightText">
-                      Εξερευνήστε τις ομορφιές του χωριού μας μέσα από τον φακό
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <Button variant="outline" className="w-full border-mesia-wine text-mesia-wine hover:bg-mesia-wine hover:text-white" asChild>
-                      <Link href="/photos">
-                        Δείτε Φωτογραφίες
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
+                <FeatureCard
+                  icon={Camera}
+                  title="Φωτογραφίες"
+                  description="Εξερευνήστε τις ομορφιές του χωριού μας μέσα από τον φακό."
+                  className="bg-mesia-cream"
+                >
+                  <Link href="/photos" className="mt-6 inline-flex items-center text-sm font-medium text-mesia-wine hover:text-mesia-gold transition-colors">
+                    Δείτε Φωτογραφίες <ArrowRight className="h-4 w-4 ml-1" />
+                  </Link>
+                </FeatureCard>
               </div>
             </div>
           </section>
 
-          {/* 🎯 AD SLOT 2 - After Quick Access (Pre-Final Content) */}
-          <ResponsiveAdSlot 
-            id="homepage-ad-2" 
-            adSlot="9390449710"  // Using same ad slot, you can create different ones
-            className="bg-white" 
-          />
+          <ResponsiveAdSlot slotKey="home-ad-2" className="bg-white" />
 
-          {/* Attractions Section */}
-          <section id="attractions" className="py-24 bg-gradient-to-br from-mesia-beige/30 via-white to-mesia-cream/30" aria-labelledby="attractions-heading">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <header className="text-center mb-16">
-                <h2 id="attractions-heading" className="text-5xl font-bold text-mesia-wine font-greek mb-6">
-                  Αξιοθέατα & Ιστορία
-                </h2>
-                <p className="text-2xl text-mesia-lightText max-w-3xl mx-auto">
-                  Ανακαλύψτε την πλούσια ιστορία και τα μνημεία του χωριού μας
-                </p>
-              </header>
+          {/* Attractions */}
+          <section id="attractions" className="py-24 bg-white" aria-labelledby="attractions-heading">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+              <SectionHeading
+                eyebrow="Αξιοθέατα & Ιστορία"
+                title="Χιλιάδες χρόνια σε λίγα χιλιόμετρα"
+                description="Ανακαλύψτε την πλούσια ιστορία και τα μνημεία του χωριού μας."
+              />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {[
-                  {
-                    title: "Εκκλησία Αγ. Κωνσταντίνου & Ελένης",
-                    description: "Ιστορικό διατηρητέο μνημείο με ενσωματωμένο μουσουλμανικό τέμενος του 15ου-16ου αιώνα, κτισμένο με μαρμάρινους δόμους από αρχαίο κτήριο.",
-                    emoji: "⛪",
-                    gradient: "from-mesia-wine to-mesia-wine/80"
-                  },
-                  {
-                    title: "Αρχαιολογικός Χώρος",
-                    description: "Στην τοποθεσία 'Τούμπας Παπάκιοϊ' βρίσκεται σημαντικός αρχαιολογικός χώρος που μαρτυρεί την παρουσία αρχαίων πολιτισμών.",
-                    emoji: "🏛️",
-                    gradient: "from-mesia-gold to-mesia-accent"
-                  }
-                ].map((attraction, index) => (
-                  <Card key={index} className="group hover:scale-105 transition-all duration-500 border-0 shadow-xl hover:shadow-2xl overflow-hidden bg-white/95 backdrop-blur-sm">
-                    <div className={`absolute inset-0 bg-gradient-to-br ${attraction.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} aria-hidden="true"></div>
-                    <CardHeader className="relative">
-                      <div className="flex items-center mb-6">
-                        <div className={`bg-gradient-to-br ${attraction.gradient} p-4 rounded-2xl mr-6 text-4xl flex items-center justify-center shadow-lg text-white`} aria-hidden="true">
-                          {attraction.emoji}
-                        </div>
-                        <CardTitle className="text-2xl font-bold text-mesia-wine font-greek">
-                          {attraction.title}
-                        </CardTitle>
-                      </div>
-                      <CardDescription className="text-lg text-mesia-darkText leading-relaxed">
-                        {attraction.description}
-                      </CardDescription>
-                    </CardHeader>
-                  </Card>
-                ))}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <FeatureCard
+                  icon={Church}
+                  tag="15ος αι. — 1930"
+                  title="Εκκλησία Αγ. Κωνσταντίνου & Ελένης"
+                  description="Ιστορικό διατηρητέο μνημείο με ενσωματωμένο μουσουλμανικό τέμενος του 15ου-16ου αιώνα, κτισμένο με μαρμάρινους δόμους από αρχαίο κτήριο."
+                />
+                <FeatureCard
+                  icon={Landmark}
+                  tag="Προϊστορική εποχή"
+                  title="Αρχαιολογικός Χώρος"
+                  description="Στην τοποθεσία «Τούμπας Παπάκιοϊ» βρίσκεται σημαντικός αρχαιολογικός χώρος που μαρτυρεί την παρουσία αρχαίων πολιτισμών."
+                />
               </div>
             </div>
           </section>

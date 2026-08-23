@@ -1,26 +1,19 @@
 // src/app/services/page.tsx
 import { Metadata } from 'next'
-import Link from "next/link"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Clock, 
-  ArrowLeft, 
-  Building, 
+import {
+  MapPin,
+  Phone,
+  Clock,
+  Building,
   Heart,
   Package,
   GraduationCap,
-  Users,
   Shield,
-  Briefcase,
-  Home,
-  Car,
-  Landmark
 } from "lucide-react"
 import StructuredData from "@/components/StructuredData"
+import PageHero from '@/components/site/PageHero'
+import SectionHeading from '@/components/site/SectionHeading'
+import FeatureCard from '@/components/site/FeatureCard'
 
 export const metadata: Metadata = {
   title: 'Υπηρεσίες & Δημοτικό Συμβούλιο',
@@ -41,7 +34,6 @@ export default function ServicesPage() {
       contact: "Τηλ: 23430 41234",
       hours: "Δευ-Παρ: 08:00-14:00",
       location: "Κεντρική Πλατεία",
-      color: "from-mesia-wine to-mesia-wine/80"
     },
     {
       title: "Ιατρείο",
@@ -50,7 +42,6 @@ export default function ServicesPage() {
       contact: "Τηλ: 23430 41567 (Επείγον: 166)",
       hours: "Δευ-Τετ-Παρ: 09:00-13:00",
       location: "Οδός Κιλκίς 15",
-      color: "from-mesia-gold to-mesia-accent"
     },
     {
       title: "Δημοτικό Σχολείο",
@@ -59,7 +50,6 @@ export default function ServicesPage() {
       contact: "Τηλ: 23430 41890",
       hours: "Δευ-Παρ: 08:15-14:00",
       location: "Οδός Μακεδονίας 8",
-      color: "from-mesia-wine to-mesia-gold"
     },
     {
       title: "Αστυνομικό Τμήμα",
@@ -68,174 +58,92 @@ export default function ServicesPage() {
       contact: "Τηλ: 23430 41100 (Επείγον: 100)",
       hours: "24ωρη εξυπηρέτηση",
       location: "Κεντρικός Δρόμος 22",
-      color: "from-mesia-gold to-mesia-wine"
     }
   ]
 
-  const councilMembers = [
-    {
-      name: "Δημήτριος Παπαδόπουλος",
-      position: "Πρόεδρος Τοπικής Κοινότητας",
-      phone: "23430 41001",
-      email: "president@mesia-kilkis.gr",
-      responsibilities: ["Γενική διοίκηση", "Συντονισμός έργων", "Εξωτερικές σχέσεις"]
-    },
-    {
-      name: "Μαρία Γεωργιάδου",
-      position: "Αντιπρόεδρος",
-      phone: "23430 41002", 
-      email: "vicepresident@mesia-kilkis.gr",
-      responsibilities: ["Κοινωνικά θέματα", "Πολιτιστικές εκδηλώσεις", "Γυναικείες οργανώσεις"]
-    },
-    {
-      name: "Ιωάννης Νικολάου",
-      position: "Γραμματέας",
-      phone: "23430 41003",
-      email: "secretary@mesia-kilkis.gr", 
-      responsibilities: ["Διοικητικά", "Πρακτικά συνεδριάσεων", "Αρχειοθέτηση"]
-    },
-    {
-      name: "Ελένη Κωνσταντίνου",
-      position: "Ταμίας",
-      phone: "23430 41004",
-      email: "treasurer@mesia-kilkis.gr",
-      responsibilities: ["Οικονομικά", "Προϋπολογισμός", "Λογιστική διαχείριση"]
-    },
-    {
-      name: "Νικόλαος Ανδρέου",
-      position: "Σύμβουλος",
-      phone: "23430 41005",
-      email: "councilor1@mesia-kilkis.gr",
-      responsibilities: ["Αγροτικά θέματα", "Περιβάλλον", "Υδροδότηση"]
-    }
-  ]
+  // NOTE: villageServices contact/hours/location above and the emergency
+  // numbers below are placeholder data carried over from the original
+  // build — see project to-do notes about replacing them with real details.
 
   return (
     <>
       <StructuredData type="place" />
-      
-      <div className="min-h-screen bg-gradient-to-br from-mesia-cream via-mesia-lightCream to-mesia-beige">
-    
 
-        {/* Main content */}
+      <div className="min-h-screen bg-mesia-cream">
         <main>
-          {/* Hero Section */}
-          <section className="relative bg-gradient-to-br from-mesia-wine via-mesia-wine/95 to-mesia-wine/90 py-20 overflow-hidden">
-            <div className="absolute inset-0 opacity-10">
-              <div className="absolute top-10 left-10 w-64 h-64 bg-mesia-gold rounded-full blur-3xl"></div>
-              <div className="absolute bottom-10 right-10 w-80 h-80 bg-mesia-cream rounded-full blur-3xl"></div>
-            </div>
-            
-            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-              <div className="mb-6">
-                <Building className="h-16 w-16 text-mesia-gold mx-auto mb-6" aria-hidden="true" />
-              </div>
-              <h2 className="text-5xl md:text-6xl font-bold text-white font-greek mb-6">
-                Υπηρεσίες & Συμβούλιο
-              </h2>
-              <p className="text-xl md:text-2xl text-mesia-cream mb-8 max-w-3xl mx-auto leading-relaxed">
-                Όλες οι υπηρεσίες του χωριού και η επικοινωνία με το Δημοτικό Συμβούλιο
-              </p>
-            </div>
-          </section>
+          <PageHero
+            icon={Building}
+            eyebrow="Δημοτικό Συμβούλιο"
+            title="Υπηρεσίες & Συμβούλιο"
+            description="Όλες οι υπηρεσίες του χωριού και η επικοινωνία με το Δημοτικό Συμβούλιο"
+          />
 
           {/* Village Services */}
-          <section className="py-24 bg-white" aria-labelledby="services-heading">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <header className="text-center mb-16">
-                <h2 id="services-heading" className="text-4xl font-bold text-mesia-wine font-greek mb-6">
-                  Υπηρεσίες Χωριού
-                </h2>
-                <p className="text-xl text-mesia-lightText max-w-3xl mx-auto">
-                  Βρείτε όλες τις απαραίτητες υπηρεσίες για την καθημερινή σας εξυπηρέτηση
-                </p>
-              </header>
+          <section className="py-24 bg-white">
+            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+              <SectionHeading
+                title="Υπηρεσίες Χωριού"
+                description="Βρείτε όλες τις απαραίτητες υπηρεσίες για την καθημερινή σας εξυπηρέτηση"
+              />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {villageServices.map((service, index) => (
-                  <Card key={index} className="group hover:scale-105 transition-all duration-500 border-0 shadow-xl hover:shadow-2xl overflow-hidden bg-white/95 backdrop-blur-sm">
-                    <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} aria-hidden="true"></div>
-                    <CardHeader className="relative">
-                      <div className="flex items-center mb-6">
-                        <div className={`bg-gradient-to-br ${service.color} p-4 rounded-2xl mr-6 shadow-lg text-white`} aria-hidden="true">
-                          <service.icon className="h-8 w-8" />
-                        </div>
-                        <div>
-                          <CardTitle className="text-2xl font-bold text-mesia-wine font-greek mb-2">
-                            {service.title}
-                          </CardTitle>
-                          <CardDescription className="text-lg text-mesia-darkText leading-relaxed">
-                            {service.description}
-                          </CardDescription>
-                        </div>
+                  <FeatureCard
+                    key={index}
+                    icon={service.icon}
+                    title={service.title}
+                    description={service.description}
+                  >
+                    <div className="space-y-2.5 mt-5 pt-5 border-t border-mesia-gold/20 text-sm">
+                      <div className="flex items-center text-mesia-darkText/80">
+                        <Phone className="h-4 w-4 mr-3 text-mesia-gold flex-shrink-0" />
+                        <span>{service.contact}</span>
                       </div>
-                      
-                      <div className="space-y-3 ml-20">
-                        <div className="flex items-center text-mesia-darkText">
-                          <Phone className="h-4 w-4 mr-3 text-mesia-gold" />
-                          <span>{service.contact}</span>
-                        </div>
-                        <div className="flex items-center text-mesia-darkText">
-                          <Clock className="h-4 w-4 mr-3 text-mesia-gold" />
-                          <span>{service.hours}</span>
-                        </div>
-                        <div className="flex items-center text-mesia-darkText">
-                          <MapPin className="h-4 w-4 mr-3 text-mesia-gold" />
-                          <span>{service.location}</span>
-                        </div>
+                      <div className="flex items-center text-mesia-darkText/80">
+                        <Clock className="h-4 w-4 mr-3 text-mesia-gold flex-shrink-0" />
+                        <span>{service.hours}</span>
                       </div>
-                    </CardHeader>
-                  </Card>
+                      <div className="flex items-center text-mesia-darkText/80">
+                        <MapPin className="h-4 w-4 mr-3 text-mesia-gold flex-shrink-0" />
+                        <span>{service.location}</span>
+                      </div>
+                    </div>
+                  </FeatureCard>
                 ))}
               </div>
             </div>
           </section>
 
-          {/* Village Council */}
-          <section className="py-24 bg-gradient-to-br from-mesia-beige/30 via-white to-mesia-cream/30" aria-labelledby="council-heading">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <header className="text-center mb-16">
-               
-              </header>
-
-             
-            
-
-              {/* Emergency Contacts */}
-              <div className="mt-16">
-                <Card className="bg-gradient-to-r from-red-600 to-red-700 text-white shadow-2xl border-0">
-                  <CardHeader>
-                    <CardTitle className="text-2xl font-bold text-center font-greek flex items-center justify-center">
-                      <Shield className="h-8 w-8 mr-3" />
-                      Αριθμοί Έκτακτης Ανάγκης
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
-                      <div>
-                        <div className="text-3xl font-bold mb-2">100</div>
-                        <div className="text-sm">Αστυνομία</div>
-                      </div>
-                      <div>
-                        <div className="text-3xl font-bold mb-2">199</div>
-                        <div className="text-sm">Πυροσβεστική</div>
-                      </div>
-                      <div>
-                        <div className="text-3xl font-bold mb-2">166</div>
-                        <div className="text-sm">Ιατρική Βοήθεια</div>
-                      </div>
-                      <div>
-                        <div className="text-3xl font-bold mb-2">112</div>
-                        <div className="text-sm">Ευρωπαϊκός Αριθμός</div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+          {/* Emergency Contacts */}
+          <section className="py-24 bg-mesia-cream">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="border-2 border-red-700/30 bg-red-50 p-8 md:p-10">
+                <h2 className="text-2xl font-bold text-red-800 font-greek text-center mb-8 flex items-center justify-center">
+                  <Shield className="h-7 w-7 mr-3" />
+                  Αριθμοί Έκτακτης Ανάγκης
+                </h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                  <div>
+                    <div className="text-3xl font-bold font-mono text-red-800 mb-1">100</div>
+                    <div className="text-sm text-red-800/80">Αστυνομία</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold font-mono text-red-800 mb-1">199</div>
+                    <div className="text-sm text-red-800/80">Πυροσβεστική</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold font-mono text-red-800 mb-1">166</div>
+                    <div className="text-sm text-red-800/80">Ιατρική Βοήθεια</div>
+                  </div>
+                  <div>
+                    <div className="text-3xl font-bold font-mono text-red-800 mb-1">112</div>
+                    <div className="text-sm text-red-800/80">Ευρωπαϊκός Αριθμός</div>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
         </main>
-
       </div>
     </>
   )

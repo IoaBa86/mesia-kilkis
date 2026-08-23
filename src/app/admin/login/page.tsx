@@ -3,6 +3,10 @@
 import { useState } from "react"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { AlertTriangle } from "lucide-react"
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("")
@@ -38,60 +42,66 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
-      <div className="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md">
-        <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Μεσιά Κιλκίς</h1>
-        <p className="text-center text-gray-600 mb-6">Διαχείριση Ιστοσελίδας</p>
-        
+    <div className="min-h-screen bg-mesia-wine flex items-center justify-center p-4 relative overflow-hidden">
+      <div
+        className="absolute inset-0 opacity-[0.15]"
+        style={{
+          backgroundImage: 'radial-gradient(circle, rgba(250,247,240,0.7) 1px, transparent 1.5px)',
+          backgroundSize: '22px 22px',
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="relative bg-white border border-mesia-gold/30 p-10 w-full max-w-md">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="flex h-11 w-11 items-center justify-center border-2 border-mesia-wine bg-mesia-wine text-mesia-gold font-greek font-bold text-xl">
+            Μ
+          </div>
+          <div>
+            <h1 className="text-xl font-bold font-greek text-mesia-wine leading-none">Μεσιά Κιλκίς</h1>
+            <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-mesia-lightText mt-1">
+              Διαχείριση Ιστοσελίδας
+            </p>
+          </div>
+        </div>
+
         {error && (
-          <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            <div className="flex items-center">
-              <span className="text-red-500 mr-2">⚠️</span>
-              <span className="text-sm">{error}</span>
-            </div>
+          <div className="mb-6 flex items-center gap-2 border border-red-200 bg-red-50 text-red-700 px-4 py-3 text-sm">
+            <AlertTriangle className="h-4 w-4 flex-shrink-0" />
+            <span>{error}</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-              Email
-            </label>
-            <input
+            <Label htmlFor="email">Email</Label>
+            <Input
               id="email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="admin@mesiakilkis.gr"
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
               disabled={loading}
             />
           </div>
-          
+
           <div>
-            <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-2">
-              Κωδικός
-            </label>
-            <input
+            <Label htmlFor="password">Κωδικός</Label>
+            <Input
               id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="••••••••"
-              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none transition-colors"
               disabled={loading}
             />
           </div>
-          
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-500 hover:bg-blue-600 disabled:bg-blue-300 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-lg transition-all transform hover:scale-105 disabled:transform-none"
-          >
+
+          <Button type="submit" disabled={loading} className="w-full">
             {loading ? "Σύνδεση..." : "Σύνδεση"}
-          </button>
+          </Button>
         </form>
       </div>
     </div>

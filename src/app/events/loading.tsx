@@ -29,7 +29,7 @@ export default function EventsLoading() {
       </section>
 
       {/* Ad Slot - Matches your actual page */}
-      <ResponsiveAdSlot id="events-ad-1" />
+      <ResponsiveAdSlot slotKey="events-ad-1" />
 
       {/* Events List Loading - Multiple cards like your actual page */}
       <section className="py-12">
