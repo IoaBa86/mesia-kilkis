@@ -1,14 +1,15 @@
 // src/app/legal/privacy-policy/page.tsx
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowLeft, Shield, Mail, Phone } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { ArrowLeft, Shield, Mail } from 'lucide-react'
+
+const LAST_UPDATED = '23 Αυγούστου 2026'
 
 export const metadata: Metadata = {
   title: 'Πολιτική Απορρήτου - Μεσιά Κιλκίς',
   description: 'Πολιτική προστασίας προσωπικών δεδομένων σύμφωνα με τον GDPR και την ελληνική νομοθεσία. Δικαιώματα χρηστών και ασφάλεια δεδομένων.',
   alternates: {
-    canonical: '/legal/privacy-policy', // ✅ Add this line
+    canonical: '/legal/privacy-policy',
   },
   openGraph: {
     title: 'Πολιτική Απορρήτου - Μεσιά Κιλκίς',
@@ -16,7 +17,6 @@ export const metadata: Metadata = {
     images: ['/og-image.jpg'],
   },
 }
-
 
 export default function PrivacyPolicyPage() {
   return (
@@ -33,32 +33,46 @@ export default function PrivacyPolicyPage() {
         </div>
       </div>
 
-      {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="border border-mesia-gold/25 bg-white p-8 md:p-10">
           <div className="prose prose-lg max-w-none">
             <div className="mb-8 p-4 bg-mesia-wine/10 rounded-lg border border-mesia-wine/20">
               <p className="text-mesia-darkText mb-0">
-                <strong>Ημερομηνία τελευταίας ενημέρωσης:</strong> {new Date().toLocaleDateString('el-GR')}
+                <strong>Ημερομηνία τελευταίας ενημέρωσης:</strong> {LAST_UPDATED}
+              </p>
+            </div>
+
+            <div className="mb-8 p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+              <p className="text-sm text-yellow-900 mb-0">
+                Η παρούσα ιστοσελίδα λειτουργεί ανεξάρτητα, χωρίς σχέση με δημόσιους ή δημοτικούς φορείς
+                (βλ. Δήλωση Αποποίησης Ευθύνης στο υποσέλιδο). Το κείμενο που ακολουθεί περιγράφει με ειλικρίνεια
+                πώς λειτουργεί η ιστοσελίδα σήμερα, αλλά δεν αποτελεί νομική συμβουλή — πριν τεθεί σε πλήρη
+                παραγωγική χρήση συνιστάται έλεγχος από δικηγόρο εξειδικευμένο στο GDPR και το ελληνικό δίκαιο.
               </p>
             </div>
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">1. Υπεύθυνος Επεξεργασίας Δεδομένων</h2>
             <div className="bg-mesia-lightCream/50 p-4 rounded-lg mb-6">
-              <p><strong>Οργανισμός:</strong> mesia.gr</p>
-              <p><strong>Διεύθυνση:</strong> Μεσιά, Κιλκίς 61100, Ελλάδα</p>
-              <p><strong>Email:</strong> info@mesia.gr</p>
-              
+              <p><strong>Ιστοσελίδα:</strong> mesia.gr — ανεξάρτητη, μη κερδοσκοπική ενημερωτική ιστοσελίδα για το χωριό Μεσιά Κιλκίς</p>
+              <p><strong>Έδρα/Περιοχή αναφοράς:</strong> Μεσιά, Κιλκίς 61100, Ελλάδα</p>
+              <p><strong>Email επικοινωνίας για θέματα προστασίας δεδομένων:</strong> info@mesia.gr</p>
+              <p className="text-sm text-mesia-lightText mb-0">
+                (Πλήρες όνομα/επωνυμία υπευθύνου επεξεργασίας προς συμπλήρωση πριν την πλήρη κυκλοφορία της ιστοσελίδας.)
+              </p>
             </div>
 
-            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">2. Τύποι Προσωπικών Δεδομένων που Συλλέγουμε</h2>
-            <p>Συλλέγουμε τα ακόλουθα προσωπικά δεδομένα:</p>
+            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">2. Δεδομένα που Συλλέγουμε</h2>
+            <p>Ανάλογα με τον τρόπο που χρησιμοποιείτε την ιστοσελίδα, ενδέχεται να συλλέξουμε:</p>
             <ul className="space-y-2">
-              <li><strong>Στοιχεία ταυτότητας:</strong> Όνομα, επώνυμο, διεύθυνση email</li>
-              <li><strong>Τεχνικά στοιχεία:</strong> Διεύθυνση IP, τύπος φυλλομετρητή, συσκευή</li>
-              <li><strong>Στοιχεία χρήσης:</strong> Σελίδες που επισκέπτεστε, χρόνος παραμονής</li>
-              <li><strong>Στοιχεία επικοινωνίας:</strong> Μηνύματα μέσω φορμών επικοινωνίας</li>
+              <li><strong>Στοιχεία επικοινωνίας:</strong> όνομα και email, εφόσον επικοινωνήσετε μαζί μας μέσω email</li>
+              <li><strong>Τεχνικά στοιχεία:</strong> διεύθυνση IP (ανωνυμοποιημένη όπου καταγράφεται — βλ. ενότητα 9), τύπος φυλλομετρητή/συσκευής</li>
+              <li><strong>Προτιμήσεις cookies:</strong> οι επιλογές σας σχετικά με τα cookies, μέσω του συστήματος συναίνεσης που χρησιμοποιούμε (Usercentrics)</li>
+              <li><strong>Στοιχεία διαχειριστών:</strong> για τους λογαριασμούς διαχείρισης περιεχομένου (email, κρυπτογραφημένος κωδικός) — αφορά μόνο τους εθελοντές/συντάκτες της ιστοσελίδας, όχι τους επισκέπτες</li>
             </ul>
+            <p>
+              Δεν λειτουργούμε φόρμα εγγραφής, newsletter, ή λογαριασμό επισκέπτη — η ιστοσελίδα είναι κατά βάση
+              ενημερωτική.
+            </p>
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">3. Σκοπός και Νομική Βάση Επεξεργασίας</h2>
             <div className="overflow-x-auto">
@@ -71,80 +85,85 @@ export default function PrivacyPolicyPage() {
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="border border-mesia-gold/30 p-3">Παροχή υπηρεσιών ιστοσελίδας</td>
-                    <td className="border border-mesia-gold/30 p-3">Νόμιμο συμφέρον</td>
+                    <td className="border border-mesia-gold/30 p-3">Λειτουργία και ασφάλεια της ιστοσελίδας</td>
+                    <td className="border border-mesia-gold/30 p-3">Έννομο συμφέρον</td>
                   </tr>
                   <tr className="bg-mesia-lightCream/30">
-                    <td className="border border-mesia-gold/30 p-3">Ενημέρωση για εκδηλώσεις</td>
+                    <td className="border border-mesia-gold/30 p-3">Απάντηση σε email επικοινωνίας</td>
+                    <td className="border border-mesia-gold/30 p-3">Έννομο συμφέρον / εκτέλεση αιτήματός σας</td>
+                  </tr>
+                  <tr>
+                    <td className="border border-mesia-gold/30 p-3">Ανάλυση επισκεψιμότητας (Google Analytics)</td>
+                    <td className="border border-mesia-gold/30 p-3">Συγκατάθεση</td>
+                  </tr>
+                  <tr className="bg-mesia-lightCream/30">
+                    <td className="border border-mesia-gold/30 p-3">Εμφάνιση διαφημίσεων (Google AdSense)</td>
                     <td className="border border-mesia-gold/30 p-3">Συγκατάθεση</td>
                   </tr>
                   <tr>
-                    <td className="border border-mesia-gold/30 p-3">Βελτίωση υπηρεσιών</td>
-                    <td className="border border-mesia-gold/30 p-3">Νόμιμο συμφέρον</td>
-                  </tr>
-                  <tr className="bg-mesia-lightCream/30">
-                    <td className="border border-mesia-gold/30 p-3">Συμμόρφωση με νομικές υποχρεώσεις</td>
-                    <td className="border border-mesia-gold/30 p-3">Νομική υποχρέωση</td>
+                    <td className="border border-mesia-gold/30 p-3">Καταγραφή επιλογών cookies</td>
+                    <td className="border border-mesia-gold/30 p-3">Νομική υποχρέωση (απόδειξη συναίνεσης)</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">4. Κοινοποίηση Δεδομένων σε Τρίτους</h2>
-            <p>Τα προσωπικά σας δεδομένα μπορεί να κοινοποιηθούν σε:</p>
+            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">4. Πάροχοι και Τρίτα Μέρη</h2>
+            <p>Για τη λειτουργία της ιστοσελίδας χρησιμοποιούμε τους ακόλουθους παρόχους, οι οποίοι ενδέχεται να επεξεργάζονται δεδομένα ως εκτελούντες την επεξεργασία ή ως ανεξάρτητοι υπεύθυνοι επεξεργασίας:</p>
             <ul>
-              <li><strong>Παρόχους υπηρεσιών hosting:</strong> Για τη λειτουργία της ιστοσελίδας</li>
-              <li><strong>Παρόχους email:</strong> Για την αποστολή ενημερώσεων</li>
-              <li><strong>Αρχές:</strong> Όταν απαιτείται από το νόμο</li>
+              <li><strong>Vercel Inc.</strong> — φιλοξενία (hosting) της ιστοσελίδας</li>
+              <li><strong>Neon (Neon Inc.)</strong> — φιλοξενία της βάσης δεδομένων (PostgreSQL)</li>
+              <li><strong>Google LLC</strong> — Google Analytics (στατιστικά επισκεψιμότητας) και Google AdSense (διαφημίσεις), εφόσον έχετε δώσει τη σχετική συγκατάθεση</li>
+              <li><strong>Usercentrics GmbH</strong> — πλατφόρμα διαχείρισης συναίνεσης cookies (Consent Management Platform)</li>
             </ul>
+            <p>
+              Ορισμένοι από τους παραπάνω παρόχους (Vercel, Neon, Google) εδρεύουν ή διατηρούν υποδομές εκτός
+              Ευρωπαϊκού Οικονομικού Χώρου (κυρίως ΗΠΑ). Η μεταφορά δεδομένων προς αυτούς στηρίζεται σε
+              Τυποποιημένες Συμβατικές Ρήτρες (Standard Contractual Clauses) και, όπου εφαρμόζεται, στο πλαίσιο
+              EU-U.S. Data Privacy Framework.
+            </p>
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">5. Περίοδος Αποθήκευσης</h2>
-            <p>Τα προσωπικά δεδομένα αποθηκεύονται για:</p>
             <ul>
-              <li><strong>Στοιχεία χρήστη:</strong> Μέχρι την ανάκληση της συγκατάθεσης</li>
-              <li><strong>Logs ιστοσελίδας:</strong> 12 μήνες για λόγους ασφαλείας</li>
-              <li><strong>Στοιχεία επικοινωνίας:</strong> 24 μήνες από την τελευταία επικοινωνία</li>
+              <li><strong>Στοιχεία επικοινωνίας μέσω email:</strong> έως 24 μήνες από την τελευταία επικοινωνία</li>
+              <li><strong>Καταγραφές συναίνεσης cookies:</strong> έως 2 έτη, ως απόδειξη τήρησης του GDPR</li>
+              <li><strong>Λογαριασμοί διαχειριστών:</strong> για όσο διάστημα το πρόσωπο εξακολουθεί να συμμετέχει στη διαχείριση της ιστοσελίδας</li>
+              <li><strong>Δεδομένα Google Analytics / AdSense:</strong> σύμφωνα με τις δικές τους πολιτικές διατήρησης (βλ. πολιτικές απορρήτου Google)</li>
             </ul>
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">6. Τα Δικαιώματά σας (GDPR)</h2>
             <div className="bg-mesia-gold/10 p-6 rounded-lg border border-mesia-gold/30">
               <h3 className="text-lg font-semibold text-mesia-wine mb-3">Έχετε δικαίωμα:</h3>
               <ul className="space-y-2">
-                <li>✅ <strong>Πρόσβασης:</strong> Να ζητήσετε αντίγραφο των δεδομένων σας</li>
-                <li>✅ <strong>Διόρθωσης:</strong> Να διορθώσετε ανακριβή δεδομένα</li>
-                <li>✅ <strong>Διαγραφής:</strong> Να ζητήσετε διαγραφή των δεδομένων σας</li>
-                <li>✅ <strong>Περιορισμού:</strong> Να περιορίσετε την επεξεργασία</li>
-                <li>✅ <strong>Φορητότητας:</strong> Να λάβετε τα δεδομένα σας σε δομημένη μορφή</li>
-                <li>✅ <strong>Εναντίωσης:</strong> Να αντιταχθείτε στην επεξεργασία</li>
-                <li>✅ <strong>Ανάκλησης συγκατάθεσης:</strong> Οποιαδήποτε στιγμή</li>
+                <li>✅ <strong>Πρόσβασης:</strong> να ζητήσετε αντίγραφο των δεδομένων σας</li>
+                <li>✅ <strong>Διόρθωσης:</strong> να διορθώσετε ανακριβή δεδομένα</li>
+                <li>✅ <strong>Διαγραφής:</strong> να ζητήσετε διαγραφή των δεδομένων σας</li>
+                <li>✅ <strong>Περιορισμού:</strong> να περιορίσετε την επεξεργασία</li>
+                <li>✅ <strong>Φορητότητας:</strong> να λάβετε τα δεδομένα σας σε δομημένη μορφή</li>
+                <li>✅ <strong>Εναντίωσης:</strong> να αντιταχθείτε στην επεξεργασία</li>
+                <li>✅ <strong>Ανάκλησης συγκατάθεσης:</strong> οποιαδήποτε στιγμή, μέσω των ρυθμίσεων cookies</li>
               </ul>
             </div>
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">7. Ασφάλεια Δεδομένων</h2>
-            <p>Εφαρμόζουμε κατάλληλα τεχνικά και οργανωτικά μέτρα:</p>
             <ul>
-              <li>🔒 Κρυπτογράφηση δεδομένων (SSL/TLS)</li>
-              <li>🔒 Περιορισμένη πρόσβαση στα δεδομένα</li>
-              <li>🔒 Τακτικά αντίγραφα ασφαλείας</li>
-              <li>🔒 Παρακολούθηση για ανωμαλίες</li>
+              <li>🔒 Κρυπτογρημένη σύνδεση (HTTPS/TLS) σε όλη την ιστοσελίδα</li>
+              <li>🔒 Κρυπτογράφηση κωδικών πρόσβασης διαχειριστών</li>
+              <li>🔒 Περιορισμένη πρόσβαση στα δεδομένα, μόνο σε εξουσιοδοτημένους διαχειριστές</li>
+              <li>🔒 Τακτικά αντίγραφα ασφαλείας μέσω του παρόχου βάσης δεδομένων</li>
             </ul>
 
-            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">8. Διεθνείς Μεταφορές</h2>
-            <p>Τα δεδομένα σας μπορεί να επεξεργάζονται σε χώρες εκτός της ΕΕ που παρέχουν επαρκές επίπεδο προστασίας ή με κατάλληλες εγγυήσεις.</p>
+            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">8. Cookies</h2>
+            <p>
+              Χρησιμοποιούμε cookies απαραίτητα για τη λειτουργία της ιστοσελίδας, καθώς και — μόνο κατόπιν
+              συγκατάθεσής σας — cookies ανάλυσης (Google Analytics) και διαφήμισης (Google AdSense).
+              Δείτε αναλυτικά την <Link href="/legal/cookie-policy" className="text-mesia-wine hover:text-mesia-gold">Πολιτική Cookies</Link>.
+            </p>
 
-            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">9. Cookies και Τεχνολογίες Παρακολούθησης</h2>
-            <p>Χρησιμοποιούμε cookies για:</p>
-            <ul>
-              <li>Βελτίωση της εμπειρίας χρήστη</li>
-              <li>Ανάλυση κίνησης ιστοσελίδας</li>
-              <li>Προσωποποίηση περιεχομένου</li>
-            </ul>
-            <p>Δείτε την <Link href="/legal/cookie-policy" className="text-mesia-wine hover:text-mesia-gold">Πολιτική Cookies</Link> για περισσότερες πληροφορίες.</p>
+            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">9. Ενημερώσεις Πολιτικής</h2>
+            <p>Η παρούσα πολιτική ενδέχεται να ενημερώνεται περιοδικά. Η ημερομηνία στην κορυφή της σελίδας δείχνει πάντα την τελευταία ουσιαστική ενημέρωση.</p>
 
-            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">10. Ενημερώσεις Πολιτικής</h2>
-            <p>Αυτή η πολιτική μπορεί να ενημερωθεί περιοδικά. Θα σας ενημερώσουμε για σημαντικές αλλαγές μέσω της ιστοσελίδας ή email.</p>
-
-            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">11. Επικοινωνία - Άσκηση Δικαιωμάτων</h2>
+            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">10. Επικοινωνία - Άσκηση Δικαιωμάτων</h2>
             <div className="bg-mesia-wine/10 p-6 rounded-lg border border-mesia-wine/20">
               <p className="mb-4">Για την άσκηση των δικαιωμάτων σας ή οποιαδήποτε ερώτηση σχετικά με την επεξεργασία των προσωπικών σας δεδομένων:</p>
               <div className="space-y-2">
@@ -152,16 +171,15 @@ export default function PrivacyPolicyPage() {
               </div>
             </div>
 
-            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">12. Καταγγελία στην Αρχή Προστασίας Δεδομένων</h2>
+            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">11. Καταγγελία στην Αρχή Προστασίας Δεδομένων</h2>
             <p>Έχετε δικαίωμα να υποβάλετε καταγγελία στην Αρχή Προστασίας Δεδομένων Προσωπικού Χαρακτήρα:</p>
             <div className="bg-mesia-lightCream/50 p-4 rounded-lg">
-  <p><strong>Αρχή Προστασίας Δεδομένων Προσωπικού Χαρακτήρα</strong></p>
-  <p>Κηφισίας 1-3, 11523 Αθήνα</p>
-  <p>Τηλ.: 210 6475600</p>
-  <p>Email: contact@dpa.gr</p>
-  <p>Website: <a href="https://www.dpa.gr" target="_blank" rel="noopener noreferrer" className="text-mesia-wine hover:text-mesia-gold">www.dpa.gr</a></p>
-</div>
-
+              <p><strong>Αρχή Προστασίας Δεδομένων Προσωπικού Χαρακτήρα</strong></p>
+              <p>Κηφισίας 1-3, 11523 Αθήνα</p>
+              <p>Τηλ.: 210 6475600</p>
+              <p>Email: complaints@dpa.gr</p>
+              <p>Website: <a href="https://www.dpa.gr" target="_blank" rel="noopener noreferrer" className="text-mesia-wine hover:text-mesia-gold">www.dpa.gr</a></p>
+            </div>
           </div>
         </div>
       </main>

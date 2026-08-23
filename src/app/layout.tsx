@@ -6,7 +6,6 @@ import { Providers } from './providers'
 import Header from '@/components/layout/Header'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
-import SimplePageTracker from '@/components/SimplePageTracker'
 
 const inter = Inter({ subsets: ['latin', 'greek'], variable: '--font-body' })
 const alegreya = Alegreya({ subsets: ['latin', 'greek'], variable: '--font-display', weight: ['500', '600', '700', '800'] })
@@ -129,9 +128,6 @@ export default function RootLayout({
             <Footer />
           </div>
         </Providers>
-        
-        {/* Page Tracker for Client-Side Navigation */}
-        <SimplePageTracker />
       </body>
     </html>
   )

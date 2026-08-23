@@ -4,6 +4,12 @@ import { useState, useEffect } from 'react'
 import CookieConsent, { getCookieConsentValue } from 'react-cookie-consent'
 import Link from 'next/link'
 
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void
+  }
+}
+
 export default function CookieConsentBanner() {
   const [showBanner, setShowBanner] = useState(false)
 

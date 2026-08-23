@@ -182,61 +182,6 @@ model HistoricalPost {
   @@map("historical_posts")
 }
 
-model PageView {
-  id         String   @id @default(cuid())
-  path       String
-  userAgent  String?
-  country    String?
-  referrer   String?
-  sessionId  String
-  userId     String?
-  timestamp  DateTime @default(now())
-  timeOnPage Int?
-
-  @@index([path])
-  @@index([sessionId])
-  @@index([timestamp])
-  @@index([userId])
-
-  @@map("page_views")
-}
-
-model AnalyticsSession {
-  id         String    @id @default(cuid())
-  sessionId  String    @unique
-  userId     String?
-  startTime  DateTime  @default(now())
-  endTime    DateTime?
-  totalPages Int       @default(1)
-  bounced    Boolean   @default(true)
-  country    String?
-  device     String?
-  browser     String?
-
-  @@index([startTime])
-  @@index([userId])
-
-  @@map("analytics_sessions")
-}
-
-model ContentAnalytics {
-  id           String   @id @default(cuid())
-  contentType  String
-  contentId    String
-  path         String
-  views        Int      @default(0)
-  uniqueViews  Int      @default(0)
-  avgTimeSpent Int      @default(0)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  @@unique([contentType, contentId])
-  @@index([contentType])
-  @@index([path])
-
-  @@map("content_analytics")
-}
-
 model SiteConfig {
   key       String   @id
   value     Json

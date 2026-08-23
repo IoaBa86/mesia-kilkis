@@ -2,13 +2,14 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft, Cookie } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+
+const LAST_UPDATED = '23 Αυγούστου 2026'
 
 export const metadata: Metadata = {
   title: 'Πολιτική Cookies - Μεσιά Κιλκίς',
   description: 'Πληροφορίες για τη χρήση cookies στην ιστοσελίδα Μεσιά Κιλκίς. Τύποι cookies, διαχείριση και προσωπικά δεδομένα.',
   alternates: {
-    canonical: '/legal/cookie-policy', // ✅ Add this line
+    canonical: '/legal/cookie-policy',
   },
   openGraph: {
     title: 'Πολιτική Cookies - Μεσιά Κιλκίς',
@@ -16,7 +17,6 @@ export const metadata: Metadata = {
     images: ['/og-image.jpg'],
   },
 }
-
 
 export default function CookiePolicyPage() {
   return (
@@ -33,90 +33,106 @@ export default function CookiePolicyPage() {
         </div>
       </div>
 
-      {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="border border-mesia-gold/25 bg-white p-8 md:p-10">
           <div className="prose prose-lg max-w-none">
-            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Τι είναι τα Cookies;</h2>
-            <p>Τα cookies είναι μικρά αρχεία κειμένου που αποθηκεύονται στη συσκευή σας όταν επισκέπτεστε μια ιστοσελίδα. Χρησιμοποιούνται για να κάνουν τις ιστοσελίδες να λειτουργούν αποτελεσματικότερα και να παρέχουν πληροφορίες στους ιδιοκτήτες της ιστοσελίδας.</p>
+            <div className="mb-8 p-4 bg-mesia-wine/10 rounded-lg border border-mesia-wine/20">
+              <p className="text-mesia-darkText mb-0">
+                <strong>Ημερομηνία τελευταίας ενημέρωσης:</strong> {LAST_UPDATED}
+              </p>
+            </div>
 
-            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Πώς Χρησιμοποιούμε τα Cookies</h2>
-            <p>Στην ιστοσελίδα "Μεσιά Κιλκίς" χρησιμοποιούμε cookies για τους ακόλουθους σκοπούς:</p>
+            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Τι είναι τα Cookies</h2>
+            <p>Τα cookies είναι μικρά αρχεία κειμένου που αποθηκεύονται στη συσκευή σας όταν επισκέπτεστε μια ιστοσελίδα, ώστε αυτή να λειτουργεί σωστά και να θυμάται τις προτιμήσεις σας.</p>
 
+            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Διαχείριση Συναίνεσης</h2>
+            <p>
+              Κατά την πρώτη επίσκεψή σας εμφανίζεται ένα banner συναίνεσης cookies, μέσω της πλατφόρμας{' '}
+              <strong>Usercentrics</strong>, όπου μπορείτε να επιλέξετε ποιες κατηγορίες cookies επιτρέπετε.
+              Μπορείτε να αλλάξετε την επιλογή σας ανά πάσα στιγμή μέσω του σχετικού συνδέσμου ρυθμίσεων cookies
+              στο υποσέλιδο της ιστοσελίδας.
+            </p>
+
+            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Κατηγορίες Cookies που Χρησιμοποιούμε</h2>
             <div className="overflow-x-auto">
               <table className="w-full border-collapse border border-mesia-gold/30 rounded-lg overflow-hidden">
                 <thead className="bg-mesia-wine text-white">
                   <tr>
-                    <th className="border border-mesia-gold/30 p-3 text-left">Τύπος Cookie</th>
+                    <th className="border border-mesia-gold/30 p-3 text-left">Κατηγορία</th>
                     <th className="border border-mesia-gold/30 p-3 text-left">Σκοπός</th>
-                    <th className="border border-mesia-gold/30 p-3 text-left">Διάρκεια</th>
+                    <th className="border border-mesia-gold/30 p-3 text-left">Απαιτεί Συναίνεση;</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td className="border border-mesia-gold/30 p-3"><strong>Απαραίτητα</strong></td>
-                    <td className="border border-mesia-gold/30 p-3">Λειτουργία ιστοσελίδας, ασφάλεια, προτιμήσεις</td>
-                    <td className="border border-mesia-gold/30 p-3">Περίοδος λειτουργίας</td>
+                    <td className="border border-mesia-gold/30 p-3">Βασική λειτουργία ιστοσελίδας, ασφάλεια, καταγραφή της επιλογής σας για cookies</td>
+                    <td className="border border-mesia-gold/30 p-3">Όχι</td>
                   </tr>
                   <tr className="bg-mesia-lightCream/30">
-                    <td className="border border-mesia-gold/30 p-3"><strong>Αναλυτικά</strong></td>
-                    <td className="border border-mesia-gold/30 p-3">Στατιστικά επισκεψιμότητας, βελτίωση υπηρεσιών</td>
-                    <td className="border border-mesia-gold/30 p-3">24 μήνες</td>
+                    <td className="border border-mesia-gold/30 p-3"><strong>Λειτουργικότητας</strong></td>
+                    <td className="border border-mesia-gold/30 p-3">Απομνημόνευση προτιμήσεων εμφάνισης/πλοήγησης</td>
+                    <td className="border border-mesia-gold/30 p-3">Ναι</td>
                   </tr>
                   <tr>
-                    <td className="border border-mesia-gold/30 p-3"><strong>Λειτουργικότητας</strong></td>
-                    <td className="border border-mesia-gold/30 p-3">Αποθήκευση προτιμήσεων χρήστη</td>
-                    <td className="border border-mesia-gold/30 p-3">12 μήνες</td>
+                    <td className="border border-mesia-gold/30 p-3"><strong>Ανάλυσης</strong></td>
+                    <td className="border border-mesia-gold/30 p-3">Στατιστικά επισκεψιμότητας μέσω Google Analytics</td>
+                    <td className="border border-mesia-gold/30 p-3">Ναι</td>
+                  </tr>
+                  <tr className="bg-mesia-lightCream/30">
+                    <td className="border border-mesia-gold/30 p-3"><strong>Διαφήμισης</strong></td>
+                    <td className="border border-mesia-gold/30 p-3">Εμφάνιση και εξατομίκευση διαφημίσεων μέσω Google AdSense</td>
+                    <td className="border border-mesia-gold/30 p-3">Ναι</td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Συγκατάθεση για Cookies</h2>
-            <p>Κατά την πρώτη επίσκεψή σας, θα εμφανιστεί ένα banner που σας ενημερώνει για τη χρήση cookies.</p>
-            <p>
-  Για συμμόρφωση με τον GDPR και άλλους νόμους προστασίας δεδομένων, 
-  καταγράφουμε τις επιλογές σας σχετικά με τα cookies, συμπεριλαμβανομένων:
-</p>
-<ul>
-  <li>Ανωνυμοποιημένη διεύθυνση IP (τα τελευταία ψηφία αφαιρούνται)</li>
-  <li>Ημερομηνία και ώρα της απόφασής σας</li>
-  <li>Ποιες κατηγορίες cookies αποδεχτήκατε ή απορρίψατε</li>
-  <li>Βασικές πληροφορίες του περιηγητή σας</li>
-</ul>
-<p>
-  Αυτά τα αρχεία διατηρούνται για 2 χρόνια και χρησιμοποιούνται μόνο για 
-  να αποδείξουμε ότι ληφθήκε η συναίνεσή σας σύμφωνα με το νόμο.
-</p>
-              
-              <p> Μπορείτε:</p>
+            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Τρίτα Μέρη</h2>
+            <p>Οι ακόλουθοι τρίτοι πάροχοι ενδέχεται να τοποθετούν cookies στη συσκευή σας, εφόσον έχετε δώσει τη σχετική συγκατάθεση:</p>
             <ul>
-              <li>Να αποδεχτείτε όλα τα cookies</li>
-              <li>Να επιλέξετε συγκεκριμένες κατηγορίες</li>
-              <li>Να απορρίψετε μη απαραίτητα cookies</li>
+              <li>
+                <strong>Google Analytics</strong> — ανάλυση επισκεψιμότητας και συμπεριφοράς χρηστών.{' '}
+                <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-mesia-wine hover:text-mesia-gold">
+                  Πολιτική απορρήτου Google
+                </a>
+              </li>
+              <li>
+                <strong>Google AdSense</strong> — εμφάνιση διαφημίσεων, ενδεχομένως εξατομικευμένων βάσει του ιστορικού περιήγησής σας.{' '}
+                <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" className="text-mesia-wine hover:text-mesia-gold">
+                  Πώς η Google χρησιμοποιεί cookies για διαφημίσεις
+                </a>
+              </li>
+              <li>
+                <strong>Usercentrics</strong> — αποθηκεύει την επιλογή συναίνεσής σας ώστε να μη σας ζητείται ξανά σε κάθε επίσκεψη.
+              </li>
             </ul>
 
-            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Διαχείριση Cookies</h2>
+            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Καταγραφή Συναίνεσης</h2>
+            <p>
+              Για συμμόρφωση με τον GDPR, καταγράφουμε την επιλογή σας σχετικά με τα cookies
+              (αποδοχή/απόρριψη ανά κατηγορία), την ημερομηνία της επιλογής και βασικά τεχνικά στοιχεία
+              (ανωνυμοποιημένη IP, τύπος φυλλομετρητή) ως απόδειξη ότι λήφθηκε νόμιμα η συναίνεσή σας.
+              Αυτά τα αρχεία διατηρούνται έως 2 έτη.
+            </p>
+
+            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Διαχείριση Cookies από Εσάς</h2>
             <div className="bg-mesia-gold/10 p-6 rounded-lg border border-mesia-gold/30">
-              <h3 className="text-lg font-semibold text-mesia-wine mb-3">Μπορείτε να διαχειριστείτε τα cookies:</h3>
-              <ul className="space-y-2">
-                <li><strong>Μέσω φυλλομετρητή:</strong> Ρυθμίσεις → Απόρρητο → Cookies</li>
-                <li><strong>Μέσω ιστοσελίδας:</strong> Χρήση του cookie banner</li>
-                <li><strong>Τρίτων μερών:</strong> Μέσω των δικών τους ρυθμίσεων</li>
+              <ul className="space-y-2 mb-0">
+                <li><strong>Μέσω του banner συναίνεσης:</strong> κατά την πρώτη επίσκεψη ή μέσω του συνδέσμου ρυθμίσεων στο υποσέλιδο</li>
+                <li><strong>Μέσω του φυλλομετρητή σας:</strong> Ρυθμίσεις → Απόρρητο → Cookies, όπου μπορείτε να διαγράψετε ή να μπλοκάρετε cookies</li>
+                <li><strong>Για τη Google:</strong> μέσω των <a href="https://myadcenter.google.com" target="_blank" rel="noopener noreferrer" className="text-mesia-wine hover:text-mesia-gold">ρυθμίσεων διαφημίσεων Google</a></li>
               </ul>
             </div>
+            <p className="text-sm text-mesia-lightText">
+              Ο αποκλεισμός των απαραίτητων cookies μπορεί να επηρεάσει τη σωστή λειτουργία της ιστοσελίδας.
+            </p>
 
-            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Τρίτα Μέρη</h2>
-            <p>Ενδέχεται να χρησιμοποιούμε υπηρεσίες τρίτων που τοποθετούν cookies:</p>
-            <ul>
-              <li><strong>Google Analytics:</strong> Ανάλυση κίνησης ιστοσελίδας</li>
-              <li><strong>Social Media:</strong> Κουμπιά κοινοποίησης</li>
-            </ul>
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Περισσότερες Πληροφορίες</h2>
-            <p>Για περισσότερες πληροφορίες σχετικά με τα cookies και τα δικαιώματά σας, δείτε την <Link href="/legal/privacy-policy" className="text-mesia-wine hover:text-mesia-gold">Πολιτική Απορρήτου</Link> μας.</p>
+            <p>Για περισσότερες πληροφορίες σχετικά με τα δεδομένα που επεξεργαζόμαστε, δείτε την <Link href="/legal/privacy-policy" className="text-mesia-wine hover:text-mesia-gold">Πολιτική Απορρήτου</Link> μας.</p>
 
             <div className="bg-mesia-wine/10 p-6 rounded-lg border border-mesia-wine/20">
-              <p><strong>Επικοινωνία:</strong> info@mesia.gr</p>
+              <p className="mb-0"><strong>Επικοινωνία:</strong> info@mesia.gr</p>
             </div>
           </div>
         </div>

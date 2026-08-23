@@ -3,24 +3,21 @@
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Share2 } from "lucide-react"
-import { trackDualAnalytics } from '@/lib/analytics'
 
 interface ShareButtonProps {
   title: string
   text: string
   url?: string
   className?: string
-  contentType?: string  // For analytics tracking (e.g., 'photos', 'events', 'page')
   onShared?: () => void  // Optional callback after successful share
 }
 
-export default function ShareButton({ 
-  title, 
-  text, 
-  url, 
+export default function ShareButton({
+  title,
+  text,
+  url,
   className,
-  contentType = 'page',
-  onShared 
+  onShared
 }: ShareButtonProps) {
   const [isSharing, setIsSharing] = useState(false)
   const [shareMessage, setShareMessage] = useState<string | null>(null)
@@ -42,25 +39,16 @@ export default function ShareButton({
           text,
           url: shareUrl
         })
-        
-        // Track successful native share
-        trackDualAnalytics.shareClick(contentType, 'native_share')
         setShareMessage('✅ Μοιράστηκε επιτυχώς!')
-        
+
       } else if (typeof navigator !== 'undefined' && navigator.clipboard) {
         // Fallback: Copy to clipboard
         await navigator.clipboard.writeText(shareUrl)
-        
-        // Track clipboard share
-        trackDualAnalytics.shareClick(contentType, 'clipboard')
         setShareMessage('📋 Ο σύνδεσμος αντιγράφηκε!')
-        
+
       } else {
         // Final fallback: Show URL in prompt
         prompt('Αντιγράψτε αυτόν τον σύνδεσμο:', shareUrl)
-        
-        // Track manual share
-        trackDualAnalytics.shareClick(contentType, 'manual')
         setShareMessage('📋 Σύνδεσμος εμφανίστηκε!')
       }
       

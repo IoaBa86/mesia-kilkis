@@ -12,13 +12,7 @@ import {
   Plus,
   Upload,
   Calendar,
-  Users,
-  Globe,
-  Shield,
-  BookOpen,
-  History,
   Eye,         // Cookie Consent Logs
-  TrendingUp,  // NEW: Analytics Dashboard
   Megaphone,   // Ad Slots
   type LucideIcon
 } from "lucide-react"
@@ -31,7 +25,6 @@ interface DashboardStats {
   upcomingEvents: number
   historicalPostsCount?: number
   cookieConsentCount?: number
-  analyticsVisitors?: number  // NEW: Analytics data
   adSlotsCount?: number
   activeAdSlots?: number
 }
@@ -86,7 +79,6 @@ export default function AdminDashboard() {
     upcomingEvents: 0,
     historicalPostsCount: 0,
     cookieConsentCount: 0,
-    analyticsVisitors: 0,  // NEW: Initialize analytics visitors
     adSlotsCount: 0,
     activeAdSlots: 0
   })
@@ -106,83 +98,53 @@ export default function AdminDashboard() {
 
   const fetchDashboardStats = async () => {
     try {
-      // Fetch categories
-      const categoriesResponse = await fetch('/api/categories')
-      let categoriesData = []
+      // Fire every request in parallel instead of awaiting them one by one —
+      // sequential round trips were the reason this dashboard felt slow.
+      const [categoriesRes, eventsRes, postsRes, consentRes, adSlotsRes] = await Promise.allSettled([
+        fetch('/api/categories'),
+        fetch('/api/events'),
+        fetch('/api/admin/historical-posts'),
+        fetch('/api/cookie-consent'),
+        fetch('/api/ad-slots'),
+      ])
+
+      let categoriesData: any[] = []
       let activeCategories = 0
       let totalPhotos = 0
-
-      if (categoriesResponse.ok) {
-        categoriesData = await categoriesResponse.json()
+      if (categoriesRes.status === 'fulfilled' && categoriesRes.value.ok) {
+        categoriesData = await categoriesRes.value.json()
         activeCategories = categoriesData.filter((cat: any) => cat.isActive).length
         totalPhotos = categoriesData.reduce((sum: number, cat: any) => sum + (cat._count?.photos || 0), 0)
       }
 
-      // Fetch events
       let eventsCount = 0
       let upcomingEvents = 0
-
-      try {
-        const eventsResponse = await fetch('/api/events')
-        if (eventsResponse.ok) {
-          const eventsData = await eventsResponse.json()
-          eventsCount = eventsData.events?.length || 0
-          upcomingEvents = eventsData.events?.filter((event: any) =>
-            new Date(event.eventDate) >= new Date()
-          ).length || 0
-        }
-      } catch (eventsError) {
-        console.log('Events API not available yet:', eventsError)
+      if (eventsRes.status === 'fulfilled' && eventsRes.value.ok) {
+        const eventsData = await eventsRes.value.json()
+        eventsCount = eventsData.events?.length || 0
+        upcomingEvents = eventsData.events?.filter((event: any) =>
+          new Date(event.eventDate) >= new Date()
+        ).length || 0
       }
 
-      // Fetch historical posts
       let historicalPostsCount = 0
-      try {
-        const postsResponse = await fetch('/api/admin/historical-posts')
-        if (postsResponse.ok) {
-          const postsData = await postsResponse.json()
-          historicalPostsCount = postsData.posts?.length || 0
-        }
-      } catch (postsError) {
-        console.log('Historical posts API not available yet:', postsError)
+      if (postsRes.status === 'fulfilled' && postsRes.value.ok) {
+        const postsData = await postsRes.value.json()
+        historicalPostsCount = postsData.posts?.length || 0
       }
 
-      // Fetch cookie consent logs
       let cookieConsentCount = 0
-      try {
-        const consentResponse = await fetch('/api/cookie-consent')
-        if (consentResponse.ok) {
-          const consentData = await consentResponse.json()
-          cookieConsentCount = consentData.totalCount || 0
-        }
-      } catch (consentError) {
-        console.log('Cookie consent API not available yet:', consentError)
+      if (consentRes.status === 'fulfilled' && consentRes.value.ok) {
+        const consentData = await consentRes.value.json()
+        cookieConsentCount = consentData.totalCount || 0
       }
 
-      // NEW: Fetch analytics data
-      let analyticsVisitors = 0
-      try {
-        const analyticsResponse = await fetch('/api/analytics')
-        if (analyticsResponse.ok) {
-          const analyticsData = await analyticsResponse.json()
-          analyticsVisitors = analyticsData.visitors?.today || 0
-        }
-      } catch (analyticsError) {
-        console.log('Analytics API not available yet:', analyticsError)
-      }
-
-      // Fetch ad slots
       let adSlotsCount = 0
       let activeAdSlots = 0
-      try {
-        const adSlotsResponse = await fetch('/api/ad-slots')
-        if (adSlotsResponse.ok) {
-          const adSlotsData = await adSlotsResponse.json()
-          adSlotsCount = adSlotsData.length || 0
-          activeAdSlots = adSlotsData.filter((slot: any) => slot.isActive).length || 0
-        }
-      } catch (adSlotsError) {
-        console.log('Ad slots API not available yet:', adSlotsError)
+      if (adSlotsRes.status === 'fulfilled' && adSlotsRes.value.ok) {
+        const adSlotsData = await adSlotsRes.value.json()
+        adSlotsCount = adSlotsData.length || 0
+        activeAdSlots = adSlotsData.filter((slot: any) => slot.isActive).length || 0
       }
 
       setStats({
@@ -193,7 +155,6 @@ export default function AdminDashboard() {
         upcomingEvents,
         historicalPostsCount,
         cookieConsentCount,
-        analyticsVisitors,  // NEW: Set analytics visitors
         adSlotsCount,
         activeAdSlots
       })
@@ -289,14 +250,6 @@ export default function AdminDashboard() {
             buttonLabel="Διαχείριση"
           />
           <DashCard
-            title="Αναλυτικά"
-            icon={TrendingUp}
-            value={stats.analyticsVisitors || 0}
-            caption="Σημερινοί επισκέπτες"
-            onOpen={() => router.push("/admin/analytics")}
-            buttonLabel="Προβολή Στατιστικών"
-          />
-          <DashCard
             title="Cookie Consent"
             icon={Eye}
             value={stats.cookieConsentCount || 0}
@@ -330,7 +283,6 @@ export default function AdminDashboard() {
               { icon: Plus, label: "Νέα Κατηγορία", href: "/admin/categories/new" },
               { icon: Upload, label: "Ανέβασμα Φωτογραφιών", href: "/admin/photos/upload" },
               { icon: Calendar, label: "Νέα Εκδήλωση", href: "/admin/events/new" },
-              { icon: TrendingUp, label: "Αναλυτικά", href: "/admin/analytics" },
               { icon: Eye, label: "Cookie Logs", href: "/admin/consent-logs" },
               { icon: Settings, label: "Ρυθμίσεις", href: "/admin/settings" },
               { icon: Megaphone, label: "Νέα Θέση Διαφήμισης", href: "/admin/ads/new" },
@@ -352,7 +304,7 @@ export default function AdminDashboard() {
           <div className="mb-12">
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-mesia-wine/50 mb-4">Σύνοψη Περιεχομένου</p>
             <div className="border border-mesia-gold/25 bg-white p-8">
-              <div className="grid grid-cols-2 md:grid-cols-6 gap-8 text-center">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-8 text-center">
                 <div>
                   <div className="text-3xl font-bold text-mesia-wine font-mono mb-1">{stats.categoriesCount}</div>
                   <div className="text-mesia-lightText text-sm font-medium">Κατηγορίες</div>
@@ -367,11 +319,6 @@ export default function AdminDashboard() {
                   <div className="text-3xl font-bold text-mesia-wine font-mono mb-1">{stats.eventsCount}</div>
                   <div className="text-mesia-lightText text-sm font-medium">Εκδηλώσεις</div>
                   <div className="text-xs text-mesia-lightText mt-1">{stats.upcomingEvents} επερχόμενες</div>
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-mesia-wine font-mono mb-1">{stats.analyticsVisitors || 0}</div>
-                  <div className="text-mesia-lightText text-sm font-medium">Επισκέπτες</div>
-                  <div className="text-xs text-mesia-lightText mt-1">Σήμερα</div>
                 </div>
                 <div>
                   <div className="text-3xl font-bold text-mesia-wine font-mono mb-1">{stats.cookieConsentCount || 0}</div>

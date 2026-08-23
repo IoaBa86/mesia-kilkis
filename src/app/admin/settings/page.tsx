@@ -1,4 +1,4 @@
-// src/app/admin/settings/page.tsx - Complete with Enhanced Analytics Dashboard
+// src/app/admin/settings/page.tsx
 "use client"
 
 import { useState, useEffect, useRef } from "react"
@@ -91,17 +91,6 @@ export default function SettingsPage() {
   const [newUserEmail, setNewUserEmail] = useState("")
   const [newUserRole, setNewUserRole] = useState("EDITOR")
 
-  // Phase 3 - ENHANCED Analytics State
-  const [analytics, setAnalytics] = useState({
-    visitors: { today: 0, week: 0, month: 0 },
-    pageViews: { today: 0, week: 0, month: 0 },
-    topPages: [],
-    recentActivity: [],
-    engagement: { avgTimeOnSite: 0, bounceRate: 0 },
-    growth: { monthlyVisitors: [], monthlyLabels: [] },
-    contentStats: { categories: 0, photos: 0, events: 0 }
-  })
-
   // Phase 3 - NEW Workflows State
   const [workflows, setWorkflows] = useState({
     autoImageOptimization: true,
@@ -160,16 +149,6 @@ export default function SettingsPage() {
         }
       } catch (error) {
         console.log('Users API not available yet:', error)
-      }
-
-      try {
-        const analyticsResponse = await fetch('/api/admin/analytics')
-        if (analyticsResponse.ok) {
-          const analyticsData = await analyticsResponse.json()
-          setAnalytics(analyticsData)
-        }
-      } catch (error) {
-        console.log('Analytics API not available yet:', error)
       }
 
       try {
@@ -446,26 +425,6 @@ export default function SettingsPage() {
     }
   }
 
-  const exportAnalytics = async () => {
-    try {
-      const response = await fetch('/api/admin/export-analytics')
-      if (response.ok) {
-        const blob = await response.blob()
-        const url = window.URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = `mesia-analytics-${new Date().toISOString().split('T')[0]}.csv`
-        document.body.appendChild(a)
-        a.click()
-        window.URL.revokeObjectURL(url)
-        document.body.removeChild(a)
-        setSuccess("Τα analytics εξήχθησαν επιτυχώς!")
-      }
-    } catch (error) {
-      setError("Σφάλμα κατά την εξαγωγή analytics")
-    }
-  }
-
   if (status === "loading") {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-mesia-cream via-mesia-lightCream to-mesia-beige">
@@ -518,9 +477,9 @@ export default function SettingsPage() {
           </div>
         )}
 
-        {/* Settings Tabs - Extended to 6 tabs */}
+        {/* Settings Tabs */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-          <TabsList className="grid w-full grid-cols-6 bg-white/90 backdrop-blur-sm border border-mesia-gold/20">
+          <TabsList className="grid w-full grid-cols-5 bg-white/90 backdrop-blur-sm border border-mesia-gold/20">
             <TabsTrigger value="site" className="data-[state=active]:bg-mesia-wine data-[state=active]:text-white">
               <Globe className="h-4 w-4 mr-2" />
               Ιστοσελίδα
@@ -536,10 +495,6 @@ export default function SettingsPage() {
             <TabsTrigger value="users" className="data-[state=active]:bg-mesia-wine data-[state=active]:text-white">
               <Users className="h-4 w-4 mr-2" />
               Χρήστες
-            </TabsTrigger>
-            <TabsTrigger value="analytics" className="data-[state=active]:bg-mesia-wine data-[state=active]:text-white">
-              <BarChart3 className="h-4 w-4 mr-2" />
-              Analytics
             </TabsTrigger>
             <TabsTrigger value="account" className="data-[state=active]:bg-mesia-wine data-[state=active]:text-white">
               <Key className="h-4 w-4 mr-2" />
@@ -973,236 +928,6 @@ export default function SettingsPage() {
                   </div>
                 </CardContent>
               </Card>
-            </div>
-          </TabsContent>
-
-          {/* ENHANCED Analytics Tab - MAJOR UPDATE */}
-          <TabsContent value="analytics" className="space-y-8">
-            {/* Enhanced Analytics Header */}
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-mesia-wine font-greek mb-2">Analytics & Insights</h2>
-              <p className="text-mesia-lightText text-lg">Λεπτομερή στατιστικά και αναλυτικά στοιχεία της ιστοσελίδας</p>
-            </div>
-
-            {/* Real Visitor Metrics - Enhanced 4 Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-              <Card className="bg-gradient-to-br from-mesia-wine to-mesia-wine/90 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-mesia-cream text-sm">Επισκέπτες Σήμερα</p>
-                      <p className="text-3xl font-bold mb-2">{analytics.visitors.today}</p>
-                      <div className="text-xs text-mesia-cream space-y-1">
-                        <div>📅 Εβδομάδα: {analytics.visitors.week}</div>
-                        <div>📊 Μήνας: {analytics.visitors.month}</div>
-                      </div>
-                    </div>
-                    <Eye className="h-10 w-10 text-mesia-gold" />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gradient-to-br from-mesia-gold to-mesia-accent text-mesia-wine shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-mesia-wine/70 text-sm">Προβολές Σήμερα</p>
-                      <p className="text-3xl font-bold mb-2">{analytics.pageViews.today}</p>
-                      <div className="text-xs text-mesia-wine/70 space-y-1">
-                        <div>📅 Εβδομάδα: {analytics.pageViews.week}</div>
-                        <div>📊 Μήνας: {analytics.pageViews.month}</div>
-                      </div>
-                    </div>
-                    <MousePointer className="h-10 w-10 text-mesia-wine" />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gradient-to-br from-green-600 to-green-700 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-green-100 text-sm">Μέσος Χρόνος</p>
-                      <p className="text-3xl font-bold mb-2">{analytics.engagement.avgTimeOnSite}λ</p>
-                      <div className="text-xs text-green-100">
-                        <div>⏱️ Στην ιστοσελίδα</div>
-                        <div>🎯 Ποιότητα: Υψηλή</div>
-                      </div>
-                    </div>
-                    <Timer className="h-10 w-10 text-green-200" />
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-gradient-to-br from-purple-600 to-purple-700 text-white shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-purple-100 text-sm">Bounce Rate</p>
-                      <p className="text-3xl font-bold mb-2">{analytics.engagement.bounceRate.toFixed(1)}%</p>
-                      <div className="text-xs text-purple-100">
-                        <div>📉 Ποσοστό εξόδου</div>
-                        <div>{analytics.engagement.bounceRate < 50 ? '✅ Εξαιρετικό' : '⚠️ Βελτίωση'}</div>
-                      </div>
-                    </div>
-                    <TrendingUp className="h-10 w-10 text-purple-200" />
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Growth Chart - Enhanced */}
-            <Card className="bg-white/90 backdrop-blur-sm border border-mesia-gold/20 shadow-xl">
-              <CardHeader>
-                <CardTitle className="text-2xl text-mesia-wine font-greek flex items-center">
-                  <BarChart3 className="h-6 w-6 mr-3" />
-                  Ανάπτυξη Επισκεπτών - Τελευταίοι 12 Μήνες
-                </CardTitle>
-                <CardDescription>
-                  Παρακολούθηση της μηνιαίας αύξησης επισκεπτών
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="h-80 flex items-end justify-between px-4 py-6 bg-gradient-to-t from-mesia-cream/20 to-transparent rounded-lg">
-                  {analytics.growth.monthlyVisitors.map((visitors, index) => {
-                    const maxVisitors = Math.max(...analytics.growth.monthlyVisitors)
-                    const height = maxVisitors > 0 ? (visitors / maxVisitors) * 240 : 20
-                    return (
-                      <div key={index} className="flex flex-col items-center group">
-                        <div className="relative">
-                          <div 
-                            className="bg-gradient-to-t from-mesia-wine via-mesia-wine/80 to-mesia-gold w-8 rounded-t transition-all duration-300 hover:scale-110 cursor-pointer"
-                            style={{ height: `${Math.max(height, 20)}px` }}
-                            title={`${analytics.growth.monthlyLabels[index]}: ${visitors} επισκέπτες`}
-                          />
-                          <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-mesia-wine text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                            {visitors}
-                          </div>
-                        </div>
-                        <span className="text-xs text-mesia-lightText mt-2 rotate-45 origin-left whitespace-nowrap">
-                          {analytics.growth.monthlyLabels[index]}
-                        </span>
-                      </div>
-                    )
-                  })}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Content Performance & Recent Activity - Enhanced */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <Card className="bg-white/90 backdrop-blur-sm border border-mesia-gold/20 shadow-xl">
-                <CardHeader>
-                  <CardTitle className="text-xl text-mesia-wine font-greek flex items-center">
-                    <TrendingUp className="h-5 w-5 mr-2" />
-                    Δημοφιλείς Σελίδες
-                  </CardTitle>
-                  <CardDescription>Τελευταίες 30 ημέρες - Ανάλυση περιεχομένου</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3 max-h-64 overflow-y-auto">
-                    {analytics.topPages.length === 0 ? (
-                      <p className="text-mesia-lightText text-center py-8">Δεν υπάρχουν δεδομένα ακόμα</p>
-                    ) : (
-                      analytics.topPages.map((page: any, index: number) => (
-                        <div key={index} className="flex items-center justify-between p-3 border-b border-mesia-gold/20 last:border-b-0 hover:bg-mesia-gold/5 transition-colors">
-                          <div className="flex-1">
-                            <div className="flex items-center">
-                              <span className="text-mesia-wine font-medium text-sm mr-2">#{index + 1}</span>
-                              <div>
-                                <div className="font-medium text-mesia-darkText">{page.path}</div>
-                                <div className="text-sm text-mesia-lightText flex items-center space-x-3">
-                                  <span>⏱️ Μέσος χρόνος: {Math.round(page.avgTime / 60)}λ {page.avgTime % 60}δ</span>
-                                  <span>👁️ Προβολές: {page.views}</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <div className="text-lg font-bold text-mesia-wine">{page.views}</div>
-                            <div className="text-xs text-mesia-lightText">προβολές</div>
-                          </div>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-white/90 backdrop-blur-sm border border-mesia-gold/20 shadow-xl">
-                <CardHeader>
-                  <CardTitle className="text-xl text-mesia-wine font-greek flex items-center">
-                    <Activity className="h-5 w-5 mr-2" />
-                    Πρόσφατη Δραστηριότητα
-                  </CardTitle>
-                  <CardDescription>Live feed δραστηριοτήτων</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3 max-h-64 overflow-y-auto">
-                    {analytics.recentActivity.length === 0 ? (
-                      <p className="text-mesia-lightText text-center py-8">Δεν υπάρχει δραστηριότητα ακόμα</p>
-                    ) : (
-                      analytics.recentActivity.map((activity: any, index: number) => (
-                        <div key={index} className="flex items-center space-x-3 p-2 hover:bg-mesia-gold/5 rounded transition-colors">
-                          <div className="w-2 h-2 bg-mesia-gold rounded-full animate-pulse"></div>
-                          <Activity className="h-4 w-4 text-mesia-gold flex-shrink-0" />
-                          <div className="flex-1 min-w-0">
-                            <div className="text-sm text-mesia-darkText truncate">{activity.action}</div>
-                            <div className="text-xs text-mesia-lightText">{activity.timestamp}</div>
-                          </div>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Content Statistics Summary */}
-            <Card className="bg-gradient-to-br from-mesia-beige via-white to-mesia-cream border border-mesia-gold/20 shadow-xl">
-              <CardHeader>
-                <CardTitle className="text-2xl text-mesia-wine font-greek text-center">
-                  Σύνοψη Περιεχομένου
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                  <div className="space-y-2">
-                    <div className="text-4xl font-bold text-mesia-wine">{analytics.contentStats.categories}</div>
-                    <div className="text-mesia-lightText font-medium">Κατηγορίες</div>
-                    <div className="text-xs text-mesia-lightText">📁 Ενεργές</div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="text-4xl font-bold text-mesia-gold">{analytics.contentStats.photos}</div>
-                    <div className="text-mesia-lightText font-medium">Φωτογραφίες</div>
-                    <div className="text-xs text-mesia-lightText">📸 Συνολικές</div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="text-4xl font-bold text-mesia-wine">{analytics.contentStats.events}</div>
-                    <div className="text-mesia-lightText font-medium">Εκδηλώσεις</div>
-                    <div className="text-xs text-mesia-lightText">📅 Δημοσιευμένες</div>
-                  </div>
-                  <div className="space-y-2">
-                    <div className="text-4xl font-bold text-mesia-gold">7</div>
-                    <div className="text-mesia-lightText font-medium">Σελίδες</div>
-                    <div className="text-xs text-mesia-lightText">🌐 Ενεργές</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Action Buttons */}
-            <div className="flex justify-between items-center">
-              <Button onClick={exportAnalytics} variant="outline" className="border-mesia-wine text-mesia-wine hover:bg-mesia-wine hover:text-white">
-                <Download className="h-4 w-4 mr-2" />
-                Εξαγωγή Analytics (CSV)
-              </Button>
-              <div className="text-sm text-mesia-lightText">
-                <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <span>Τελευταία ενημέρωση: {new Date().toLocaleString('el-GR')}</span>
-                </div>
-              </div>
             </div>
           </TabsContent>
 
