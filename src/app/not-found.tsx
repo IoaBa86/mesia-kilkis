@@ -24,7 +24,7 @@ export default function NotFound() {
             Σφάλμα 404
           </p>
 
-          <h1 className="text-7xl md:text-8xl font-bold text-mesia-wine font-greek leading-none mb-6">
+          <h1 className="text-5xl md:text-8xl font-bold text-mesia-wine font-greek leading-none mb-6">
             Εκτός Χάρτη
           </h1>
 

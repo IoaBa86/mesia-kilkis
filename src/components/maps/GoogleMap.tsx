@@ -22,22 +22,36 @@ interface MapComponentProps {
   height?: string
 }
 
-export default function MapComponent({ 
-  lat = center.lat, 
-  lng = center.lng, 
+export default function MapComponent({
+  lat = center.lat,
+  lng = center.lng,
   zoom = 15,
-  height = '400px' 
+  height = '400px'
 }: MapComponentProps) {
+  const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY
+
+  // Skip loading the Maps script entirely when no key is configured, rather
+  // than let Google render its raw "for development purposes only" watermark.
   const { isLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY as string,
+    googleMapsApiKey: apiKey || '',
   })
 
-  if (loadError) {
+  if (!apiKey || loadError) {
     return (
-      <div className="w-full h-96 bg-mesia-lightCream/50 border border-mesia-gold/20 rounded-xl flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-mesia-wine font-medium mb-2">Σφάλμα φόρτωσης χάρτη</p>
-          <p className="text-mesia-lightText text-sm">Παρακαλώ δοκιμάστε να ανανεώσετε τη σελίδα</p>
+      <div
+        className="w-full bg-mesia-lightCream/50 border border-mesia-gold/20 rounded-xl flex items-center justify-center"
+        style={{ height }}
+      >
+        <div className="text-center px-6">
+          <p className="text-mesia-wine font-medium mb-2">Ο χάρτης δεν είναι διαθέσιμος αυτή τη στιγμή</p>
+          <a
+            href={`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-mesia-wine underline hover:text-mesia-gold text-sm"
+          >
+            Δείτε οδηγίες στο Google Maps
+          </a>
         </div>
       </div>
     )
