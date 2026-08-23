@@ -14,7 +14,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Όροι Χρήσης - Μεσιά Κιλκίς',
     description: 'Όροι και προϋποθέσεις χρήσης της ιστοσελίδας Μεσιά Κιλκίς',
-    images: ['/og-image.jpg'],
   },
 }
 

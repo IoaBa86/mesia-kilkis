@@ -6,7 +6,8 @@ interface StructuredDataProps {
 
 export default function StructuredData({ type, data }: StructuredDataProps) {
   const generateSchema = () => {
-    const baseUrl = 'https://mesia.gr' // Update with your actual domain
+    const baseUrl = 'https://www.mesia.gr'
+    const ogImage = `${baseUrl}/opengraph-image`
     
     switch (type) {
       case 'website':
@@ -18,21 +19,13 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           url: baseUrl,
           description: 'Iστοσελίδα του  χωριού Μεσιά Κιλκίς στην Κεντρική Μακεδονία, Ελλάδα',
           inLanguage: 'el-GR',
-          potentialAction: {
-            '@type': 'SearchAction',
-            target: {
-              '@type': 'EntryPoint',
-              urlTemplate: `${baseUrl}/search?q={search_term_string}`
-            },
-            'query-input': 'required name=search_term_string'
-          },
           publisher: {
             '@type': 'Organization',
             name: 'Μεσιά Κιλκίς',
             url: baseUrl,
             logo: {
               '@type': 'ImageObject',
-              url: `${baseUrl}/images/logo.png`
+              url: ogImage
             }
           },
           sameAs: [
@@ -48,7 +41,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           name: 'Μεσιά Κιλκίς',
           description: 'Xωριό της Κεντρικής Μακεδονίας με πλούσια ιστορία και παράδοση',
           url: baseUrl,
-          telephone: data?.phone || '+30-xxx-xxxxxxx',
+          telephone: data?.phone,
           email: data?.email || 'info@mesia.gr',
           address: {
             '@type': 'PostalAddress',
@@ -65,8 +58,8 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           },
           openingHours: data?.openingHours || ['Mo-Su 00:00-23:59'],
           priceRange: data?.priceRange || '€',
-          image: data?.image || `${baseUrl}/images/village-main.jpg`,
-          logo: `${baseUrl}/images/logo.png`,
+          image: data?.image || ogImage,
+          logo: ogImage,
           sameAs: [
             'https://www.facebook.com/mesia.kilkis',
             'https://www.instagram.com/mesia_kilkis'
@@ -108,7 +101,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
             }
           },
           hasMap: `https://www.google.com/maps/place/40.8825,22.5764`,
-          photo: data?.photos || [`${baseUrl}/images/village-aerial.jpg`],
+          photo: data?.photos || [ogImage],
           touristType: ['Cultural Tourism', 'Rural Tourism', 'Historical Tourism']
         }
 
@@ -153,7 +146,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
             availability: 'https://schema.org/InStock',
             url: `${baseUrl}/events/${data.slug}`
           } : undefined,
-          image: data?.image || `${baseUrl}/images/events-default.jpg`,
+          image: data?.image || ogImage,
           isAccessibleForFree: data?.isFree !== false
         }
 
@@ -164,7 +157,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           name: data?.name || 'Γκαλερί Φωτογραφιών - Μεσιά Κιλκίς',
           description: data?.description || 'Φωτογραφίες από το παραδοσιακό χωριό Μεσιά Κιλκίς, εκδηλώσεις και καθημερινή ζωή',
           url: `${baseUrl}/photos`,
-          image: data?.images || [`${baseUrl}/images/gallery-cover.jpg`],
+          image: data?.images || [ogImage],
           author: {
             '@type': 'Organization',
             name: 'Μεσιά Κιλκίς',
@@ -176,7 +169,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
             url: baseUrl,
             logo: {
               '@type': 'ImageObject',
-              url: `${baseUrl}/images/logo.png`
+              url: ogImage
             }
           },
           contentLocation: {
@@ -213,11 +206,11 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           url: baseUrl,
           logo: {
             '@type': 'ImageObject',
-            url: `${baseUrl}/images/logo.png`,
+            url: ogImage,
             width: 600,
             height: 200
           },
-          image: `${baseUrl}/images/village-header.jpg`,
+          image: ogImage,
           telephone: data?.phone,
           email: data?.email,
           address: {
@@ -251,7 +244,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
           '@type': 'Article',
           headline: data?.title || 'Άρθρο από Μεσιά Κιλκίς',
           description: data?.description,
-          image: data?.image || `${baseUrl}/images/article-default.jpg`,
+          image: data?.image || ogImage,
           datePublished: data?.publishedDate,
           dateModified: data?.modifiedDate || data?.publishedDate,
           author: {
@@ -264,7 +257,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
             url: baseUrl,
             logo: {
               '@type': 'ImageObject',
-              url: `${baseUrl}/images/logo.png`
+              url: ogImage
             }
           },
           mainEntityOfPage: {

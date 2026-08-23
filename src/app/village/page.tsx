@@ -20,7 +20,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Το Χωριό - Μεσιά Κιλκίς',
     description: 'Πλήρεις πληροφορίες για το παραδοσιακό χωριό Μεσιά Κιλκίς',
-    images: ['/og-image.jpg'],
   },
 }
 

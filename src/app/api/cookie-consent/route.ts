@@ -1,21 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
-import crypto from 'crypto'
-
-const prisma = new PrismaClient()
+import { prisma } from '@/lib/prisma'
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('🍪 Cookie consent API called')
-    
     const body = await request.json()
-    console.log('📝 Request body:', body)
-    
-    const { consent, categories, consentType } = body
+    const { consent, categories } = body
     
     // Validate required fields
     if (!consent) {
-      console.error('❌ Missing consent field')
       return NextResponse.json(
         { success: false, error: 'Missing consent field' },
         { status: 400 }
@@ -25,7 +17,7 @@ export async function POST(request: NextRequest) {
     // Extract IP address
     const forwardedFor = request.headers.get('x-forwarded-for')
     const realIP = request.headers.get('x-real-ip')
-    
+
     let clientIP = 'unknown'
     if (forwardedFor) {
       clientIP = forwardedFor.split(',')[0].trim()
@@ -33,23 +25,25 @@ export async function POST(request: NextRequest) {
       clientIP = realIP
     }
 
-    // Anonymize IP (GDPR compliance)
+    // Anonymize IP (GDPR compliance) — zero the last octet for IPv4, keep
+    // only the first 3 hextets for IPv6 (mirrors the IPv4 anonymization
+    // level; a bare `.includes('.')` check previously let IPv6 addresses
+    // through completely un-anonymized)
     const anonymizeIP = (ip: string): string => {
-      if (ip === 'unknown' || !ip.includes('.')) return ip
-      const parts = ip.split('.')
-      return parts.length === 4 ? `${parts[0]}.${parts[1]}.${parts[2]}.0` : ip
+      if (ip.includes('.')) {
+        const parts = ip.split('.')
+        return parts.length === 4 ? `${parts[0]}.${parts[1]}.${parts[2]}.0` : ip
+      }
+      if (ip.includes(':')) {
+        const parts = ip.split(':').filter(Boolean)
+        return parts.length >= 3 ? `${parts[0]}:${parts[1]}:${parts[2]}::` : ip
+      }
+      return ip
     }
 
     const anonymizedIP = anonymizeIP(clientIP)
     const userAgent = request.headers.get('user-agent') || 'unknown'
 
-    console.log('🔍 Processing consent:', {
-      consent,
-      ip: anonymizedIP,
-      categories: categories || {}
-    })
-
-    // Store in database
     const consentRecord = await prisma.cookieConsent.create({
       data: {
         ipAddress: anonymizedIP,
@@ -60,23 +54,15 @@ export async function POST(request: NextRequest) {
       }
     })
 
-    console.log('✅ Consent stored successfully:', consentRecord.id)
-
-    return NextResponse.json({ 
-      success: true, 
-      id: consentRecord.id 
+    return NextResponse.json({
+      success: true,
+      id: consentRecord.id
     })
 
   } catch (error) {
-    console.error('❌ Error storing cookie consent:', error)
-    
-    // Return detailed error for debugging
+    console.error('Error storing cookie consent:', error)
     return NextResponse.json(
-      { 
-        success: false, 
-        error: 'Failed to store consent',
-        details: error instanceof Error ? error.message : 'Unknown error'
-      },
+      { success: false, error: 'Failed to store consent' },
       { status: 500 }
     )
   }

@@ -1,4 +1,4 @@
-// middleware.ts
+// src/middleware.ts
 import { withAuth } from "next-auth/middleware"
 
 export default withAuth(
@@ -6,6 +6,13 @@ export default withAuth(
     // Add any additional middleware logic here
   },
   {
+    pages: {
+      // Must match authOptions.pages.signIn (src/lib/auth.ts) — without this,
+      // withAuth doesn't know /admin/login is the sign-in page and applies
+      // the authorized() check to it too, bouncing unauthenticated visitors
+      // to NextAuth's generic default sign-in page instead.
+      signIn: "/admin/login",
+    },
     callbacks: {
       authorized: ({ token, req }) => {
         // Check if user is accessing admin routes

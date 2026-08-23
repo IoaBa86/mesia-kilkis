@@ -25,7 +25,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Η Περιοχή - Μεσιά Κιλκίς',
     description: 'Ανακαλύψτε την πλούσια γεωγραφία, ιστορία και φυσικές ομορφιές της περιοχής Μεσιά Κιλκίς',
-    images: ['/og-image.jpg'],
   },
 }
 

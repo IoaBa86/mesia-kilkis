@@ -15,15 +15,22 @@ export async function POST(request: NextRequest) {
 
     const formData = await request.formData()
     const file = formData.get('file') as File
-    const type = formData.get('type') as string
+    const rawType = formData.get('type') as string
 
     if (!file) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 })
     }
 
-    // Validate file type
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
-    if (!allowedTypes.includes(file.type)) {
+    // Validate file type (MIME + extension must agree — a spoofed MIME type
+    // paired with a mismatched extension is rejected)
+    const allowedTypes: Record<string, string> = {
+      'image/jpeg': '.jpg',
+      'image/png': '.png',
+      'image/gif': '.gif',
+      'image/webp': '.webp',
+    }
+    const expectedExt = allowedTypes[file.type]
+    if (!expectedExt) {
       return NextResponse.json({ error: 'Invalid file type' }, { status: 400 })
     }
 
@@ -31,6 +38,11 @@ export async function POST(request: NextRequest) {
     if (file.size > 5 * 1024 * 1024) {
       return NextResponse.json({ error: 'File too large' }, { status: 400 })
     }
+
+    // `type` only labels the upload (e.g. "logo", "favicon") — never let it
+    // reach the filesystem unsanitized, it was previously concatenated
+    // straight into the file path (path traversal via `../`).
+    const type = (rawType || 'image').replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 40) || 'image'
 
     // Create uploads directory if it doesn't exist
     const uploadsDir = path.join(process.cwd(), 'public', 'uploads', 'admin')
@@ -40,11 +52,16 @@ export async function POST(request: NextRequest) {
       await fs.mkdir(uploadsDir, { recursive: true })
     }
 
-    // Generate unique filename
+    // Generate unique filename — extension comes from the validated MIME
+    // type, never from the user-supplied filename
     const timestamp = Date.now()
-    const extension = path.extname(file.name)
-    const filename = `${type}-${timestamp}${extension}`
+    const filename = `${type}-${timestamp}${expectedExt}`
     const filepath = path.join(uploadsDir, filename)
+
+    // Defense in depth: refuse to write anywhere outside uploadsDir
+    if (path.dirname(filepath) !== uploadsDir) {
+      return NextResponse.json({ error: 'Invalid filename' }, { status: 400 })
+    }
 
     // Save file
     const bytes = await file.arrayBuffer()

@@ -1,8 +1,9 @@
-import { PrismaClient } from '@prisma/client'
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '@/lib/auth'
+import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import { ArrowLeft, Eye, CheckCircle, XCircle } from 'lucide-react'
-
-const prisma = new PrismaClient()
+import { redirect } from 'next/navigation'
 
 async function getConsentLogs() {
   try {
@@ -46,6 +47,11 @@ async function getConsentLogs() {
 }
 
 export default async function CookieConsentLogsPage() {
+  const session = await getServerSession(authOptions)
+  if (!session || session.user.role !== 'ADMIN') {
+    redirect('/admin/login')
+  }
+
   const { stats, recentConsents, totalCount, acceptedCount, declinedCount } = await getConsentLogs()
 
   return (

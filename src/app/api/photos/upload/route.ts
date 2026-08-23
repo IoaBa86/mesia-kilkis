@@ -64,17 +64,30 @@ export async function POST(request: NextRequest) {
       await mkdir(thumbnailsDir, { recursive: true })
     }
 
+    const ALLOWED_TYPES: Record<string, string> = {
+      'image/jpeg': '.jpg',
+      'image/png': '.png',
+      'image/webp': '.webp',
+      'image/gif': '.gif',
+    }
+    const MAX_FILE_SIZE = 15 * 1024 * 1024 // 15MB
+
     for (const file of files) {
-      if (!file.type.startsWith('image/')) {
-        console.log(`Skipping non-image file: ${file.name}`)
+      const extension = ALLOWED_TYPES[file.type]
+      if (!extension) {
+        console.log(`Skipping file with disallowed type: ${file.name} (${file.type})`)
+        continue
+      }
+      if (file.size > MAX_FILE_SIZE) {
+        console.log(`Skipping oversized file: ${file.name} (${file.size} bytes)`)
         continue
       }
 
       try {
-        // Generate unique filename
+        // Generate unique filename — extension comes from the validated
+        // MIME type, never from the user-supplied filename
         const timestamp = Date.now()
         const randomId = Math.random().toString(36).substring(2, 8)
-        const extension = path.extname(file.name) || '.jpg'
         const sanitizedName = file.name.replace(/[^a-zA-Z0-9.-]/g, '_').replace(/\.[^/.]+$/, '')
         const filename = `${timestamp}_${randomId}_${sanitizedName}${extension}`
         

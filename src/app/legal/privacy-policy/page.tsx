@@ -14,7 +14,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Πολιτική Απορρήτου - Μεσιά Κιλκίς',
     description: 'Πολιτική προστασίας προσωπικών δεδομένων σύμφωνα με GDPR',
-    images: ['/og-image.jpg'],
   },
 }
 

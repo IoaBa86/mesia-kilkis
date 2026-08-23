@@ -1,14 +1,39 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { MapPin, Camera, Users, Mountain, Compass, ArrowRight, Church, Landmark } from "lucide-react"
+import { MapPin, Camera, Users, Mountain, Compass, ArrowRight, Church, Landmark, Megaphone } from "lucide-react"
 import StructuredData from "@/components/StructuredData"
 import ResponsiveAdSlot from "@/components/ads/ResponsiveAdSlot"
 import CoordinateStamp from "@/components/site/CoordinateStamp"
 import SectionHeading from "@/components/site/SectionHeading"
 import StatEntry from "@/components/site/StatEntry"
 import FeatureCard from "@/components/site/FeatureCard"
+import { prisma } from "@/lib/prisma"
 
-export default function HomePage() {
+// Without this the homepage (and its "latest news" strip) would be frozen
+// at build time and only update on the next deploy.
+export const revalidate = 300
+
+async function getLatestEvent() {
+  try {
+    // Prefer a pinned announcement; otherwise the soonest upcoming event.
+    const event = await prisma.event.findFirst({
+      where: {
+        isActive: true,
+        OR: [{ isPinned: true }, { eventDate: { gte: new Date() } }],
+      },
+      orderBy: [{ isPinned: 'desc' }, { eventDate: 'asc' }],
+      select: { id: true, title: true, eventDate: true },
+    })
+    return event
+  } catch (error) {
+    console.error('Error fetching latest event for homepage strip:', error)
+    return null
+  }
+}
+
+export default async function HomePage() {
+  const latestEvent = await getLatestEvent()
+
   return (
     <>
       <StructuredData type="website" />
@@ -16,6 +41,22 @@ export default function HomePage() {
 
       <div className="bg-mesia-cream">
         <main>
+          {/* Latest news strip */}
+          {latestEvent && (
+            <Link
+              href={`/events/${latestEvent.id}`}
+              className="group flex items-center justify-center gap-3 bg-mesia-darkText text-mesia-cream px-4 py-2.5 text-sm hover:bg-mesia-wine transition-colors"
+            >
+              <Megaphone className="h-4 w-4 text-mesia-gold flex-shrink-0" aria-hidden="true" />
+              <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-mesia-gold flex-shrink-0">Νέα</span>
+              <span className="truncate">{latestEvent.title}</span>
+              <span className="hidden sm:inline text-mesia-cream/60 flex-shrink-0">
+                {new Date(latestEvent.eventDate).toLocaleDateString('el-GR', { day: 'numeric', month: 'long' })}
+              </span>
+              <ArrowRight className="h-3.5 w-3.5 flex-shrink-0 group-hover:translate-x-0.5 transition-transform" aria-hidden="true" />
+            </Link>
+          )}
+
           {/* Hero */}
           <section className="relative overflow-hidden bg-mesia-wine pt-24 pb-32 md:pt-32 md:pb-40">
             <div

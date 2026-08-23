@@ -11,15 +11,15 @@ const inter = Inter({ subsets: ['latin', 'greek'], variable: '--font-body' })
 const alegreya = Alegreya({ subsets: ['latin', 'greek'], variable: '--font-display', weight: ['500', '600', '700', '800'] })
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin', 'greek'], variable: '--font-mono', weight: ['400', '500', '600'] })
 
-// Enhanced metadata for SEO - Updated to use correct domain
+// Enhanced metadata for SEO - canonical host is www.mesia.gr (mesia.gr 301s to it)
 export const metadata: Metadata = {
-  metadataBase: new URL('https://mesia.gr'),
+  metadataBase: new URL('https://www.mesia.gr'),
   title: {
     template: '%s | Μεσιά Κιλκίς',
-    default: 'Μεσιά Κιλκίς - Χωριό της Κεντρικής Μακεδονίας'
+    default: 'Μεσιά Κιλκίς - Χωριό της Κεντρικής Μακεδονίας | Mesia Kilkis'
   },
-  description: 'Ιστοσελίδα του χωριού Μεσιά Κιλκίς. Ανακαλύψτε την ιστορία, τις εκδηλώσεις και τις φωτογραφίες του παραδοσιακού μας χωριού στη Μακεδονία.',
-  keywords: ['Μεσιά', 'Κιλκίς', 'χωριό', 'Μακεδονία', 'Ελλάδα', 'παράδοση', 'ιστορία', 'εκδηλώσεις'],
+  description: 'Το χωριό Μεσιά (Mesia) στην Περιφερειακή Ενότητα Κιλκίς, δημοτική ενότητα Ευρωπού. Ιστορία, εκδηλώσεις και φωτογραφίες του παραδοσιακού πεδινού χωριού στην Κεντρική Μακεδονία.',
+  keywords: ['Μεσιά', 'Mesia', 'Μεσιά Κιλκίς', 'Mesia Kilkis', 'Κιλκίς', 'Ευρωπός', 'Ευρωπού', 'χωριό', 'Μακεδονία', 'Παιονία', 'ιστορία', 'εκδηλώσεις'],
   authors: [{ name: 'Μεσιά Κιλκίς' }],
   creator: 'Μεσιά Κιλκίς',
   publisher: 'Μεσιά Κιλκίς',
@@ -37,31 +37,22 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'el_GR',
-    url: 'https://mesia.gr',
+    url: 'https://www.mesia.gr',
     siteName: 'Μεσιά Κιλκίς',
     title: 'Μεσιά Κιλκίς - Χωριό της Κεντρικής Μακεδονίας',
-    description: 'Ιστοσελίδα του χωριού Μεσιά Κιλκίς. Ανακαλύψτε την ιστορία, τις εκδηλώσεις και τις φωτογραφίες του παραδοσιακού μας χωριού.',
-    images: [
-      {
-        url: 'https://mesia.gr/images/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'Μεσιά Κιλκίς - Παραδοσιακό χωριό στη Μακεδονία',
-      }
-    ],
+    description: 'Το χωριό Μεσιά (Mesia) στην Περιφερειακή Ενότητα Κιλκίς, δημοτική ενότητα Ευρωπού. Ιστορία, εκδηλώσεις και φωτογραφίες του χωριού.',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Μεσιά Κιλκίς - Παραδοσιακό Χωριό',
     description: 'Ανακαλύψτε το παραδοσιακό χωριό Μεσιά στο Κιλκίς, Μακεδονία',
     creator: '@mesia_kilkis',
-    images: ['https://mesia.gr/images/twitter-image.jpg'],
   },
   verification: {
     google: '2Xu5E66EEkrjwcbDpTpng8wP9jo57_p_lkN40R0DCe0',
   },
   alternates: {
-    canonical: 'https://mesia.gr/',
+    canonical: '/',
   },
 }
 
@@ -76,15 +67,11 @@ export default function RootLayout({
         {/* Additional SEO meta tags */}
         <meta name="geo.region" content="GR-61" />
         <meta name="geo.placename" content="Μεσιά, Κιλκίς, Ελλάδα" />
-        <meta name="geo.position" content="41.15;22.87" />
-        <meta name="ICBM" content="41.15, 22.87" />
-        
-        {/* Favicon */}
-        <link rel="icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        
+        <meta name="geo.position" content="40.8825;22.5764" />
+        <meta name="ICBM" content="40.8825, 22.5764" />
+
         {/* Theme color */}
-        <meta name="theme-color" content="#8B5A3C" />
+        <meta name="theme-color" content="#753647" />
 
         {/* Usercentrics CMP - Cookie Consent Management */}
         <Script

@@ -22,7 +22,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Ιστορία - Μεσιά Κιλκίς',
     description: 'Ανακαλύψτε την πλούσια ιστορία του χωριού Μεσιά Κιλκίς από την Τουρκοκρατία μέχρι σήμερα',
-    images: ['/og-image.jpg'],
   },
 }
 

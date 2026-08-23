@@ -12,7 +12,6 @@ export const metadata: Metadata = {
     title: 'Πώς να Έρθετε - Μεσιά Κιλκίς',
     description: 'Οδηγίες πρόσβασης στο χωριό Μεσιά Κιλκίς - οδικές διαδρομές, GPS συντεταγμένες και χρήσιμες συμβουλές',
     url: 'https://www.mesia.gr/access',
-    images: ['/og-image.jpg'],
   },
   twitter: {
     card: 'summary_large_image',

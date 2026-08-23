@@ -21,7 +21,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Υπηρεσίες & Δημοτικό Συμβούλιο - Μεσιά Κιλκίς',
     description: 'Όλες οι υπηρεσίες και επικοινωνία με το Δημοτικό Συμβούλιο του χωριού Μεσιά Κιλκίς',
-    images: ['/og-image.jpg'],
   },
 }
 

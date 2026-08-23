@@ -14,7 +14,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Πολιτική Cookies - Μεσιά Κιλκίς',
     description: 'Αναλυτικές πληροφορίες για τη χρήση cookies στην ιστοσελίδα Μεσιά Κιλκίς',
-    images: ['/og-image.jpg'],
   },
 }
 

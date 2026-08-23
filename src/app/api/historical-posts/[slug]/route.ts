@@ -15,8 +15,7 @@ export async function GET(
       include: {
         creator: {
           select: {
-            name: true,
-            email: true
+            name: true
           }
         }
       }
