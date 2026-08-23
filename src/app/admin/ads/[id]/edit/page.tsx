@@ -8,8 +8,12 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Select } from "@/components/ui/select"
 import { Switch } from "@/components/ui/switch"
 import { Save, ArrowLeft } from "lucide-react"
+import { AD_SLOT_PAGES, AD_SLOT_PLACEMENTS } from "@/lib/ad-slot-placements"
+
+const CUSTOM_POSITION = "__custom__"
 
 export default function EditAdSlotPage() {
   const { data: session, status } = useSession()
@@ -31,6 +35,10 @@ export default function EditAdSlotPage() {
   const [loading, setLoading] = useState(false)
   const [fetching, setFetching] = useState(true)
   const [error, setError] = useState("")
+  const [customPosition, setCustomPosition] = useState(false)
+
+  const positionsForPage = AD_SLOT_PLACEMENTS.filter((p) => p.page === formData.page)
+  const knownPage = AD_SLOT_PAGES.some((p) => p.page === formData.page)
 
   useEffect(() => {
     fetch('/api/ad-slots')
@@ -49,6 +57,8 @@ export default function EditAdSlotPage() {
             isActive: slot.isActive,
             order: slot.order,
           })
+          const matches = AD_SLOT_PLACEMENTS.some((p) => p.page === slot.page && p.key === slot.key)
+          setCustomPosition(!matches)
         } else {
           setError('Η θέση διαφήμισης δεν βρέθηκε')
         }
@@ -56,6 +66,26 @@ export default function EditAdSlotPage() {
       .catch(() => setError('Σφάλμα κατά τη φόρτωση'))
       .finally(() => setFetching(false))
   }, [id])
+
+  const handlePageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const page = e.target.value
+    setCustomPosition(false)
+    setFormData({ ...formData, page, position: "", key: "" })
+  }
+
+  const handlePositionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value
+    if (value === CUSTOM_POSITION) {
+      setCustomPosition(true)
+      setFormData({ ...formData, position: "", key: "" })
+      return
+    }
+    setCustomPosition(false)
+    const placement = AD_SLOT_PLACEMENTS.find((p) => p.page === formData.page && p.key === value)
+    if (placement) {
+      setFormData({ ...formData, position: placement.position, key: placement.key })
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -147,12 +177,44 @@ export default function EditAdSlotPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <Label htmlFor="page">Σελίδα *</Label>
-                  <Input id="page" value={formData.page} onChange={handleChange("page")} required />
+                  <Select id="page" value={formData.page} onChange={handlePageChange} required>
+                    <option value="" disabled>Επιλέξτε σελίδα</option>
+                    {!knownPage && formData.page && (
+                      <option value={formData.page}>{formData.page}</option>
+                    )}
+                    {AD_SLOT_PAGES.map((p) => (
+                      <option key={p.page} value={p.page}>{p.pageLabel}</option>
+                    ))}
+                  </Select>
                 </div>
 
                 <div>
                   <Label htmlFor="position">Θέση στη σελίδα *</Label>
-                  <Input id="position" value={formData.position} onChange={handleChange("position")} required />
+                  {!customPosition ? (
+                    <Select
+                      id="position"
+                      value={formData.key}
+                      onChange={handlePositionChange}
+                      disabled={!formData.page}
+                      required
+                    >
+                      <option value="" disabled>
+                        {formData.page ? "Επιλέξτε θέση" : "Επιλέξτε πρώτα σελίδα"}
+                      </option>
+                      {positionsForPage.map((p) => (
+                        <option key={p.key} value={p.key}>{p.positionLabel} ({p.key})</option>
+                      ))}
+                      <option value={CUSTOM_POSITION}>Προσαρμοσμένη θέση…</option>
+                    </Select>
+                  ) : (
+                    <Input
+                      id="position"
+                      value={formData.position}
+                      onChange={handleChange("position")}
+                      placeholder="π.χ. after-stats, before-footer"
+                      required
+                    />
+                  )}
                 </div>
               </div>
 
