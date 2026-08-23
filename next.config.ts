@@ -10,11 +10,11 @@ import type { NextConfig } from 'next'
 // add the domain to frame-src below when that happens.
 const CSP_DIRECTIVES = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://www.google-analytics.com https://maps.googleapis.com",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://www.google-analytics.com https://maps.googleapis.com https://fundingchoicesmessages.google.com",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-  "img-src 'self' data: blob: https://*.fbcdn.net https://www.newsit.gr https://images.unsplash.com https://*.googleusercontent.com https://*.google.com https://*.gstatic.com https://*.doubleclick.net",
+  "img-src 'self' data: blob: https://*.fbcdn.net https://www.newsit.gr https://images.unsplash.com https://*.googleusercontent.com https://*.google.com https://*.gstatic.com https://*.googleapis.com https://*.doubleclick.net",
   "font-src 'self' data: https://fonts.gstatic.com",
-  "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://maps.googleapis.com",
+  "connect-src 'self' https://*.google-analytics.com https://analytics.google.com https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://maps.googleapis.com https://fundingchoicesmessages.google.com https://api.open-meteo.com",
   "frame-src 'self' https://*.google.com https://*.doubleclick.net https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.youtube.com https://my.matterport.com https://sketchfab.com",
   "object-src 'none'",
   "base-uri 'self'",
