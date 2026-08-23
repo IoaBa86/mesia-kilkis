@@ -14,6 +14,7 @@ import {
   Calendar,
   Eye,         // Cookie Consent Logs
   Megaphone,   // Ad Slots
+  BookOpen,    // Historical Posts
   type LucideIcon
 } from "lucide-react"
 
@@ -242,6 +243,14 @@ export default function AdminDashboard() {
             buttonLabel="Διαχείριση"
           />
           <DashCard
+            title="Ιστορικά Άρθρα"
+            icon={BookOpen}
+            value={stats.historicalPostsCount || 0}
+            caption="Συνολικά άρθρα"
+            onOpen={() => router.push("/admin/historical-posts")}
+            buttonLabel="Διαχείριση"
+          />
+          <DashCard
             title="Διαφημίσεις"
             icon={Megaphone}
             value={stats.adSlotsCount || 0}
@@ -283,6 +292,7 @@ export default function AdminDashboard() {
               { icon: Plus, label: "Νέα Κατηγορία", href: "/admin/categories/new" },
               { icon: Upload, label: "Ανέβασμα Φωτογραφιών", href: "/admin/photos/upload" },
               { icon: Calendar, label: "Νέα Εκδήλωση", href: "/admin/events/new" },
+              { icon: BookOpen, label: "Νέο Ιστορικό Άρθρο", href: "/admin/historical-posts/new" },
               { icon: Eye, label: "Cookie Logs", href: "/admin/consent-logs" },
               { icon: Settings, label: "Ρυθμίσεις", href: "/admin/settings" },
               { icon: Megaphone, label: "Νέα Θέση Διαφήμισης", href: "/admin/ads/new" },

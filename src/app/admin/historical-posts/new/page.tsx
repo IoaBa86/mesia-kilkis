@@ -8,8 +8,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { ArrowLeft, Save, Eye, Upload, X } from "lucide-react"
+import { ArrowLeft, Save, Upload, X } from "lucide-react"
 import { Switch } from "@/components/ui/switch"
+import MarkdownEditor from "@/components/admin/MarkdownEditor"
 
 export default function NewHistoricalPostPage() {
   const { data: session } = useSession()
@@ -262,16 +263,11 @@ export default function NewHistoricalPostPage() {
               <CardTitle className="text-xl text-mesia-wine font-greek">Περιεχόμενο *</CardTitle>
             </CardHeader>
             <CardContent>
-              <Textarea
+              <MarkdownEditor
                 value={formData.content}
-                onChange={(e) => setFormData(prev => ({ ...prev, content: e.target.value }))}
+                onChange={(content) => setFormData(prev => ({ ...prev, content }))}
                 placeholder="Αναλυτική περιγραφή του ιστορικού μνημείου..."
-                rows={15}
-                className="border-mesia-gold/30 focus:border-mesia-wine"
               />
-              <p className="text-xs text-mesia-lightText mt-2">
-                Υποστηρίζεται HTML για μορφοποίηση κειμένου
-              </p>
             </CardContent>
           </Card>
         </form>

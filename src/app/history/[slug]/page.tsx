@@ -4,6 +4,8 @@
 import { use, useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { ArrowLeft, Calendar, User, Share2, Images } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
@@ -183,10 +185,9 @@ export default function HistoricalPostPage({
         )}
 
         <div className="border border-mesia-gold/25 bg-white p-8">
-          <div
-            className="prose prose-lg max-w-none text-mesia-darkText prose-headings:text-mesia-wine prose-headings:font-greek prose-p:leading-relaxed prose-strong:text-mesia-wine"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
+          <div className="prose prose-lg max-w-none text-mesia-darkText prose-headings:text-mesia-wine prose-headings:font-greek prose-p:leading-relaxed prose-strong:text-mesia-wine prose-blockquote:border-mesia-gold prose-blockquote:text-mesia-lightText prose-a:text-mesia-wine">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
+          </div>
 
           {new Date(post.updatedAt) > new Date(post.createdAt) && (
             <div className="mt-8 pt-6 border-t border-mesia-gold/25 text-sm font-mono text-mesia-lightText">

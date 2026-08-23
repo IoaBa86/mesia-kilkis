@@ -41,10 +41,10 @@ export default function HistoricalPostsSection() {
   }, [])
 
   return (
-    <div className="border-t border-mesia-gold/30 pt-16">
+    <div>
       <div className="text-center mb-12">
         <h3 className="text-2xl font-bold text-mesia-wine font-greek mb-4">
-          📚 Περισσότερα Ιστορικά Άρθρα
+          Ιστορικά Άρθρα
         </h3>
         <p className="text-mesia-lightText">
           Εξερευνήστε τα ιστορικά μνημεία και την κληρονομιά μας σε λεπτομέρεια
