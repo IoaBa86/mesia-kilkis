@@ -2,9 +2,17 @@
 
 import { Settings2 } from 'lucide-react'
 
+declare global {
+  interface Window {
+    googlefc?: {
+      showRevocationMessage?: () => void
+    }
+  }
+}
+
 export default function CookieSettingsButton() {
   const reopenSettings = () => {
-    window.dispatchEvent(new Event('mesia-cookie-settings-open'))
+    window.googlefc?.showRevocationMessage?.()
   }
 
   return (

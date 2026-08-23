@@ -6,7 +6,6 @@ import { Providers } from './providers'
 import Header from '@/components/layout/Header'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
-import CookieConsentBanner from '@/components/CookieConsent'
 import CookieSettingsButton from '@/components/CookieSettingsButton'
 import { prisma } from '@/lib/prisma'
 
@@ -92,8 +91,9 @@ export default async function RootLayout({
         {/* Theme color */}
         <meta name="theme-color" content="#753647" />
 
-        {/* Google Analytics — consent-gated: denied by default until the
-            cookie banner (src/components/CookieConsent.tsx) grants it */}
+        {/* Google Analytics — consent-gated: denied by default until Google's
+            own Funding Choices consent message (configured in the AdSense
+            dashboard, injected by the adsbygoogle script below) grants it */}
         <Script id="google-analytics-consent" strategy="beforeInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
@@ -105,6 +105,31 @@ export default async function RootLayout({
             });
             gtag('js', new Date());
             gtag('config', 'G-0JBJ2897HL');
+
+            // Mirror Funding Choices' consent decisions into our own
+            // GDPR audit log (/admin/consent-logs), since Funding Choices
+            // itself only stores consent client-side / in Google's systems.
+            var __origGtag = window.gtag;
+            window.gtag = function () {
+              __origGtag.apply(null, arguments);
+              if (arguments[0] === 'consent' && arguments[1] === 'update') {
+                var c = arguments[2] || {};
+                var analyticsGranted = c.analytics_storage === 'granted';
+                var adsGranted = c.ad_storage === 'granted';
+                fetch('/api/cookie-consent', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    consent: (analyticsGranted || adsGranted) ? 'accepted' : 'declined',
+                    categories: {
+                      necessary: true,
+                      analytics: analyticsGranted,
+                      marketing: adsGranted
+                    }
+                  })
+                }).catch(function () {});
+              }
+            };
           `}
         </Script>
         <Script
@@ -130,7 +155,6 @@ export default async function RootLayout({
           </div>
         </Providers>
 
-        <CookieConsentBanner />
         <CookieSettingsButton />
       </body>
     </html>

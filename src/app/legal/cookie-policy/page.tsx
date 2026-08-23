@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft, Cookie } from 'lucide-react'
 
-const LAST_UPDATED = '23 Αυγούστου 2026'
+const LAST_UPDATED = '24 Αυγούστου 2026'
 
 export const metadata: Metadata = {
   title: 'Πολιτική Cookies - Μεσιά Κιλκίς',
@@ -46,10 +46,10 @@ export default function CookiePolicyPage() {
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Διαχείριση Συναίνεσης</h2>
             <p>
-              Κατά την πρώτη επίσκεψή σας εμφανίζεται ένα banner συναίνεσης cookies, όπου μπορείτε να επιλέξετε
-              ποιες κατηγορίες cookies επιτρέπετε ανά κατηγορία («Προσαρμογή»), ή να αποδεχτείτε/απορρίψετε όλα.
-              Μπορείτε να αλλάξετε την επιλογή σας ανά πάσα στιγμή μέσω του κουμπιού ρυθμίσεων cookies
-              (κάτω δεξιά σε κάθε σελίδα).
+              Κατά την πρώτη επίσκεψή σας εμφανίζεται μήνυμα συναίνεσης cookies (μέσω του πιστοποιημένου
+              μηχανισμού συναίνεσης της Google, Funding Choices / IAB TCF), όπου μπορείτε να επιλέξετε ποιες
+              κατηγορίες cookies επιτρέπετε, ή να αποδεχτείτε/απορρίψετε όλα. Μπορείτε να αλλάξετε την επιλογή
+              σας ανά πάσα στιγμή μέσω του κουμπιού ρυθμίσεων cookies (κάτω δεξιά σε κάθε σελίδα).
             </p>
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Κατηγορίες Cookies που Χρησιμοποιούμε</h2>
@@ -115,7 +115,7 @@ export default function CookiePolicyPage() {
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Διαχείριση Cookies από Εσάς</h2>
             <div className="bg-mesia-gold/10 p-6 rounded-lg border border-mesia-gold/30">
               <ul className="space-y-2 mb-0">
-                <li><strong>Μέσω του banner συναίνεσης:</strong> κατά την πρώτη επίσκεψη ή μέσω του κουμπιού ρυθμίσεων cookies (κάτω δεξιά)</li>
+                <li><strong>Μέσω του μηνύματος συναίνεσης:</strong> κατά την πρώτη επίσκεψη ή μέσω του κουμπιού ρυθμίσεων cookies (κάτω δεξιά)</li>
                 <li><strong>Μέσω του φυλλομετρητή σας:</strong> Ρυθμίσεις → Απόρρητο → Cookies, όπου μπορείτε να διαγράψετε ή να μπλοκάρετε cookies</li>
                 <li><strong>Για τη Google:</strong> μέσω των <a href="https://myadcenter.google.com" target="_blank" rel="noopener noreferrer" className="text-mesia-wine hover:text-mesia-gold">ρυθμίσεων διαφημίσεων Google</a></li>
               </ul>

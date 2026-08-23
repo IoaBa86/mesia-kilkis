@@ -80,7 +80,7 @@ export default function MapComponent({
         options={{
           disableDefaultUI: false,
           zoomControl: true,
-          streetViewControl: true,
+          streetViewControl: false, // no Street View coverage exists for this village
           mapTypeControl: true,
           fullscreenControl: true,
         }}
