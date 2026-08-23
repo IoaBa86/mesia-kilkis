@@ -10,6 +10,7 @@ export async function GET() {
         { isPinned: 'desc' },
         { createdAt: 'desc' }
       ],
+      take: 100,
       select: {
         id: true,
         title: true,

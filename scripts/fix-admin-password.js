@@ -6,28 +6,28 @@ const prisma = new PrismaClient();
 
 async function fixAdminPassword() {
   try {
-    console.log('🔄 Fixing admin password...');
-    
-    // Set a simple, known password
-    const newPassword = 'admin123';
+    const email = process.env.ADMIN_EMAIL;
+    const newPassword = process.env.ADMIN_PASSWORD;
+    if (!email || !newPassword) {
+      console.error('❌ Set ADMIN_EMAIL and ADMIN_PASSWORD in your environment before running this script.');
+      process.exit(1);
+    }
+
+    console.log('🔄 Resetting admin password...');
+
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    
+
     const updatedAdmin = await prisma.user.update({
-      where: { 
-        email: 'admin@mesiakilkis.gr' 
-      },
-      data: { 
-        password: hashedPassword 
-      }
+      where: { email },
+      data: { password: hashedPassword }
     });
-    
+
     console.log('✅ Admin password updated successfully!');
-    console.log('📧 Email: admin@mesiakilkis.gr');
-    console.log('🔐 Password: admin123');
+    console.log('📧 Email:', email);
     console.log('🆔 User ID:', updatedAdmin.id);
-    
+
     // Verify the password works
-    const testPassword = await bcrypt.compare('admin123', hashedPassword);
+    const testPassword = await bcrypt.compare(newPassword, hashedPassword);
     console.log('🧪 Password verification test:', testPassword ? '✅ PASS' : '❌ FAIL');
     
   } catch (error) {

@@ -7,6 +7,7 @@ export async function GET() {
     const voices = await prisma.villageVoice.findMany({
       where: { isActive: true },
       orderBy: [{ order: 'asc' }, { createdAt: 'desc' }],
+      take: 100,
       select: {
         id: true,
         type: true,

@@ -4,9 +4,15 @@ import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 
-// GET /api/categories - Fetch all categories
+// GET /api/categories - Fetch all categories (admin only — the public
+// photos page queries Prisma directly and doesn't call this route)
 export async function GET() {
   try {
+    const session = await getServerSession(authOptions)
+    if (!session || session.user.role !== 'ADMIN') {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
     const categories = await prisma.category.findMany({
       orderBy: { order: 'asc' },
       include: {

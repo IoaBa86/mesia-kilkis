@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# leftover local SQLite db from before the project moved to Postgres/Neon
+prisma/dev.db
+
 # vercel
 .vercel
 

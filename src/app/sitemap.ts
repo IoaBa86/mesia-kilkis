@@ -111,8 +111,32 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     }))
 
+    // Village Voices / Digital Museum are only indexed while their admin
+    // nav-visibility toggle is on — no point ranking a page that's hidden
+    // from the site's own navigation.
+    const config = await prisma.siteConfig.findUnique({ where: { key: 'general' } })
+    const visibility = (config?.value as Record<string, unknown>) || {}
+
+    const featurePages: MetadataRoute.Sitemap = []
+    if (visibility.showVillageVoices) {
+      featurePages.push({
+        url: `${baseUrl}/village-voices`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.7,
+      })
+    }
+    if (visibility.showDigitalMuseum) {
+      featurePages.push({
+        url: `${baseUrl}/digital-museum`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.7,
+      })
+    }
+
     // Combine all pages
-    return [...staticPages, ...eventPages, ...historyPages]
+    return [...staticPages, ...eventPages, ...historyPages, ...featurePages]
 
   } catch (error) {
     console.error('Error generating sitemap:', error)

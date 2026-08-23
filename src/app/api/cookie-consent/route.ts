@@ -1,34 +1,46 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { z } from 'zod'
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
+import { rateLimit, getClientIp } from '@/lib/rate-limit'
+
+const consentSchema = z.object({
+  consent: z.enum(['accepted', 'declined']),
+  categories: z.object({
+    necessary: z.boolean().optional(),
+    functional: z.boolean().optional(),
+    analytics: z.boolean().optional(),
+    marketing: z.boolean().optional(),
+  }).optional(),
+})
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json()
-    const { consent, categories } = body
-    
-    // Validate required fields
-    if (!consent) {
+    const clientIp = getClientIp(request)
+
+    // This is the one fully public, unauthenticated write endpoint on the
+    // site (every visitor's browser calls it once per consent choice) — cap
+    // it to stop it being used to flood the database.
+    if (!rateLimit(`cookie-consent:${clientIp}`, 10, 60_000)) {
       return NextResponse.json(
-        { success: false, error: 'Missing consent field' },
-        { status: 400 }
+        { success: false, error: 'Too many requests' },
+        { status: 429 }
       )
     }
 
-    // Extract IP address
-    const forwardedFor = request.headers.get('x-forwarded-for')
-    const realIP = request.headers.get('x-real-ip')
-
-    let clientIP = 'unknown'
-    if (forwardedFor) {
-      clientIP = forwardedFor.split(',')[0].trim()
-    } else if (realIP) {
-      clientIP = realIP
+    const body = await request.json().catch(() => null)
+    const parsed = consentSchema.safeParse(body)
+    if (!parsed.success) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid request body' },
+        { status: 400 }
+      )
     }
+    const { consent, categories } = parsed.data
 
     // Anonymize IP (GDPR compliance) — zero the last octet for IPv4, keep
-    // only the first 3 hextets for IPv6 (mirrors the IPv4 anonymization
-    // level; a bare `.includes('.')` check previously let IPv6 addresses
-    // through completely un-anonymized)
+    // only the first 3 hextets for IPv6.
     const anonymizeIP = (ip: string): string => {
       if (ip.includes('.')) {
         const parts = ip.split('.')
@@ -41,7 +53,7 @@ export async function POST(request: NextRequest) {
       return ip
     }
 
-    const anonymizedIP = anonymizeIP(clientIP)
+    const anonymizedIP = anonymizeIP(clientIp)
     const userAgent = request.headers.get('user-agent') || 'unknown'
 
     const consentRecord = await prisma.cookieConsent.create({
@@ -68,9 +80,14 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// GET endpoint for admin dashboard stats
+// GET /api/cookie-consent - aggregate stats for the admin dashboard
 export async function GET() {
   try {
+    const session = await getServerSession(authOptions)
+    if (!session || session.user.role !== 'ADMIN') {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+
     const totalCount = await prisma.cookieConsent.count()
     const acceptedCount = await prisma.cookieConsent.count({
       where: { consentGiven: true }

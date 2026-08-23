@@ -8,41 +8,44 @@ const prisma = new PrismaClient();
 
 async function createAdmin() {
   try {
+    const email = process.env.ADMIN_EMAIL;
+    const password = process.env.ADMIN_PASSWORD;
+    if (!email || !password) {
+      console.error('❌ Set ADMIN_EMAIL and ADMIN_PASSWORD in your environment before running this script.');
+      process.exit(1);
+    }
+
     console.log('🔄 Creating admin user for mesia.gr...');
     console.log('📊 Database URL found:', !!process.env.DATABASE_URL);
-    console.log('📧 Admin email will be:', process.env.ADMIN_EMAIL || 'admin@mesiakilkis.gr');
-    
-    // Hash the password
-    const password = 'mesia2024admin'; // Change this password!
+    console.log('📧 Admin email will be:', email);
+
     const hashedPassword = await bcrypt.hash(password, 10);
-    
-    // Create admin user with your exact schema
+
     const admin = await prisma.user.create({
       data: {
-        email: process.env.ADMIN_EMAIL || 'admin@mesia.gr',
+        email,
         name: 'Mesia Admin',
         password: hashedPassword,
         role: 'ADMIN',
       },
     });
-    
+
     console.log('✅ Admin user created successfully!');
     console.log('📧 Email:', admin.email);
     console.log('👤 Name:', admin.name);
-    console.log('🔐 Password: mesia2024admin');
     console.log('🎭 Role:', admin.role);
     console.log('🆔 ID:', admin.id);
     console.log('📅 Created:', admin.createdAt);
-    
+
   } catch (error) {
     if (error.code === 'P2002') {
       console.log('ℹ️ Admin user already exists with this email');
-      
+
       // Try to update password instead
       try {
-        const hashedPassword = await bcrypt.hash('mesia2024admin', 10);
+        const hashedPassword = await bcrypt.hash(process.env.ADMIN_PASSWORD, 10);
         const updatedAdmin = await prisma.user.update({
-          where: { email: process.env.ADMIN_EMAIL || 'admin@mesiakilkis.gr' },
+          where: { email: process.env.ADMIN_EMAIL },
           data: { password: hashedPassword }
         });
         console.log('✅ Updated existing admin password');
