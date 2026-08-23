@@ -15,6 +15,8 @@ import {
   Eye,         // Cookie Consent Logs
   Megaphone,   // Ad Slots
   BookOpen,    // Historical Posts
+  MessageCircle, // Village Voices
+  Landmark,    // Digital Museum
   type LucideIcon
 } from "lucide-react"
 
@@ -28,6 +30,8 @@ interface DashboardStats {
   cookieConsentCount?: number
   adSlotsCount?: number
   activeAdSlots?: number
+  villageVoicesCount?: number
+  museumExhibitsCount?: number
 }
 
 function DashCard({
@@ -81,7 +85,9 @@ export default function AdminDashboard() {
     historicalPostsCount: 0,
     cookieConsentCount: 0,
     adSlotsCount: 0,
-    activeAdSlots: 0
+    activeAdSlots: 0,
+    villageVoicesCount: 0,
+    museumExhibitsCount: 0
   })
   const [loading, setLoading] = useState(true)
 
@@ -101,12 +107,14 @@ export default function AdminDashboard() {
     try {
       // Fire every request in parallel instead of awaiting them one by one —
       // sequential round trips were the reason this dashboard felt slow.
-      const [categoriesRes, eventsRes, postsRes, consentRes, adSlotsRes] = await Promise.allSettled([
+      const [categoriesRes, eventsRes, postsRes, consentRes, adSlotsRes, voicesRes, exhibitsRes] = await Promise.allSettled([
         fetch('/api/categories'),
         fetch('/api/events'),
         fetch('/api/admin/historical-posts'),
         fetch('/api/cookie-consent'),
         fetch('/api/ad-slots'),
+        fetch('/api/admin/village-voices'),
+        fetch('/api/admin/museum-exhibits'),
       ])
 
       let categoriesData: any[] = []
@@ -148,6 +156,18 @@ export default function AdminDashboard() {
         activeAdSlots = adSlotsData.filter((slot: any) => slot.isActive).length || 0
       }
 
+      let villageVoicesCount = 0
+      if (voicesRes.status === 'fulfilled' && voicesRes.value.ok) {
+        const voicesData = await voicesRes.value.json()
+        villageVoicesCount = voicesData.voices?.length || 0
+      }
+
+      let museumExhibitsCount = 0
+      if (exhibitsRes.status === 'fulfilled' && exhibitsRes.value.ok) {
+        const exhibitsData = await exhibitsRes.value.json()
+        museumExhibitsCount = exhibitsData.exhibits?.length || 0
+      }
+
       setStats({
         categoriesCount: categoriesData.length,
         photosCount: totalPhotos,
@@ -157,7 +177,9 @@ export default function AdminDashboard() {
         historicalPostsCount,
         cookieConsentCount,
         adSlotsCount,
-        activeAdSlots
+        activeAdSlots,
+        villageVoicesCount,
+        museumExhibitsCount
       })
     } catch (error) {
       console.error('Error fetching dashboard stats:', error)
@@ -251,6 +273,22 @@ export default function AdminDashboard() {
             buttonLabel="Διαχείριση"
           />
           <DashCard
+            title="Φωνές Χωριού"
+            icon={MessageCircle}
+            value={stats.villageVoicesCount || 0}
+            caption="Ιστορίες & μαρτυρίες"
+            onOpen={() => router.push("/admin/village-voices")}
+            buttonLabel="Διαχείριση"
+          />
+          <DashCard
+            title="Ψηφιακό Μουσείο"
+            icon={Landmark}
+            value={stats.museumExhibitsCount || 0}
+            caption="Εκθέματα"
+            onOpen={() => router.push("/admin/museum-exhibits")}
+            buttonLabel="Διαχείριση"
+          />
+          <DashCard
             title="Διαφημίσεις"
             icon={Megaphone}
             value={stats.adSlotsCount || 0}
@@ -293,6 +331,8 @@ export default function AdminDashboard() {
               { icon: Upload, label: "Ανέβασμα Φωτογραφιών", href: "/admin/photos/upload" },
               { icon: Calendar, label: "Νέα Εκδήλωση", href: "/admin/events/new" },
               { icon: BookOpen, label: "Νέο Ιστορικό Άρθρο", href: "/admin/historical-posts/new" },
+              { icon: MessageCircle, label: "Νέα Μαρτυρία", href: "/admin/village-voices/new" },
+              { icon: Landmark, label: "Νέο Έκθεμα", href: "/admin/museum-exhibits/new" },
               { icon: Eye, label: "Cookie Logs", href: "/admin/consent-logs" },
               { icon: Settings, label: "Ρυθμίσεις", href: "/admin/settings" },
               { icon: Megaphone, label: "Νέα Θέση Διαφήμισης", href: "/admin/ads/new" },

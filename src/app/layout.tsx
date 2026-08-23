@@ -6,6 +6,7 @@ import { Providers } from './providers'
 import Header from '@/components/layout/Header'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import { prisma } from '@/lib/prisma'
 
 const inter = Inter({ subsets: ['latin', 'greek'], variable: '--font-body' })
 const alegreya = Alegreya({ subsets: ['latin', 'greek'], variable: '--font-display', weight: ['500', '600', '700', '800'] })
@@ -56,11 +57,27 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+async function getNavVisibility() {
+  try {
+    const config = await prisma.siteConfig.findUnique({ where: { key: 'general' } })
+    const value = (config?.value as Record<string, unknown>) || {}
+    return {
+      showVillageVoices: Boolean(value.showVillageVoices),
+      showDigitalMuseum: Boolean(value.showDigitalMuseum),
+    }
+  } catch (error) {
+    console.error('Error loading nav visibility:', error)
+    return { showVillageVoices: false, showDigitalMuseum: false }
+  }
+}
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const navVisibility = await getNavVisibility()
+
   return (
     <html lang="el" className="scroll-smooth">
       <head>
@@ -108,11 +125,11 @@ export default function RootLayout({
         <Providers>
           <div className="flex flex-col min-h-screen">
             <Header />
-            <Navbar />
-            <main className="flex-grow">        
+            <Navbar {...navVisibility} />
+            <main className="flex-grow">
               {children}
             </main>
-            <Footer />
+            <Footer {...navVisibility} />
           </div>
         </Providers>
       </body>

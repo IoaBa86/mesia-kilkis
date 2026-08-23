@@ -56,7 +56,9 @@ export default function SettingsPage() {
     address: "Μεσιά Κιλκίς, 61100",
     logoUrl: "",
     faviconUrl: "",
-    heroImageUrl: ""
+    heroImageUrl: "",
+    showVillageVoices: false,
+    showDigitalMuseum: false
   })
 
   // Email SMTP Settings (from original)
@@ -546,6 +548,40 @@ export default function SettingsPage() {
                       value={siteSettings.address}
                       onChange={(e) => setSiteSettings(prev => ({ ...prev, address: e.target.value }))}
                       className="border-mesia-gold/30 focus:border-mesia-wine focus:ring-mesia-wine"
+                    />
+                  </div>
+                  <Button onClick={saveSiteSettings} disabled={saving} className="w-full bg-mesia-wine text-white">
+                    <Save className="h-4 w-4 mr-2" />
+                    {saving ? "Αποθήκευση..." : "Αποθήκευση"}
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Page Visibility */}
+              <Card className="bg-white/90 backdrop-blur-sm border border-mesia-gold/20 shadow-xl">
+                <CardHeader>
+                  <CardTitle className="text-2xl text-mesia-wine font-greek">Ορατότητα Σελίδων</CardTitle>
+                  <CardDescription>Εμφάνιση/απόκρυψη σελίδων από το μενού πλοήγησης</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label>Φωνές του Χωριού</Label>
+                      <p className="text-sm text-mesia-lightText">/village-voices</p>
+                    </div>
+                    <Switch
+                      checked={siteSettings.showVillageVoices}
+                      onCheckedChange={(checked) => setSiteSettings(prev => ({ ...prev, showVillageVoices: checked }))}
+                    />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label>Ψηφιακό Μουσείο</Label>
+                      <p className="text-sm text-mesia-lightText">/digital-museum</p>
+                    </div>
+                    <Switch
+                      checked={siteSettings.showDigitalMuseum}
+                      onCheckedChange={(checked) => setSiteSettings(prev => ({ ...prev, showDigitalMuseum: checked }))}
                     />
                   </div>
                   <Button onClick={saveSiteSettings} disabled={saving} className="w-full bg-mesia-wine text-white">

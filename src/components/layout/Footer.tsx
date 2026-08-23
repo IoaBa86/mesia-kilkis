@@ -2,7 +2,13 @@
 import Link from 'next/link'
 import { MapPin, Mail, Calendar, FileText } from 'lucide-react'
 
-export default function Footer() {
+export default function Footer({
+  showVillageVoices = false,
+  showDigitalMuseum = false,
+}: {
+  showVillageVoices?: boolean
+  showDigitalMuseum?: boolean
+}) {
   const currentYear = new Date().getFullYear()
 
   const quickLinks = [
@@ -11,6 +17,8 @@ export default function Footer() {
     { href: '/photos', label: 'Φωτογραφίες' },
     { href: '/area', label: 'Η Περιοχή' },
     { href: '/history', label: 'Ιστορία' },
+    ...(showVillageVoices ? [{ href: '/village-voices', label: 'Φωνές του Χωριού' }] : []),
+    ...(showDigitalMuseum ? [{ href: '/digital-museum', label: 'Ψηφιακό Μουσείο' }] : []),
     { href: '/events', label: 'Εκδηλώσεις' },
   ]
 

@@ -12,23 +12,33 @@ import {
   BookOpen,
   Calendar,
   Navigation,
+  MessageCircle,
+  Landmark,
   Menu,
   X
 } from 'lucide-react'
 
-const navItems = [
-  { href: '/', label: 'Αρχική', icon: Home },
-  { href: '/village', label: 'Το Χωριό', icon: Building2 },
-  { href: '/access', label: 'Πώς να Έρθετε', icon: Navigation },
-  { href: '/photos', label: 'Φωτογραφίες', icon: Camera },
-  { href: '/area', label: 'Η Περιοχή', icon: Map },
-  { href: '/history', label: 'Ιστορία', icon: BookOpen },
-  { href: '/events', label: 'Εκδηλώσεις', icon: Calendar },
-]
-
-export default function Navbar() {
+export default function Navbar({
+  showVillageVoices = false,
+  showDigitalMuseum = false,
+}: {
+  showVillageVoices?: boolean
+  showDigitalMuseum?: boolean
+}) {
   const pathname = usePathname()
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  const navItems = [
+    { href: '/', label: 'Αρχική', icon: Home },
+    { href: '/village', label: 'Το Χωριό', icon: Building2 },
+    { href: '/access', label: 'Πώς να Έρθετε', icon: Navigation },
+    { href: '/photos', label: 'Φωτογραφίες', icon: Camera },
+    { href: '/area', label: 'Η Περιοχή', icon: Map },
+    { href: '/history', label: 'Ιστορία', icon: BookOpen },
+    ...(showVillageVoices ? [{ href: '/village-voices', label: 'Φωνές του Χωριού', icon: MessageCircle }] : []),
+    ...(showDigitalMuseum ? [{ href: '/digital-museum', label: 'Ψηφιακό Μουσείο', icon: Landmark }] : []),
+    { href: '/events', label: 'Εκδηλώσεις', icon: Calendar },
+  ]
 
   const isActivePath = (path: string) => {
     if (path === '/') return pathname === '/'

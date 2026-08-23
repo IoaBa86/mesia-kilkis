@@ -21,6 +21,8 @@ model User {
   sessions        Session[]
   events          Event[]
   historicalPosts HistoricalPost[]
+  villageVoices   VillageVoice[]
+  museumExhibits  MuseumExhibit[]
 
   @@index([email])
   @@index([role])
@@ -208,6 +210,59 @@ model AdSlot {
   @@index([page])
   @@index([isActive])
   @@map("ad_slots")
+}
+
+model VillageVoice {
+  id        String    @id @default(cuid())
+  type      VoiceType
+  authorName String
+  title     String
+  content   String
+  imageUrl  String?
+  isActive  Boolean   @default(true)
+  order     Int       @default(0)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  creatorId String
+  creator   User      @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+
+  @@index([type])
+  @@index([isActive])
+  @@index([order])
+  @@map("village_voices")
+}
+
+model MuseumExhibit {
+  id          String       @id @default(cuid())
+  type        ExhibitType
+  title       String
+  description String
+  imageUrl    String?
+  mediaUrl    String?
+  isActive    Boolean      @default(true)
+  order       Int          @default(0)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  creatorId   String
+  creator     User         @relation(fields: [creatorId], references: [id], onDelete: Cascade)
+
+  @@index([type])
+  @@index([isActive])
+  @@index([order])
+  @@map("museum_exhibits")
+}
+
+enum VoiceType {
+  RESIDENT_STORY
+  YOUTH_STORY
+  TESTIMONIAL
+}
+
+enum ExhibitType {
+  EXHIBIT
+  AUDIO_GUIDE
+  VIRTUAL_TOUR
+  ARTIFACT
 }
 
 enum Role {

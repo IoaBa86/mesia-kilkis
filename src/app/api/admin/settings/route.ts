@@ -10,7 +10,9 @@ const DEFAULT_SETTINGS = {
   siteTitle: "Μεσιά Κιλκίς",
   contactEmail: "info@mesia-kilkis.gr",
   villagePhone: "23430 41000",
-  address: "Μεσιά Κιλκίς, 61100"
+  address: "Μεσιά Κιλκίς, 61100",
+  showVillageVoices: false,
+  showDigitalMuseum: false,
 }
 
 // GET /api/admin/settings - Load settings
@@ -40,7 +42,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { siteTitle, contactEmail, villagePhone, address } = body
+    const { siteTitle, contactEmail, villagePhone, address, showVillageVoices, showDigitalMuseum } = body
 
     // Validate required fields
     if (!siteTitle || !contactEmail) {
@@ -64,6 +66,8 @@ export async function POST(request: NextRequest) {
       contactEmail,
       villagePhone: villagePhone || "",
       address: address || "",
+      showVillageVoices: showVillageVoices ?? false,
+      showDigitalMuseum: showDigitalMuseum ?? false,
     }
 
     await prisma.siteConfig.upsert({
