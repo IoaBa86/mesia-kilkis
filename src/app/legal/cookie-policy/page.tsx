@@ -46,10 +46,10 @@ export default function CookiePolicyPage() {
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Διαχείριση Συναίνεσης</h2>
             <p>
-              Κατά την πρώτη επίσκεψή σας εμφανίζεται ένα banner συναίνεσης cookies, μέσω της πλατφόρμας{' '}
-              <strong>Usercentrics</strong>, όπου μπορείτε να επιλέξετε ποιες κατηγορίες cookies επιτρέπετε.
-              Μπορείτε να αλλάξετε την επιλογή σας ανά πάσα στιγμή μέσω του σχετικού συνδέσμου ρυθμίσεων cookies
-              στο υποσέλιδο της ιστοσελίδας.
+              Κατά την πρώτη επίσκεψή σας εμφανίζεται ένα banner συναίνεσης cookies, όπου μπορείτε να επιλέξετε
+              ποιες κατηγορίες cookies επιτρέπετε ανά κατηγορία («Προσαρμογή»), ή να αποδεχτείτε/απορρίψετε όλα.
+              Μπορείτε να αλλάξετε την επιλογή σας ανά πάσα στιγμή μέσω του κουμπιού ρυθμίσεων cookies
+              (κάτω δεξιά σε κάθε σελίδα).
             </p>
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Κατηγορίες Cookies που Χρησιμοποιούμε</h2>
@@ -102,9 +102,6 @@ export default function CookiePolicyPage() {
                   Πώς η Google χρησιμοποιεί cookies για διαφημίσεις
                 </a>
               </li>
-              <li>
-                <strong>Usercentrics</strong> — αποθηκεύει την επιλογή συναίνεσής σας ώστε να μη σας ζητείται ξανά σε κάθε επίσκεψη.
-              </li>
             </ul>
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Καταγραφή Συναίνεσης</h2>
@@ -118,7 +115,7 @@ export default function CookiePolicyPage() {
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Διαχείριση Cookies από Εσάς</h2>
             <div className="bg-mesia-gold/10 p-6 rounded-lg border border-mesia-gold/30">
               <ul className="space-y-2 mb-0">
-                <li><strong>Μέσω του banner συναίνεσης:</strong> κατά την πρώτη επίσκεψη ή μέσω του συνδέσμου ρυθμίσεων στο υποσέλιδο</li>
+                <li><strong>Μέσω του banner συναίνεσης:</strong> κατά την πρώτη επίσκεψη ή μέσω του κουμπιού ρυθμίσεων cookies (κάτω δεξιά)</li>
                 <li><strong>Μέσω του φυλλομετρητή σας:</strong> Ρυθμίσεις → Απόρρητο → Cookies, όπου μπορείτε να διαγράψετε ή να μπλοκάρετε cookies</li>
                 <li><strong>Για τη Google:</strong> μέσω των <a href="https://myadcenter.google.com" target="_blank" rel="noopener noreferrer" className="text-mesia-wine hover:text-mesia-gold">ρυθμίσεων διαφημίσεων Google</a></li>
               </ul>

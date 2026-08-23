@@ -65,7 +65,7 @@ export default function PrivacyPolicyPage() {
             <ul className="space-y-2">
               <li><strong>Στοιχεία επικοινωνίας:</strong> όνομα και email, εφόσον επικοινωνήσετε μαζί μας μέσω email</li>
               <li><strong>Τεχνικά στοιχεία:</strong> διεύθυνση IP (ανωνυμοποιημένη όπου καταγράφεται — βλ. ενότητα 9), τύπος φυλλομετρητή/συσκευής</li>
-              <li><strong>Προτιμήσεις cookies:</strong> οι επιλογές σας σχετικά με τα cookies, μέσω του συστήματος συναίνεσης που χρησιμοποιούμε (Usercentrics)</li>
+              <li><strong>Προτιμήσεις cookies:</strong> οι επιλογές σας σχετικά με τα cookies, μέσω του banner συναίνεσης της ιστοσελίδας</li>
               <li><strong>Στοιχεία διαχειριστών:</strong> για τους λογαριασμούς διαχείρισης περιεχομένου (email, κρυπτογραφημένος κωδικός) — αφορά μόνο τους εθελοντές/συντάκτες της ιστοσελίδας, όχι τους επισκέπτες</li>
             </ul>
             <p>
@@ -113,7 +113,6 @@ export default function PrivacyPolicyPage() {
               <li><strong>Vercel Inc.</strong> — φιλοξενία (hosting) της ιστοσελίδας</li>
               <li><strong>Neon (Neon Inc.)</strong> — φιλοξενία της βάσης δεδομένων (PostgreSQL)</li>
               <li><strong>Google LLC</strong> — Google Analytics (στατιστικά επισκεψιμότητας) και Google AdSense (διαφημίσεις), εφόσον έχετε δώσει τη σχετική συγκατάθεση</li>
-              <li><strong>Usercentrics GmbH</strong> — πλατφόρμα διαχείρισης συναίνεσης cookies (Consent Management Platform)</li>
             </ul>
             <p>
               Ορισμένοι από τους παραπάνω παρόχους (Vercel, Neon, Google) εδρεύουν ή διατηρούν υποδομές εκτός

@@ -6,6 +6,8 @@ import { Providers } from './providers'
 import Header from '@/components/layout/Header'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
+import CookieConsentBanner from '@/components/CookieConsent'
+import CookieSettingsButton from '@/components/CookieSettingsButton'
 import { prisma } from '@/lib/prisma'
 
 const inter = Inter({ subsets: ['latin', 'greek'], variable: '--font-body' })
@@ -90,30 +92,25 @@ export default async function RootLayout({
         {/* Theme color */}
         <meta name="theme-color" content="#753647" />
 
-        {/* Usercentrics CMP - Cookie Consent Management */}
-        <Script
-          id="usercentrics-cmp"
-          src="https://app.usercentrics.eu/browser-ui/latest/loader.js"
-          data-settings-id="AwAIUZcb10Nqhx"
-          strategy="beforeInteractive"
-        />
-
-        {/* Google Analytics - Direct Implementation */}
+        {/* Google Analytics — consent-gated: denied by default until the
+            cookie banner (src/components/CookieConsent.tsx) grants it */}
+        <Script id="google-analytics-consent" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+            gtag('consent', 'default', {
+              analytics_storage: 'denied',
+              ad_storage: 'denied'
+            });
+            gtag('js', new Date());
+            gtag('config', 'G-0JBJ2897HL');
+          `}
+        </Script>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-0JBJ2897HL"
           strategy="afterInteractive"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-0JBJ2897HL', {
-              debug_mode: true
-            });
-            console.log('📊 Google Analytics loaded directly');
-          `}
-        </Script>
       </head>
       <body className={`${inter.variable} ${alegreya.variable} ${jetbrainsMono.variable} ${inter.className} antialiased`}>
         {/* Google AdSense Script */}
@@ -132,6 +129,9 @@ export default async function RootLayout({
             <Footer {...navVisibility} />
           </div>
         </Providers>
+
+        <CookieConsentBanner />
+        <CookieSettingsButton />
       </body>
     </html>
   )

@@ -5,6 +5,10 @@ import Link from 'next/link'
 import { ArrowLeft, Eye, CheckCircle, XCircle } from 'lucide-react'
 import { redirect } from 'next/navigation'
 
+// Always fetch fresh — this is a live monitoring page, a cached/stale
+// snapshot would silently hide new consent records.
+export const dynamic = 'force-dynamic'
+
 async function getConsentLogs() {
   try {
     const [stats, recentConsents, totalCount] = await Promise.all([
