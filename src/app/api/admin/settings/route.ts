@@ -2,46 +2,28 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/lib/auth"
-import { promises as fs } from 'fs'
-import path from 'path'
+import { prisma } from "@/lib/prisma"
 
-const SETTINGS_FILE = path.join(process.cwd(), 'data', 'settings.json')
+const CONFIG_KEY = "general"
 
-// Ensure data directory exists
-async function ensureDataDir() {
-  const dataDir = path.join(process.cwd(), 'data')
-  try {
-    await fs.access(dataDir)
-  } catch {
-    await fs.mkdir(dataDir, { recursive: true })
-  }
+const DEFAULT_SETTINGS = {
+  siteTitle: "Μεσιά Κιλκίς",
+  contactEmail: "info@mesia-kilkis.gr",
+  villagePhone: "23430 41000",
+  address: "Μεσιά Κιλκίς, 61100"
 }
 
 // GET /api/admin/settings - Load settings
 export async function GET() {
   try {
     const session = await getServerSession(authOptions)
-    
+
     if (!session || session.user.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    await ensureDataDir()
-    
-    try {
-      const settingsData = await fs.readFile(SETTINGS_FILE, 'utf-8')
-      const settings = JSON.parse(settingsData)
-      return NextResponse.json(settings)
-    } catch (error) {
-      // Return default settings if file doesn't exist
-      const defaultSettings = {
-        siteTitle: "Μεσιά Κιλκίς",
-        contactEmail: "info@mesia-kilkis.gr",
-        villagePhone: "23430 41000",
-        address: "Μεσιά Κιλκίς, 61100"
-      }
-      return NextResponse.json(defaultSettings)
-    }
+    const config = await prisma.siteConfig.findUnique({ where: { key: CONFIG_KEY } })
+    return NextResponse.json(config ? config.value : DEFAULT_SETTINGS)
   } catch (error) {
     console.error('Error loading settings:', error)
     return NextResponse.json({ error: 'Failed to load settings' }, { status: 500 })
@@ -52,7 +34,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions)
-    
+
     if (!session || session.user.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
@@ -82,12 +64,13 @@ export async function POST(request: NextRequest) {
       contactEmail,
       villagePhone: villagePhone || "",
       address: address || "",
-      updatedAt: new Date().toISOString(),
-      updatedBy: session.user.email
     }
 
-    await ensureDataDir()
-    await fs.writeFile(SETTINGS_FILE, JSON.stringify(settings, null, 2))
+    await prisma.siteConfig.upsert({
+      where: { key: CONFIG_KEY },
+      update: { value: settings, updatedBy: session.user.email },
+      create: { key: CONFIG_KEY, value: settings, updatedBy: session.user.email },
+    })
 
     return NextResponse.json({ success: true })
   } catch (error) {

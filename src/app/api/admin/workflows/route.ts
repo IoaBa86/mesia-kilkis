@@ -2,43 +2,28 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/lib/auth"
-import { promises as fs } from 'fs'
-import path from 'path'
+import { prisma } from "@/lib/prisma"
 
-const WORKFLOWS_FILE = path.join(process.cwd(), 'data', 'workflows.json')
+const CONFIG_KEY = "workflows"
 
-async function ensureDataDir() {
-  const dataDir = path.join(process.cwd(), 'data')
-  try {
-    await fs.access(dataDir)
-  } catch {
-    await fs.mkdir(dataDir, { recursive: true })
-  }
+const DEFAULT_WORKFLOWS = {
+  autoImageOptimization: true,
+  contentApprovalRequired: false,
+  emailNotifications: true,
+  scheduledBackups: true,
+  autoPublishEvents: false
 }
 
 export async function GET() {
   try {
     const session = await getServerSession(authOptions)
-    
+
     if (!session || session.user.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    await ensureDataDir()
-    
-    try {
-      const workflowsData = await fs.readFile(WORKFLOWS_FILE, 'utf-8')
-      return NextResponse.json(JSON.parse(workflowsData))
-    } catch (error) {
-      const defaultWorkflows = {
-        autoImageOptimization: true,
-        contentApprovalRequired: false,
-        emailNotifications: true,
-        scheduledBackups: true,
-        autoPublishEvents: false
-      }
-      return NextResponse.json(defaultWorkflows)
-    }
+    const config = await prisma.siteConfig.findUnique({ where: { key: CONFIG_KEY } })
+    return NextResponse.json(config ? config.value : DEFAULT_WORKFLOWS)
   } catch (error) {
     console.error('Error loading workflows:', error)
     return NextResponse.json({ error: 'Failed to load workflows' }, { status: 500 })
@@ -48,20 +33,18 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions)
-    
+
     if (!session || session.user.role !== 'ADMIN') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
     const body = await request.json()
-    const workflows = {
-      ...body,
-      updatedAt: new Date().toISOString(),
-      updatedBy: session.user.email
-    }
 
-    await ensureDataDir()
-    await fs.writeFile(WORKFLOWS_FILE, JSON.stringify(workflows, null, 2))
+    await prisma.siteConfig.upsert({
+      where: { key: CONFIG_KEY },
+      update: { value: body, updatedBy: session.user.email },
+      create: { key: CONFIG_KEY, value: body, updatedBy: session.user.email },
+    })
 
     return NextResponse.json({ success: true })
   } catch (error) {

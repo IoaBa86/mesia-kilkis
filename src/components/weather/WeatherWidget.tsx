@@ -33,7 +33,7 @@ const weatherIcons: { [key: number]: { icon: any, label: string } } = {
   99: { icon: Zap, label: '⛈️' },         // Thunderstorm with heavy hail
 }
 
-export default function WeatherWidget() {
+export default function WeatherWidget({ compact = false }: { compact?: boolean } = {}) {
   const [weather, setWeather] = useState<WeatherData | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
@@ -80,6 +80,26 @@ export default function WeatherWidget() {
     
     return () => clearInterval(interval)
   }, [])
+
+  if (compact) {
+    if (loading) {
+      return (
+        <span className="flex items-center gap-1.5">
+          <Loader className="h-3 w-3 animate-spin" />
+        </span>
+      )
+    }
+    if (error || !weather) {
+      return <span>Καιρός μη διαθέσιμος</span>
+    }
+    const info = weatherIcons[weather.weatherCode] || weatherIcons[0]
+    return (
+      <span className="flex items-center gap-1.5 whitespace-nowrap">
+        <span aria-hidden="true">{info.label}</span>
+        <span>{weather.temperature}°C Μεσιά</span>
+      </span>
+    )
+  }
 
   if (loading) {
     return (

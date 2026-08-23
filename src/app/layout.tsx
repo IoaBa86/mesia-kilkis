@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Alegreya, IBM_Plex_Mono } from 'next/font/google'
+import { Inter, Alegreya, JetBrains_Mono } from 'next/font/google'
 import Script from 'next/script'
 import './globals.css'
 import { Providers } from './providers'
@@ -10,7 +10,7 @@ import SimplePageTracker from '@/components/SimplePageTracker'
 
 const inter = Inter({ subsets: ['latin', 'greek'], variable: '--font-body' })
 const alegreya = Alegreya({ subsets: ['latin', 'greek'], variable: '--font-display', weight: ['500', '600', '700', '800'] })
-const plexMono = IBM_Plex_Mono({ subsets: ['latin'], variable: '--font-mono', weight: ['400', '500', '600'] })
+const jetbrainsMono = JetBrains_Mono({ subsets: ['latin', 'greek'], variable: '--font-mono', weight: ['400', '500', '600'] })
 
 // Enhanced metadata for SEO - Updated to use correct domain
 export const metadata: Metadata = {
@@ -112,7 +112,7 @@ export default function RootLayout({
           `}
         </Script>
       </head>
-      <body className={`${inter.variable} ${alegreya.variable} ${plexMono.variable} ${inter.className} antialiased`}>
+      <body className={`${inter.variable} ${alegreya.variable} ${jetbrainsMono.variable} ${inter.className} antialiased`}>
         {/* Google AdSense Script */}
         <Script
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1184028367307988"

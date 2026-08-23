@@ -237,6 +237,15 @@ model ContentAnalytics {
   @@map("content_analytics")
 }
 
+model SiteConfig {
+  key       String   @id
+  value     Json
+  updatedAt DateTime @updatedAt
+  updatedBy String?
+
+  @@map("site_config")
+}
+
 model AdSlot {
   id        String   @id @default(cuid())
   key       String   @unique

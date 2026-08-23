@@ -5,8 +5,6 @@ import { authOptions } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 import nodemailer from "nodemailer"
-import { promises as fs } from 'fs'
-import path from 'path'
 
 export async function POST(request: NextRequest) {
   try {
@@ -57,10 +55,13 @@ export async function POST(request: NextRequest) {
     // Send invitation email
     try {
       // Load email settings
-      const emailSettingsPath = path.join(process.cwd(), 'data', 'email-settings.json')
-      const emailSettings = JSON.parse(await fs.readFile(emailSettingsPath, 'utf-8'))
+      const emailConfig = await prisma.siteConfig.findUnique({ where: { key: 'email' } })
+      if (!emailConfig) {
+        throw new Error('Email settings not configured')
+      }
+      const emailSettings = emailConfig.value as Record<string, any>
 
-      const transporter = nodemailer.createTransporter({
+      const transporter = nodemailer.createTransport({
         host: emailSettings.smtpHost,
         port: parseInt(emailSettings.smtpPort),
         secure: emailSettings.smtpSecure,
