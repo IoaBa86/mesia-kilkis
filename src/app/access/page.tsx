@@ -3,8 +3,9 @@ import { Metadata } from 'next'
 import AccessClient from './AccessClient'
 
 export const metadata: Metadata = {
-  title: 'Πώς να Έρθετε - Μεσιά Κιλκίς',
-  description: 'Αναλυτικές οδηγίες για την πρόσβαση στο παραδοσιακό χωριό Μεσιά Κιλκίς. Οδικές διαδρομές, δημόσια μέσα και χρήσιμες πληροφορίες.',
+  title: 'Πώς να Έρθετε στη Μεσιά (Mesia) - Κιλκίς',
+  description: 'Αναλυτικές οδηγίες για την πρόσβαση στο παραδοσιακό χωριό Μεσιά (Mesia) Κιλκίς. Οδικές διαδρομές, δημόσια μέσα και χρήσιμες πληροφορίες.',
+  keywords: ['Μεσιά', 'Mesia', 'Κιλκίς', 'οδηγίες πρόσβασης', 'πώς να έρθετε'],
   alternates: {
     canonical: '/access', // ✅ Fixed canonical URL
   },

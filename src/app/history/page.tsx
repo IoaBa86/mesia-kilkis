@@ -5,8 +5,9 @@ import HistoricalPostsSection from '@/components/history/HistoricalPostsSection'
 import PageHero from '@/components/site/PageHero'
 
 export const metadata: Metadata = {
-  title: 'Ιστορία - Μεσιά Κιλκίς',
-  description: 'Η ιστορία του χωριού Μεσιά Κιλκίς από την Τουρκοκρατία μέχρι σήμερα. Ιστορικά μνημεία, σημαντικές ημερομηνίες και η εξέλιξη της κοινότητας.',
+  title: 'Ιστορία της Μεσιάς (Mesia) - Κιλκίς',
+  description: 'Η ιστορία του χωριού Μεσιά (Mesia) Κιλκίς από την Τουρκοκρατία μέχρι σήμερα. Ιστορικά μνημεία, σημαντικές ημερομηνίες και η εξέλιξη της κοινότητας.',
+  keywords: ['Μεσιά', 'Mesia', 'Κιλκίς', 'ιστορία', 'Μπαλμπά Κιόϊ', 'Τουρκοκρατία'],
   alternates: {
     canonical: '/history',
   },

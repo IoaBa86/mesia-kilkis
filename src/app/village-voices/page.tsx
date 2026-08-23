@@ -8,8 +8,9 @@ import PageHero from '@/components/site/PageHero'
 import { prisma } from '@/lib/prisma'
 
 export const metadata: Metadata = {
-  title: 'Φωνές του Χωριού - Μεσιά Κιλκίς',
-  description: 'Ιστορίες κατοίκων, φωνές νέων και μαρτυρίες επισκεπτών της Μεσιάς Κιλκίς.',
+  title: 'Φωνές του Χωριού Μεσιά (Mesia) - Κιλκίς',
+  description: 'Ιστορίες κατοίκων, φωνές νέων και μαρτυρίες επισκεπτών της Μεσιάς (Mesia) Κιλκίς.',
+  keywords: ['Μεσιά', 'Mesia', 'Κιλκίς', 'ιστορίες κατοίκων', 'μαρτυρίες'],
   alternates: {
     canonical: '/village-voices',
   },

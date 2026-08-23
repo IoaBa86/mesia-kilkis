@@ -131,13 +131,17 @@ export async function POST(request: NextRequest) {
         }
 
         // Save to database
+        // Default alt text is genuinely descriptive (category + village) so
+        // photos are never shipped with a meaningless "Photo: IMG_1234.jpg"
+        // alt — admins can still refine it later via the photo edit screen.
+        const readableTitle = sanitizedName || file.name.replace(/\.[^/.]+$/, '')
         const photo = await prisma.photo.create({
           data: {
-            title: sanitizedName || file.name.replace(/\.[^/.]+$/, ''),
+            title: readableTitle,
             filename,
             url: `/uploads/${filename}`,
             thumbnailUrl: `/uploads/thumbnails/thumb_${filename}`,
-            alt: `Photo: ${file.name}`,
+            alt: `${category.name} - Μεσιά Κιλκίς`,
             order: nextOrder,
             categoryId,
             userId,

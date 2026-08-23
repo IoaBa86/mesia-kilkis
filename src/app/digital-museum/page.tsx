@@ -8,8 +8,9 @@ import PageHero from '@/components/site/PageHero'
 import { prisma } from '@/lib/prisma'
 
 export const metadata: Metadata = {
-  title: 'Ψηφιακό Μουσείο - Μεσιά Κιλκίς',
-  description: 'Εικονικά εκθέματα, ηχητικοί οδηγοί, περιηγήσεις και αντικείμενα από την ιστορία της Μεσιάς Κιλκίς.',
+  title: 'Ψηφιακό Μουσείο Μεσιάς (Mesia) - Κιλκίς',
+  description: 'Εικονικά εκθέματα, ηχητικοί οδηγοί, περιηγήσεις και αντικείμενα από την ιστορία της Μεσιάς (Mesia) Κιλκίς.',
+  keywords: ['Μεσιά', 'Mesia', 'Κιλκίς', 'ψηφιακό μουσείο', 'εκθέματα'],
   alternates: {
     canonical: '/digital-museum',
   },
