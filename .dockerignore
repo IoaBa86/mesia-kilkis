@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.vscode
+.claude
+backups
+data
+*.log
+.env
+.env.*
+!.env.example
+README.md
+DEPLOYMENT.md
+tsconfig.tsbuildinfo
