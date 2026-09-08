@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { Landmark, Headphones, Box, Gem } from 'lucide-react'
 import PageHero from '@/components/site/PageHero'
 import { prisma } from '@/lib/prisma'
+import ResponsiveAdSlot from '@/components/ads/ResponsiveAdSlot'
 
 export const metadata: Metadata = {
   title: 'Ψηφιακό Μουσείο Μεσιάς (Mesia) - Κιλκίς',
@@ -60,6 +61,8 @@ export default async function DigitalMuseumPage() {
           title="Ψηφιακό Μουσείο"
           description="Εικονικά εκθέματα, ηχητικοί οδηγοί, περιηγήσεις και αντικείμενα από την ιστορία μας."
         />
+
+        <ResponsiveAdSlot slotKey="digital-museum-ad-1" />
 
         <section className="py-20 bg-white">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

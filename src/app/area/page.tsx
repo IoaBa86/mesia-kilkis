@@ -15,6 +15,7 @@ import {
 import PageHero from '@/components/site/PageHero'
 import SectionHeading from '@/components/site/SectionHeading'
 import FeatureCard from '@/components/site/FeatureCard'
+import ResponsiveAdSlot from '@/components/ads/ResponsiveAdSlot'
 
 export const metadata: Metadata = {
   title: 'Η Περιοχή γύρω από τη Μεσιά - Ευρωπός, Κιλκίς',
@@ -219,6 +220,8 @@ export default function AreaPage() {
             </div>
           </div>
         </section>
+
+        <ResponsiveAdSlot slotKey="area-ad-1" />
 
         {/* Activities */}
         <section className="py-24 bg-white">

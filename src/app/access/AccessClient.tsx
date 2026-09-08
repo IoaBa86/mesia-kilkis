@@ -15,6 +15,7 @@ import MapComponent from '@/components/maps/GoogleMap'
 import PageHero from '@/components/site/PageHero'
 import SectionHeading from '@/components/site/SectionHeading'
 import CoordinateStamp from '@/components/site/CoordinateStamp'
+import ResponsiveAdSlot from '@/components/ads/ResponsiveAdSlot'
 
 export default function AccessClient() {
   const accessMethods = [
@@ -234,6 +235,8 @@ export default function AccessClient() {
             </button>
           </div>
         </section>
+
+        <ResponsiveAdSlot slotKey="access-ad-1" />
 
         {/* Tips Section */}
         <section className="mt-20">

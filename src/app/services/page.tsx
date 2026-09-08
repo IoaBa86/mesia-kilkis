@@ -14,6 +14,7 @@ import StructuredData from "@/components/StructuredData"
 import PageHero from '@/components/site/PageHero'
 import SectionHeading from '@/components/site/SectionHeading'
 import FeatureCard from '@/components/site/FeatureCard'
+import ResponsiveAdSlot from '@/components/ads/ResponsiveAdSlot'
 
 export const metadata: Metadata = {
   title: 'Υπηρεσίες & Δημοτικό Συμβούλιο',
@@ -113,6 +114,8 @@ export default function ServicesPage() {
               </div>
             </div>
           </section>
+
+          <ResponsiveAdSlot slotKey="services-ad-1" />
 
           {/* Emergency Contacts */}
           <section className="py-24 bg-mesia-cream">

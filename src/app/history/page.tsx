@@ -3,6 +3,7 @@ import { Metadata } from 'next'
 import { History } from "lucide-react"
 import HistoricalPostsSection from '@/components/history/HistoricalPostsSection'
 import PageHero from '@/components/site/PageHero'
+import ResponsiveAdSlot from '@/components/ads/ResponsiveAdSlot'
 
 export const metadata: Metadata = {
   title: 'Ιστορία της Μεσιάς (Mesia) - Κιλκίς',
@@ -35,6 +36,8 @@ export default function HistoryPage() {
               Η ιστορία της Μεσιάς καταγράφεται σταδιακά εδώ, άρθρο προς άρθρο —
               από επίσημα ΦΕΚ και ιστορικά μνημεία μέχρι αρχαιολογικά ευρήματα της περιοχής.
             </p>
+
+            <ResponsiveAdSlot slotKey="history-ad-1" />
 
             <HistoricalPostsSection />
           </div>

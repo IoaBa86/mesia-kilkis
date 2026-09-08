@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { MessageCircle, User } from 'lucide-react'
 import PageHero from '@/components/site/PageHero'
 import { prisma } from '@/lib/prisma'
+import ResponsiveAdSlot from '@/components/ads/ResponsiveAdSlot'
 
 export const metadata: Metadata = {
   title: 'Φωνές του Χωριού Μεσιά (Mesia) - Κιλκίς',
@@ -52,6 +53,8 @@ export default async function VillageVoicesPage() {
           title="Φωνές του Χωριού"
           description="Ιστορίες κατοίκων, φωνές νέων και μαρτυρίες επισκεπτών της Μεσιάς."
         />
+
+        <ResponsiveAdSlot slotKey="village-voices-ad-1" />
 
         <section className="py-20 bg-white">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

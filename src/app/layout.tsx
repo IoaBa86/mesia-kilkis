@@ -121,6 +121,17 @@ export default async function RootLayout({
                 var c = arguments[2] || {};
                 var analyticsGranted = c.analytics_storage === 'granted';
                 var adsGranted = c.ad_storage === 'granted';
+
+                // Consent Mode only applies "granted" to events fired AFTER
+                // the update — it never retroactively resends the page_view
+                // that already went out (denied) on load. Without this, a
+                // visitor who accepts and then just stays on the page never
+                // produces a single consented hit, so they never show up in
+                // Realtime at all.
+                if (analyticsGranted) {
+                  __origGtag('event', 'page_view');
+                }
+
                 fetch('/api/cookie-consent', {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },

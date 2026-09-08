@@ -15,6 +15,12 @@ export const AD_SLOT_PLACEMENTS: AdSlotPlacement[] = [
   { page: "village", pageLabel: "Το Χωριό", key: "village-ad-2", position: "before-footer", positionLabel: "Πριν το footer" },
   { page: "photos", pageLabel: "Φωτογραφίες", key: "photos-ad-1", position: "in-page", positionLabel: "Μέσα στη σελίδα" },
   { page: "events", pageLabel: "Εκδηλώσεις", key: "events-ad-1", position: "in-page", positionLabel: "Μέσα στη σελίδα" },
+  { page: "access", pageLabel: "Πώς να Έρθετε", key: "access-ad-1", position: "after-map", positionLabel: "Μετά τον χάρτη" },
+  { page: "area", pageLabel: "Η Περιοχή", key: "area-ad-1", position: "in-page", positionLabel: "Μέσα στη σελίδα" },
+  { page: "digital-museum", pageLabel: "Ψηφιακό Μουσείο", key: "digital-museum-ad-1", position: "after-intro", positionLabel: "Μετά την εισαγωγή" },
+  { page: "history", pageLabel: "Ιστορία", key: "history-ad-1", position: "after-intro", positionLabel: "Μετά την εισαγωγή" },
+  { page: "services", pageLabel: "Υπηρεσίες", key: "services-ad-1", position: "in-page", positionLabel: "Μέσα στη σελίδα" },
+  { page: "village-voices", pageLabel: "Φωνές του Χωριού", key: "village-voices-ad-1", position: "after-intro", positionLabel: "Μετά την εισαγωγή" },
 ]
 
 export const AD_SLOT_PAGES = Array.from(
