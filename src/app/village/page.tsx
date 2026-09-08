@@ -28,7 +28,7 @@ export default function VillagePage() {
   const villageStats = [
     { icon: Users, code: 'ΠΛΗΘ.', value: '173', label: 'κάτοικοι (2021)' },
     { icon: Mountain, code: 'ΥΨΟΣ', value: '30μ', label: 'από τη θάλασσα' },
-    { icon: Mail, code: 'Τ.Κ.', value: '61200', label: 'ταχυδρομικός κώδικας' },
+    { icon: Mail, code: 'Τ.Κ.', value: '61007', label: 'ταχυδρομικός κώδικας' },
     { icon: Globe, code: 'ΣΥΝΤ.', value: '40°52′57″N', label: '22°34′35″E' },
   ]
 

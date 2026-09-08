@@ -9,7 +9,12 @@ import Footer from '@/components/layout/Footer'
 import CookieSettingsButton from '@/components/CookieSettingsButton'
 import { prisma } from '@/lib/prisma'
 
-const inter = Inter({ subsets: ['latin', 'greek'], variable: '--font-body' })
+// Explicit static weights (not the default variable-font build) — the
+// variable font's self-hosted bold cut was silently missing Greek glyphs
+// (e.g. "ω" rendered as tofu in <strong>/bold text) while regular weight
+// and document.fonts.check() both looked fine. Static per-weight files
+// sidestep whatever merge step drops the subset.
+const inter = Inter({ subsets: ['latin', 'greek'], variable: '--font-body', weight: ['400', '500', '600', '700', '800'] })
 const alegreya = Alegreya({ subsets: ['latin', 'greek'], variable: '--font-display', weight: ['500', '600', '700', '800'] })
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin', 'greek'], variable: '--font-mono', weight: ['400', '500', '600'] })
 

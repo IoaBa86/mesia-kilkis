@@ -82,6 +82,7 @@ export default function MapComponent({
           zoomControl: true,
           streetViewControl: false, // no Street View coverage exists for this village
           mapTypeControl: true,
+          mapTypeId: 'satellite',
           fullscreenControl: true,
         }}
       >

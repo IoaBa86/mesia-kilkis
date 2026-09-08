@@ -2,7 +2,9 @@
 import { NextAuthOptions } from "next-auth"
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import CredentialsProvider from "next-auth/providers/credentials"
+import bcrypt from "bcrypt"
 import { prisma } from "@/lib/prisma"
+import { rateLimit } from "@/lib/rate-limit"
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -19,49 +21,39 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         if (!credentials?.email || !credentials?.password) {
           return null
         }
 
-        // Your authentication logic
-        if (credentials.email === process.env.ADMIN_EMAIL && 
-            credentials.password === "admin123") {
-          
-          // Create or find user in database
-          try {
-            const user = await prisma.user.upsert({
-              where: { email: credentials.email },
-              update: { 
-                name: "Admin",
-                role: "ADMIN"
-              },
-              create: {
-                email: credentials.email,
-                name: "Admin",
-                role: "ADMIN"
-              }
-            })
-
-            return {
-              id: user.id,
-              email: user.email,
-              name: user.name,
-              role: user.role,
-            }
-          } catch (error) {
-            console.error("Error creating/finding user:", error)
-            // Fallback to static user for development
-            return {
-              id: "admin-1",
-              email: credentials.email,
-              name: "Admin",
-              role: "ADMIN",
-            }
-          }
+        // Brute-force guard: NextAuth's credentials provider has no
+        // built-in rate limiting, and this endpoint is the single most
+        // sensitive one on the site.
+        const forwardedFor = req?.headers?.["x-forwarded-for"]
+        const clientIp = (Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor)?.split(",")[0].trim() || "unknown"
+        if (!rateLimit(`admin-login:${clientIp}`, 5, 60_000)) {
+          return null
         }
 
-        return null
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email },
+        })
+
+        if (!user?.password) {
+          return null
+        }
+
+        const isValid = await bcrypt.compare(credentials.password, user.password)
+        if (!isValid) {
+          return null
+        }
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+        }
       }
     })
   ],
