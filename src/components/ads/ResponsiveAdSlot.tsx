@@ -63,7 +63,11 @@ export default function ResponsiveAdSlot({
   if (!loaded || !slot) return null
 
   return (
-    <div className={`w-full flex justify-center py-6 ${className}`}>
+    // `relative` + `overflow-hidden` keep the AdSense iframe inside this
+    // block: with data-full-width-responsive the injected iframe sizes itself
+    // to the viewport, which on narrow screens made it spill out of the
+    // container and sit on top of the section below it.
+    <div className={`relative w-full flex justify-center py-6 overflow-hidden ${className}`}>
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <ins
           className="adsbygoogle"
@@ -72,7 +76,8 @@ export default function ResponsiveAdSlot({
               display: 'block',
               minHeight: '50px',
               width: '100%',
-              maxWidth: '970px',
+              maxWidth: '100%',
+              overflow: 'hidden',
               margin: '0 auto',
             }
           }

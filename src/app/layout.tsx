@@ -146,6 +146,79 @@ export default async function RootLayout({
                 }).catch(function () {});
               }
             };
+
+            // --- Funding Choices -> Google Consent Mode bridge ---
+            // Funding Choices is an IAB TCF CMP: it publishes the visitor's
+            // choice through __tcfapi and googlefc, but it never calls
+            // gtag('consent','update') itself. Without this bridge,
+            // analytics_storage stays 'denied' forever no matter how many
+            // people accept, so GA only ever receives cookieless pings and
+            // nobody shows up in Realtime.
+            (function () {
+              var applied = '';
+
+              function applyConsent(analyticsOk, adsOk, adUserDataOk, adPersonalizationOk) {
+                var fingerprint = [analyticsOk, adsOk, adUserDataOk, adPersonalizationOk].join('|');
+                if (fingerprint === applied) return;
+                applied = fingerprint;
+                window.gtag('consent', 'update', {
+                  analytics_storage: analyticsOk ? 'granted' : 'denied',
+                  ad_storage: adsOk ? 'granted' : 'denied',
+                  ad_user_data: adUserDataOk ? 'granted' : 'denied',
+                  ad_personalization: adPersonalizationOk ? 'granted' : 'denied'
+                });
+              }
+
+              // Preferred source: Funding Choices' own Consent Mode values,
+              // when the message has consent mode configured in AdSense.
+              window.googlefc = window.googlefc || {};
+              window.googlefc.callbackQueue = window.googlefc.callbackQueue || [];
+              window.googlefc.callbackQueue.push({
+                CONSENT_DATA_READY: function () {
+                  try {
+                    var GRANTED = 1;
+                    var v = window.googlefc.getGoogleConsentModeValues();
+                    // Only trust these when they're actually configured —
+                    // otherwise every purpose comes back NOT_CONFIGURED (4)
+                    // and we'd wrongly downgrade a real TCF grant to denied.
+                    if (v && v.analyticsStoragePurposeConsentStatus !== 4) {
+                      applyConsent(
+                        v.analyticsStoragePurposeConsentStatus === GRANTED,
+                        v.adStoragePurposeConsentStatus === GRANTED,
+                        v.adUserDataPurposeConsentStatus === GRANTED,
+                        v.adPersonalizationPurposeConsentStatus === GRANTED
+                      );
+                    }
+                  } catch (e) {}
+                }
+              });
+
+              // Fallback that works even when Consent Mode isn't configured
+              // on the AdSense message: read the TCF purpose consents directly.
+              function listenToTcf() {
+                if (typeof window.__tcfapi !== 'function') return false;
+                window.__tcfapi('addEventListener', 2, function (tcData, success) {
+                  if (!success || !tcData) return;
+                  if (tcData.eventStatus !== 'tcloaded' && tcData.eventStatus !== 'useractioncomplete') return;
+                  var p = (tcData.purpose && tcData.purpose.consents) || {};
+                  var storage = !!p[1];
+                  applyConsent(
+                    storage && !!p[8],            // measure content performance
+                    storage,
+                    storage && !!p[7],            // measure ad performance
+                    storage && !!p[3] && !!p[4]   // ad profile + personalised ads
+                  );
+                });
+                return true;
+              }
+
+              if (!listenToTcf()) {
+                var tries = 0;
+                var poll = setInterval(function () {
+                  if (listenToTcf() || ++tries > 40) clearInterval(poll);
+                }, 250);
+              }
+            })();
           `}
         </Script>
         <Script
