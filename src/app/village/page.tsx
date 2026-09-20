@@ -60,8 +60,6 @@ export default function VillagePage() {
           description="Ένα παραδοσιακό πεδινό χωριό της Κεντρικής Μακεδονίας με πλούσια ιστορία."
         />
 
-        <ResponsiveAdSlot slotKey="village-ad-1" />
-
         {/* Statistics */}
         <section className="relative z-20 -mt-14">
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -73,7 +71,7 @@ export default function VillagePage() {
           </div>
         </section>
 
-        <ResponsiveAdSlot slotKey="village-ad-2" className="bg-white" />
+        <ResponsiveAdSlot slotKey="village-ad-1" className="bg-white" />
 
         {/* Geographic Position */}
         <section className="py-16 bg-white">
@@ -102,6 +100,8 @@ export default function VillagePage() {
             </div>
           </div>
         </section>
+
+        <ResponsiveAdSlot slotKey="village-ad-2" className="bg-mesia-cream" />
 
         {/* Administrative Affiliation */}
         <section className="py-16 bg-mesia-cream">
