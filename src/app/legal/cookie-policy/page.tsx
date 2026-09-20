@@ -2,6 +2,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft, Cookie } from 'lucide-react'
+import CookieSettingsLink from '@/components/CookieSettingsLink'
 
 const LAST_UPDATED = '20 Σεπτεμβρίου 2026'
 
@@ -48,8 +49,9 @@ export default function CookiePolicyPage() {
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Συναίνεση</h2>
             <p>
               Κατά την πρώτη επίσκεψη εμφανίζεται μήνυμα συναίνεσης που παρέχει η Google (Funding Choices, πλαίσιο IAB TCF).
-              Cookies ανάλυσης και διαφήμισης χρησιμοποιούνται μόνο αν τα αποδεχτείτε. Μπορείτε να αλλάξετε ή να ανακαλέσετε την επιλογή σας οποιαδήποτε στιγμή από το κουμπί ρυθμίσεων cookies (κάτω δεξιά).
+              Cookies ανάλυσης και διαφήμισης χρησιμοποιούνται μόνο αν τα αποδεχτείτε. Μπορείτε να αλλάξετε ή να ανακαλέσετε την επιλογή σας οποιαδήποτε στιγμή από τον σύνδεσμο «Ρυθμίσεις απορρήτου και cookie» στο κάτω μέρος κάθε σελίδας.
             </p>
+            <p><CookieSettingsLink className="text-mesia-wine underline hover:text-mesia-gold" /></p>
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Κατηγορίες</h2>
             <div className="overflow-x-auto">

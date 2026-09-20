@@ -6,7 +6,6 @@ import { Providers } from './providers'
 import Header from '@/components/layout/Header'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
-import CookieSettingsButton from '@/components/CookieSettingsButton'
 import { prisma } from '@/lib/prisma'
 
 // Explicit static weights (not the default variable-font build) — the
@@ -238,8 +237,6 @@ export default async function RootLayout({
             <Footer {...navVisibility} />
           </div>
         </Providers>
-
-        <CookieSettingsButton />
       </body>
     </html>
   )
