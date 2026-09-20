@@ -79,7 +79,7 @@ export default function AreaPage() {
   const historicalSites = [
     {
       title: "Τοποθεσία «Τούμπας Παπάκιοϊ»",
-      description: "Αρχαιολογικός χώρος σημαντικός που δείχνει ανθρώπινη παρουσία από την προϊστορική εποχή.",
+      description: "Σημαντικός αρχαιολογικός χώρος που δείχνει ανθρώπινη παρουσία από την προϊστορική εποχή.",
       period: "Προϊστορική εποχή"
     },
     {
@@ -129,7 +129,7 @@ export default function AreaPage() {
                   ενώ απέχει περίπου 19 χλμ. από τη Γουμένισσα.
                 </p>
                 <p>
-                  Το υψόμετρο κυμαίνεται στα <span className="text-mesia-wine font-semibold">30-36μ</span>.
+                  Το υψόμετρο κυμαίνεται στα <span className="text-mesia-wine font-semibold">30–36 μέτρα</span>.
                   Είναι τοπική κοινότητα του <span className="text-mesia-wine font-semibold">Δήμου Παιονίας</span>
                   και υπάγεται στη δημοτική ενότητα Ευρωπού.
                 </p>

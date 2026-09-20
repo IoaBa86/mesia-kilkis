@@ -1,4 +1,5 @@
 // src/components/StructuredData.tsx
+import { SITE } from '@/lib/site'
 interface StructuredDataProps {
   type: 'website' | 'article' | 'imageGallery' | 'place' | 'localBusiness' | 'event' | 'breadcrumb' | 'organization'
   data?: any
@@ -48,7 +49,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
             streetAddress: data?.address || 'Μεσιά',
             addressLocality: 'Μεσιά',
             addressRegion: 'Κιλκίς',
-            postalCode: '61100',
+            postalCode: SITE.postalCode,
             addressCountry: 'GR'
           },
           geo: {
@@ -90,7 +91,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
             addressLocality: 'Μεσιά',
             addressRegion: 'Κιλκίς',
             addressCountry: 'GR',
-            postalCode: '61100'
+            postalCode: SITE.postalCode
           },
           containedInPlace: {
             '@type': 'AdministrativeArea',
@@ -218,7 +219,7 @@ export default function StructuredData({ type, data }: StructuredDataProps) {
             addressLocality: 'Μεσιά',
             addressRegion: 'Κιλκίς', 
             addressCountry: 'GR',
-            postalCode: '61100'
+            postalCode: SITE.postalCode
           },
           geo: {
             '@type': 'GeoCoordinates',

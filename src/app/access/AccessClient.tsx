@@ -1,5 +1,6 @@
 // src/app/access/AccessClient.tsx - Client Component
 'use client'
+import { useState } from 'react'
 import {
   Car,
   Bus,
@@ -18,6 +19,7 @@ import CoordinateStamp from '@/components/site/CoordinateStamp'
 import ResponsiveAdSlot from '@/components/ads/ResponsiveAdSlot'
 
 export default function AccessClient() {
+  const [copied, setCopied] = useState(false)
   const accessMethods = [
     {
       icon: Car,
@@ -37,7 +39,7 @@ export default function AccessClient() {
         },
         {
           from: "Από Γουμένισσα",
-          description: "19 χλμ νοτιοδυτικά μέσω Στάθη. Διέλευση από γραφικά χωριά της περιοχής.",
+          description: "Η Μεσιά απέχει 19 χιλιόμετρα νοτιοδυτικά της Γουμένισσας. Η διαδρομή περνά από τον Στάθη και από άλλα χωριά της περιοχής.",
           distance: "19 χλμ",
           time: "~25 λεπτά"
         }
@@ -47,10 +49,12 @@ export default function AccessClient() {
       icon: Bus,
       title: "Με Λεωφορείο",
       info: {
-        provider: "ΚΤΕΛ Κιλκίς",
-        description: "Δρομολόγια από Θεσσαλονίκη προς Πολύκαστρο και στη συνέχεια τοπικό δρομολόγιο προς Μεσιά.",
-        phones: ["23430-22315", "2310-595433"],
-        schedule: "Καθημερινά δρομολόγια (ελέγξτε τα ωράρια)"
+        provider: "ΚΤΕΛ",
+        description: "Υπάρχουν υπεραστικά δρομολόγια από τη Θεσσαλονίκη προς το Πολύκαστρο. Δεν έχουμε επιβεβαιώσει δρομολόγιο προς τη Μεσιά· ρωτήστε τα ΚΤΕΛ πριν το ταξίδι σας.",
+        phones: [
+          { label: "ΚΤΕΛ Πολυκάστρου", display: "23430 22315", tel: "+302343022315" },
+          { label: "Σταθμός Θεσσαλονίκης", display: "2310 595433", tel: "+302310595433" },
+        ],
       }
     },
     {
@@ -62,12 +66,6 @@ export default function AccessClient() {
           distance: "~90 χλμ",
           time: "~1 ώρα 15 λεπτά",
           method: "Ενοικίαση αυτοκινήτου ή ταξί"
-        },
-        {
-          name: "Σκόπια (SKP)",
-          distance: "~85 χλμ",
-          time: "~1 ώρα 30 λεπτά",
-          method: "Μέσω Ευζώνων-Πολυκάστρου"
         }
       ]
     }
@@ -76,7 +74,7 @@ export default function AccessClient() {
   const tips = [
     "Η κίνηση είναι μειωμένη, ιδανικό για ήρεμη οδήγηση",
     "Υπάρχουν χώροι στάθμευσης στο κέντρο του χωριού",
-    "Για ενημέρωση δρομολογίων ΚΤΕΛ καλέστε πριν την αναχώρηση",
+    "Για τα δρομολόγια των ΚΤΕΛ τηλεφωνήστε πριν αναχωρήσετε",
     "Το χωριό είναι κατάλληλο για ποδηλασία και πεζοπορία"
   ]
 
@@ -145,18 +143,13 @@ export default function AccessClient() {
                       <Phone className="h-4 w-4 text-mesia-gold" />
                       <span className="font-medium text-mesia-wine">Τηλ. Πληροφοριών:</span>
                     </div>
-                    <div className="space-y-1 font-mono">
+                    <div className="space-y-1">
                       {method.info.phones.map((phone, phoneIndex) => (
-                        <a key={phoneIndex} href={`tel:${phone}`} className="block text-mesia-wine hover:text-mesia-gold transition-colors">
-                          {phone}
+                        <a key={phoneIndex} href={`tel:${phone.tel}`} className="block text-mesia-wine hover:text-mesia-gold transition-colors">
+                          {phone.label}: <span className="font-mono">{phone.display}</span>
                         </a>
                       ))}
                     </div>
-                  </div>
-                  <div className="mt-4 pt-4 border-t border-mesia-gold/25">
-                    <p className="text-mesia-wine text-sm">
-                      <strong>Συχνότητα:</strong> {method.info.schedule}
-                    </p>
                   </div>
                 </div>
               )}
@@ -224,14 +217,12 @@ export default function AccessClient() {
             </a>
             <button
               onClick={() => {
-                navigator.clipboard.writeText('40.88250, 22.57639')
-                  .then(() => alert('Οι συντεταγμένες αντιγράφηκαν!'))
-                  .catch(() => alert('Σφάλμα αντιγραφής'))
+                navigator.clipboard.writeText('40.88250, 22.57639').then(() => { setCopied(true); setTimeout(() => setCopied(false), 2000) }).catch(() => {})
               }}
               className="flex items-center justify-center gap-2 p-4 border-2 border-mesia-wine text-mesia-wine hover:bg-mesia-wine hover:text-white transition-colors"
             >
               <MapPin className="h-5 w-5" />
-              <span>Αντιγραφή Συντεταγμένων</span>
+              <span aria-live="polite">{copied ? 'Αντιγράφηκε' : 'Αντιγραφή συντεταγμένων'}</span>
             </button>
           </div>
         </section>

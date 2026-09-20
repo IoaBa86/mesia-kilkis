@@ -51,9 +51,9 @@ export default function SettingsPage() {
   // Site Settings State (from original)
   const [siteSettings, setSiteSettings] = useState({
     siteTitle: "Μεσιά Κιλκίς",
-    contactEmail: "info@mesia-kilkis.gr",
-    villagePhone: "23430 41000",
-    address: "Μεσιά Κιλκίς, 61100",
+    contactEmail: "info@mesia.gr",
+    villagePhone: "",
+    address: "Μεσιά Κιλκίς, 61007",
     logoUrl: "",
     faviconUrl: "",
     heroImageUrl: "",
@@ -742,7 +742,7 @@ export default function SettingsPage() {
                       type="email"
                       value={emailSettings.fromEmail}
                       onChange={(e) => setEmailSettings(prev => ({ ...prev, fromEmail: e.target.value }))}
-                      placeholder="info@mesia-kilkis.gr"
+                      placeholder="info@mesia.gr"
                       className="border-mesia-gold/30 focus:border-mesia-wine focus:ring-mesia-wine"
                     />
                   </div>

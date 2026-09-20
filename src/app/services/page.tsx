@@ -1,153 +1,66 @@
 // src/app/services/page.tsx
 import { Metadata } from 'next'
-import {
-  MapPin,
-  Phone,
-  Clock,
-  Building,
-  Heart,
-  Package,
-  GraduationCap,
-  Shield,
-} from "lucide-react"
-import StructuredData from "@/components/StructuredData"
+import { Building, Shield } from 'lucide-react'
 import PageHero from '@/components/site/PageHero'
-import SectionHeading from '@/components/site/SectionHeading'
-import FeatureCard from '@/components/site/FeatureCard'
 import ResponsiveAdSlot from '@/components/ads/ResponsiveAdSlot'
 
 export const metadata: Metadata = {
-  title: 'Υπηρεσίες & Δημοτικό Συμβούλιο',
-  description: 'Βρείτε όλες τις υπηρεσίες του χωριού Μεσιά (Mesia) Κιλκίς και τα στοιχεία επικοινωνίας του Δημοτικού Συμβουλίου.',
-  keywords: ['Μεσιά', 'Mesia', 'Κιλκίς', 'υπηρεσίες', 'δημοτικό συμβούλιο'],
+  title: 'Αριθμοί Έκτακτης Ανάγκης',
+  description: 'Οι πανελλαδικοί αριθμοί έκτακτης ανάγκης (100, 199, 166, 112) που ισχύουν και για την περιοχή της Μεσιάς Κιλκίς.',
+  alternates: {
+    canonical: '/services',
+  },
   openGraph: {
-    title: 'Υπηρεσίες & Δημοτικό Συμβούλιο - Μεσιά Κιλκίς',
-    description: 'Όλες οι υπηρεσίες και επικοινωνία με το Δημοτικό Συμβούλιο του χωριού Μεσιά Κιλκίς',
+    title: 'Αριθμοί Έκτακτης Ανάγκης - Μεσιά Κιλκίς',
+    description: 'Οι πανελλαδικοί αριθμοί έκτακτης ανάγκης που ισχύουν και για την περιοχή της Μεσιάς Κιλκίς.',
   },
 }
 
+const emergencyNumbers = [
+  { number: '100', label: 'Αστυνομία' },
+  { number: '199', label: 'Πυροσβεστική' },
+  { number: '166', label: 'Ιατρική Βοήθεια (ΕΚΑΒ)' },
+  { number: '112', label: 'Ευρωπαϊκός Αριθμός Έκτακτης Ανάγκης' },
+]
+
 export default function ServicesPage() {
-  const villageServices = [
-    {
-      title: "Ταχυδρομείο",
-      description: "Ταχυδρομικές υπηρεσίες και αποστολή δεμάτων",
-      icon: Package,
-      contact: "Τηλ: 23430 41234",
-      hours: "Δευ-Παρ: 08:00-14:00",
-      location: "Κεντρική Πλατεία",
-    },
-    {
-      title: "Ιατρείο",
-      description: "Πρωτοβάθμια φροντίδα υγείας για τους κατοίκους",
-      icon: Heart,
-      contact: "Τηλ: 23430 41567 (Επείγον: 166)",
-      hours: "Δευ-Τετ-Παρ: 09:00-13:00",
-      location: "Οδός Κιλκίς 15",
-    },
-    {
-      title: "Δημοτικό Σχολείο",
-      description: "Εκπαίδευση παιδιών ηλικίας 6-12 ετών",
-      icon: GraduationCap,
-      contact: "Τηλ: 23430 41890",
-      hours: "Δευ-Παρ: 08:15-14:00",
-      location: "Οδός Μακεδονίας 8",
-    },
-    {
-      title: "Αστυνομικό Τμήμα",
-      description: "Ασφάλεια και τάξη στο χωριό",
-      icon: Shield,
-      contact: "Τηλ: 23430 41100 (Επείγον: 100)",
-      hours: "24ωρη εξυπηρέτηση",
-      location: "Κεντρικός Δρόμος 22",
-    }
-  ]
-
-  // NOTE: villageServices contact/hours/location above and the emergency
-  // numbers below are placeholder data carried over from the original
-  // build — see project to-do notes about replacing them with real details.
-
   return (
-    <>
-      <StructuredData type="place" />
+    <div className="min-h-screen bg-mesia-cream">
+      <main>
+        <PageHero
+          icon={Building}
+          eyebrow="Χρήσιμες Πληροφορίες"
+          title="Αριθμοί Έκτακτης Ανάγκης"
+          description="Οι πανελλαδικοί αριθμοί που ισχύουν και για τη Μεσιά."
+        />
 
-      <div className="min-h-screen bg-mesia-cream">
-        <main>
-          <PageHero
-            icon={Building}
-            eyebrow="Δημοτικό Συμβούλιο"
-            title="Υπηρεσίες & Συμβούλιο"
-            description="Όλες οι υπηρεσίες του χωριού και η επικοινωνία με το Δημοτικό Συμβούλιο"
-          />
-
-          {/* Village Services */}
-          <section className="py-24 bg-white">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-              <SectionHeading
-                title="Υπηρεσίες Χωριού"
-                description="Βρείτε όλες τις απαραίτητες υπηρεσίες για την καθημερινή σας εξυπηρέτηση"
-              />
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {villageServices.map((service, index) => (
-                  <FeatureCard
-                    key={index}
-                    icon={service.icon}
-                    title={service.title}
-                    description={service.description}
-                  >
-                    <div className="space-y-2.5 mt-5 pt-5 border-t border-mesia-gold/20 text-sm">
-                      <div className="flex items-center text-mesia-darkText/80">
-                        <Phone className="h-4 w-4 mr-3 text-mesia-gold flex-shrink-0" />
-                        <span>{service.contact}</span>
-                      </div>
-                      <div className="flex items-center text-mesia-darkText/80">
-                        <Clock className="h-4 w-4 mr-3 text-mesia-gold flex-shrink-0" />
-                        <span>{service.hours}</span>
-                      </div>
-                      <div className="flex items-center text-mesia-darkText/80">
-                        <MapPin className="h-4 w-4 mr-3 text-mesia-gold flex-shrink-0" />
-                        <span>{service.location}</span>
-                      </div>
-                    </div>
-                  </FeatureCard>
+        <section className="py-24 bg-mesia-cream">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="border-2 border-red-700/30 bg-red-50 p-8 md:p-10">
+              <h2 className="text-2xl font-bold text-red-800 font-greek text-center mb-8 flex items-center justify-center">
+                <Shield className="h-7 w-7 mr-3" aria-hidden="true" />
+                Σε περίπτωση έκτακτης ανάγκης
+              </h2>
+              <ul className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                {emergencyNumbers.map(({ number, label }) => (
+                  <li key={number}>
+                    <a href={`tel:${number}`} className="block text-3xl font-bold font-mono text-red-800 mb-1">
+                      {number}
+                    </a>
+                    <div className="text-sm text-red-800/80">{label}</div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
-          </section>
+            <p className="mt-8 text-sm text-mesia-lightText leading-relaxed text-center">
+              Η ιστοσελίδα είναι ανεξάρτητη και δεν αποτελεί επίσημη υπηρεσία της Κοινότητας ή του Δήμου.
+              Για διοικητικά θέματα απευθυνθείτε στις αρμόδιες υπηρεσίες του Δήμου Παιονίας.
+            </p>
+          </div>
+        </section>
 
-          <ResponsiveAdSlot slotKey="services-ad-1" />
-
-          {/* Emergency Contacts */}
-          <section className="py-24 bg-mesia-cream">
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="border-2 border-red-700/30 bg-red-50 p-8 md:p-10">
-                <h2 className="text-2xl font-bold text-red-800 font-greek text-center mb-8 flex items-center justify-center">
-                  <Shield className="h-7 w-7 mr-3" />
-                  Αριθμοί Έκτακτης Ανάγκης
-                </h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                  <div>
-                    <div className="text-3xl font-bold font-mono text-red-800 mb-1">100</div>
-                    <div className="text-sm text-red-800/80">Αστυνομία</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold font-mono text-red-800 mb-1">199</div>
-                    <div className="text-sm text-red-800/80">Πυροσβεστική</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold font-mono text-red-800 mb-1">166</div>
-                    <div className="text-sm text-red-800/80">Ιατρική Βοήθεια</div>
-                  </div>
-                  <div>
-                    <div className="text-3xl font-bold font-mono text-red-800 mb-1">112</div>
-                    <div className="text-sm text-red-800/80">Ευρωπαϊκός Αριθμός</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </main>
-      </div>
-    </>
+        <ResponsiveAdSlot slotKey="services-ad-1" />
+      </main>
+    </div>
   )
 }

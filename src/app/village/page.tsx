@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 export default function VillagePage() {
   const villageStats = [
     { icon: Users, code: 'ΠΛΗΘ.', value: '173', label: 'κάτοικοι (2021)' },
-    { icon: Mountain, code: 'ΥΨΟΣ', value: '30μ', label: 'από τη θάλασσα' },
+    { icon: Mountain, code: 'ΥΨΟΣ', value: '30 μ.', label: 'υψόμετρο' },
     { icon: Mail, code: 'Τ.Κ.', value: '61007', label: 'ταχυδρομικός κώδικας' },
     { icon: Globe, code: 'ΣΥΝΤ.', value: '40°52′57″N', label: '22°34′35″E' },
   ]
@@ -35,7 +35,7 @@ export default function VillagePage() {
   const attractions = [
     {
       title: 'Εκκλησία Αγ. Κωνσταντίνου & Ελένης',
-      description: 'Ιστορικό διατηρητέο μνημείο με ιδιαίτερο ενδιαφέρον.',
+      description: 'Οθωμανικός τουρμπές του 15ου αιώνα που μετατράπηκε σε ναό το 1930.',
       icon: Church,
     },
     {

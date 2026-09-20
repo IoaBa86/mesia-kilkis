@@ -8,9 +8,9 @@ const CONFIG_KEY = "general"
 
 const DEFAULT_SETTINGS = {
   siteTitle: "Μεσιά Κιλκίς",
-  contactEmail: "info@mesia-kilkis.gr",
-  villagePhone: "23430 41000",
-  address: "Μεσιά Κιλκίς, 61100",
+  contactEmail: "info@mesia.gr",
+  villagePhone: "",
+  address: "Μεσιά Κιλκίς, 61007",
   showVillageVoices: false,
   showDigitalMuseum: false,
 }

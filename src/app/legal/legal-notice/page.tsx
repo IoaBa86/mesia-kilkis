@@ -37,12 +37,13 @@ export default function LegalNoticePage() {
           <div className="prose prose-lg max-w-none">
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Στοιχεία Ιστοσελίδας</h2>
             <div className="bg-mesia-lightCream/50 p-6 rounded-lg border border-mesia-gold/30">
-              <h3 className="text-lg font-semibold text-mesia-wine mb-3">Υπεύθυνος Ιστοσελίδας</h3>
-              <p><strong>Email:</strong> info@mesia.gr</p>
-              <p><strong>Website:</strong> www.mesia.gr</p>
+              <h3 className="text-lg font-semibold text-mesia-wine mb-3">Διαχείριση Ιστοσελίδας</h3>
+              <p><strong>Διαχειριστής:</strong> η ομάδα διαχείρισης της ιστοσελίδας «Μεσιά Κιλκίς»</p>
+              <p><strong>Επικοινωνία:</strong> μόνο μέσω email, στο info@mesia.gr</p>
+              <p><strong>Ιστοσελίδα:</strong> www.mesia.gr</p>
               <p className="text-sm text-mesia-lightText mb-0">
-                Η ιστοσελίδα λειτουργεί ανεξάρτητα από δημόσιους ή δημοτικούς φορείς (βλ. Δήλωση Αποποίησης
-                Ευθύνης στο υποσέλιδο). Πλήρες όνομα/επωνυμία υπευθύνου προς συμπλήρωση πριν την πλήρη κυκλοφορία.
+                Η ιστοσελίδα είναι ανεξάρτητη και δεν σχετίζεται με την Τοπική Κοινότητα Μεσιάς, τον Δήμο Παιονίας
+                ή άλλον δημόσιο φορέα. Δεν αποτελεί επίσημη υπηρεσία και δεν εκπροσωπεί κανέναν δημόσιο φορέα.
               </p>
             </div>
 
@@ -60,7 +61,6 @@ export default function LegalNoticePage() {
               <p><strong>Φιλοξενία (hosting):</strong> Vercel Inc.</p>
               <p><strong>Βάση δεδομένων:</strong> Neon (PostgreSQL), φιλοξενούμενη ξεχωριστά από τον πάροχο hosting</p>
               <p><strong>Domain:</strong> mesia.gr</p>
-              <p><strong>Τεχνολογίες:</strong> Next.js, React, TypeScript, Prisma ORM</p>
               <p className="mb-0"><strong>Ασφάλεια σύνδεσης:</strong> Ναι (HTTPS/TLS)</p>
             </div>
 

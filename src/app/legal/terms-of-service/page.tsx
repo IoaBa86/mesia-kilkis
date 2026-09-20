@@ -42,7 +42,7 @@ export default function TermsOfServicePage() {
             </div>
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">1. Αποδοχή Όρων</h2>
-            <p>Με την πρόσβαση και τη χρήση της ιστοσελίδας «Μεσιά Κιλκίς» (mesia.gr), αποδέχεστε πλήρως τους παρόντες όρους χρήσης. Εάν δεν συμφωνείτε με οποιονδήποτε από αυτούς τους όρους, παρακαλούμε μην χρησιμοποιείτε την ιστοσελίδα.</p>
+            <p>Με την πρόσβαση και τη χρήση της ιστοσελίδας «Μεσιά Κιλκίς» (mesia.gr), αποδέχεστε πλήρως τους παρόντες όρους χρήσης και δεσμεύεστε από αυτούς. Εάν δεν συμφωνείτε με οποιονδήποτε από αυτούς τους όρους, παρακαλούμε μην χρησιμοποιείτε την ιστοσελίδα.</p>
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">2. Περιγραφή Υπηρεσιών</h2>
             <p>Η ιστοσελίδα «Μεσιά Κιλκίς» είναι ανεξάρτητη, μη κερδοσκοπική ενημερωτική ιστοσελίδα και παρέχει:</p>
@@ -117,7 +117,7 @@ export default function TermsOfServicePage() {
             <div className="bg-mesia-wine/10 p-6 rounded-lg border border-mesia-wine/20">
               <p>Για ερωτήσεις σχετικά με τους όρους χρήσης:</p>
               <p><strong>Email:</strong> info@mesia.gr</p>
-              <p><strong>Περιοχή αναφοράς:</strong> Μεσιά, Κιλκίς 61100, Ελλάδα</p>
+              <p><strong>Περιοχή αναφοράς:</strong> Μεσιά, Κιλκίς 61007, Ελλάδα</p>
             </div>
 
             <div className="mt-8 p-4 bg-mesia-gold/10 rounded-lg border border-mesia-gold/30 text-center">

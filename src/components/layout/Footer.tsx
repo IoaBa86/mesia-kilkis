@@ -91,12 +91,12 @@ export default function Footer({
               <div className="space-y-3 text-sm">
                 <div className="flex items-start gap-2">
                   <MapPin className="h-4 w-4 text-mesia-gold flex-shrink-0 mt-0.5" />
-                  <span>Μεσιά, Κιλκίς 61100<br />Κεντρική Μακεδονία</span>
+                  <span>Μεσιά, Κιλκίς 61007<br />Κεντρική Μακεδονία</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Mail className="h-4 w-4 text-mesia-gold flex-shrink-0" />
-                  <a href="mailto:info@mesiakilkis.gr" className="hover:text-mesia-gold transition-colors">
-                    info@mesiakilkis.gr
+                  <a href="mailto:info@mesia.gr" className="hover:text-mesia-gold transition-colors">
+                    info@mesia.gr
                   </a>
                 </div>
               </div>

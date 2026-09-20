@@ -108,7 +108,7 @@ export default async function HomePage() {
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid grid-cols-2 md:grid-cols-4">
                 <StatEntry code="ΠΛΗΘ." icon={Users} value="173" label="κάτοικοι (2021)" />
-                <StatEntry code="ΥΨΟΣ" icon={Mountain} value="30μ" label="από τη θάλασσα" />
+                <StatEntry code="ΥΨΟΣ" icon={Mountain} value="30 μ." label="υψόμετρο" />
                 <StatEntry code="ΑΠΟΣΤ." icon={MapPin} value="17χλμ" label="από Πολύκαστρο" />
                 <StatEntry code="ΣΥΝΤ." icon={Compass} value="40°52′N" label="22°34′E" />
               </div>
@@ -150,7 +150,7 @@ export default async function HomePage() {
                       </Link>
                     </Button>
                     <Button variant="outline" asChild>
-                      <Link href="/services">Υπηρεσίες Χωριού</Link>
+                      <Link href="/services">Αριθμοί έκτακτης ανάγκης</Link>
                     </Button>
                   </div>
                 </article>
@@ -183,18 +183,18 @@ export default async function HomePage() {
               <SectionHeading
                 eyebrow="Γρήγορη Πρόσβαση"
                 title="Βρείτε αυτό που ψάχνετε"
-                description="Υπηρεσίες, εκδηλώσεις και φωτογραφίες του χωριού μας."
+                description="Χρήσιμοι αριθμοί, εκδηλώσεις και φωτογραφίες της Μεσιάς."
               />
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <FeatureCard
                   icon={Landmark}
-                  title="Υπηρεσίες"
-                  description="Όλες οι υπηρεσίες και η επικοινωνία με το Δημοτικό Συμβούλιο."
+                  title="Έκτακτη ανάγκη"
+                  description="Οι πανελλαδικοί αριθμοί έκτακτης ανάγκης."
                   className="bg-mesia-cream"
                 >
                   <Link href="/services" className="mt-6 inline-flex items-center text-sm font-medium text-mesia-wine hover:text-mesia-gold transition-colors">
-                    Δείτε Υπηρεσίες <ArrowRight className="h-4 w-4 ml-1" />
+                    Αριθμοί έκτακτης ανάγκης <ArrowRight className="h-4 w-4 ml-1" aria-hidden="true" />
                   </Link>
                 </FeatureCard>
 
@@ -216,7 +216,7 @@ export default async function HomePage() {
                   className="bg-mesia-cream"
                 >
                   <Link href="/photos" className="mt-6 inline-flex items-center text-sm font-medium text-mesia-wine hover:text-mesia-gold transition-colors">
-                    Δείτε Φωτογραφίες <ArrowRight className="h-4 w-4 ml-1" />
+                    Φωτογραφικό αρχείο Μεσιάς <ArrowRight className="h-4 w-4 ml-1" aria-hidden="true" />
                   </Link>
                 </FeatureCard>
               </div>
@@ -239,7 +239,7 @@ export default async function HomePage() {
                   icon={Church}
                   tag="15ος αι. — 1930"
                   title="Εκκλησία Αγ. Κωνσταντίνου & Ελένης"
-                  description="Ιστορικό διατηρητέο μνημείο με ενσωματωμένο μουσουλμανικό τέμενος του 15ου-16ου αιώνα, κτισμένο με μαρμάρινους δόμους από αρχαίο κτήριο."
+                  description="Οθωμανικός τουρμπές (μαυσωλείο) του 15ου αιώνα, τμήμα ευρύτερου συγκροτήματος που περιλάμβανε λουτρό και τέμενος. Το 1930 μετατράπηκε σε χριστιανικό ναό. Πηγή: Εφορεία Αρχαιοτήτων Κιλκίς."
                 />
                 <FeatureCard
                   icon={Landmark}

@@ -27,7 +27,7 @@ export default function HistoryPage() {
           icon={History}
           eyebrow="Από το Μπαλμπά Κιόϊ ως τη Μεσιά"
           title="Ιστορία"
-          description="Ανακαλύψτε την πλούσια ιστορία του χωριού μας από την Τουρκοκρατία μέχρι σήμερα."
+          description="Η ιστορία του χωριού από την Τουρκοκρατία ως σήμερα."
         />
 
         <section className="py-20 bg-white">
