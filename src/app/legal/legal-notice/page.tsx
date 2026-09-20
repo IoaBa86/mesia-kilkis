@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowLeft, Scale } from 'lucide-react'
 
-const LAST_UPDATED = '23 Αυγούστου 2026'
+const LAST_UPDATED = '20 Σεπτεμβρίου 2026'
 
 export const metadata: Metadata = {
   title: 'Νομικές Πληροφορίες - Μεσιά Κιλκίς',
@@ -56,15 +56,6 @@ export default function LegalNoticePage() {
               <li>Την προβολή φωτογραφικού υλικού του χωριού και της περιοχής</li>
             </ul>
 
-            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Τεχνικές Πληροφορίες</h2>
-            <div className="bg-mesia-gold/10 p-6 rounded-lg border border-mesia-gold/30">
-              <p><strong>Φιλοξενία (hosting):</strong> Vercel Inc.</p>
-              <p><strong>Βάση δεδομένων:</strong> Neon (PostgreSQL), φιλοξενούμενη ξεχωριστά από τον πάροχο hosting</p>
-              <p><strong>Domain:</strong> mesia.gr</p>
-              <p className="mb-0"><strong>Ασφάλεια σύνδεσης:</strong> Ναι (HTTPS/TLS)</p>
-            </div>
-
-            <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Διαφημίσεις</h2>
             <p>Η ιστοσελίδα συμμετέχει στο πρόγραμμα Google AdSense για την εμφάνιση διαφημίσεων τρίτων. Δείτε την <Link href="/legal/cookie-policy" className="text-mesia-wine hover:text-mesia-gold">Πολιτική Cookies</Link> για λεπτομέρειες.</p>
 
             <h2 className="text-2xl font-bold text-mesia-wine font-greek mb-4">Πνευματικά Δικαιώματα</h2>

@@ -111,41 +111,33 @@ export default async function RootLayout({
             gtag('js', new Date());
             gtag('config', 'G-0JBJ2897HL');
 
-            // Mirror Funding Choices' consent decisions into our own
-            // GDPR audit log (/admin/consent-logs), since Funding Choices
-            // itself only stores consent client-side / in Google's systems.
+            // Consent Mode only applies "granted" to events fired AFTER an
+            // update, so resend page_view once analytics is granted —
+            // otherwise a visitor who accepts and stays on the page never
+            // produces a consented hit.
             var __origGtag = window.gtag;
             window.gtag = function () {
               __origGtag.apply(null, arguments);
               if (arguments[0] === 'consent' && arguments[1] === 'update') {
                 var c = arguments[2] || {};
-                var analyticsGranted = c.analytics_storage === 'granted';
-                var adsGranted = c.ad_storage === 'granted';
-
-                // Consent Mode only applies "granted" to events fired AFTER
-                // the update — it never retroactively resends the page_view
-                // that already went out (denied) on load. Without this, a
-                // visitor who accepts and then just stays on the page never
-                // produces a single consented hit, so they never show up in
-                // Realtime at all.
-                if (analyticsGranted) {
+                if (c.analytics_storage === 'granted') {
                   __origGtag('event', 'page_view');
                 }
-
-                fetch('/api/cookie-consent', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({
-                    consent: (analyticsGranted || adsGranted) ? 'accepted' : 'declined',
-                    categories: {
-                      necessary: true,
-                      analytics: analyticsGranted,
-                      marketing: adsGranted
-                    }
-                  })
-                }).catch(function () {});
               }
             };
+
+            // Aggregate-only statistics: count each explicit choice made in
+            // the consent message (accepted/declined). Nothing identifying
+            // is sent or stored.
+            function countConsentChoice(analyticsGranted, adsGranted) {
+              fetch('/api/cookie-consent', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  consent: (analyticsGranted || adsGranted) ? 'accepted' : 'declined'
+                })
+              }).catch(function () {});
+            }
 
             // --- Funding Choices -> Google Consent Mode bridge ---
             // Funding Choices is an IAB TCF CMP: it publishes the visitor's
@@ -202,6 +194,9 @@ export default async function RootLayout({
                   if (tcData.eventStatus !== 'tcloaded' && tcData.eventStatus !== 'useractioncomplete') return;
                   var p = (tcData.purpose && tcData.purpose.consents) || {};
                   var storage = !!p[1];
+                  if (tcData.eventStatus === 'useractioncomplete') {
+                    countConsentChoice(storage && !!p[8], storage);
+                  }
                   applyConsent(
                     storage && !!p[8],            // measure content performance
                     storage,

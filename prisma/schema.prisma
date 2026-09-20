@@ -280,3 +280,13 @@ enum EventCategory {
   COMMUNITY
   OTHER
 }
+
+// Aggregate cookie-choice statistics (kind = "accepted" | "declined").
+// Deliberately holds no IP, user agent or identifier — not personal data.
+model ConsentCounter {
+  kind      String   @id
+  count     Int      @default(0)
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@map("consent_counters")
+}
